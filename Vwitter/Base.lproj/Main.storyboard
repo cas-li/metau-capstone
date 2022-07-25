@@ -478,14 +478,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AudienceMemberCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudienceMemberCell" id="Dhl-f0-ATg" customClass="AudienceMemberCell">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dhl-f0-ATg" id="e9F-i6-Qvo">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Bn-d5-0Ha">
-                                                    <rect key="frame" x="20" y="11" width="374" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -537,11 +537,11 @@
             </objects>
             <point key="canvasLocation" x="7131.884057971015" y="180.80357142857142"/>
         </scene>
-        <!--Home-->
+        <!--Navigation Controller-->
         <scene sceneID="mh6-CM-zGq">
             <objects>
                 <navigationController storyboardIdentifier="homeNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Aay-sa-LiT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="mWN-cE-y2M"/>
+                    <tabBarItem key="tabBarItem" title="" image="home" selectedImage="home" id="mWN-cE-y2M"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="KQv-RT-7Af"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="KRN-uf-OLk">
@@ -598,7 +598,7 @@
             </objects>
             <point key="canvasLocation" x="1979.7101449275365" y="137.94642857142856"/>
         </scene>
-        <!--Search-->
+        <!--Search Users View Controller-->
         <scene sceneID="UYY-Ga-wRr">
             <objects>
                 <viewController id="uky-dR-R6Y" customClass="SearchUsersViewController" sceneMemberID="viewController">
@@ -692,7 +692,7 @@
                             <constraint firstItem="at9-EW-yO4" firstAttribute="trailing" secondItem="yJh-uD-QaN" secondAttribute="trailing" id="jHD-Nt-CEd"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Search" id="Jwj-z6-UiI"/>
+                    <tabBarItem key="tabBarItem" title="" image="zoom" selectedImage="zoom" id="Jwj-z6-UiI"/>
                     <navigationItem key="navigationItem" id="Vxz-Jy-aJv"/>
                     <connections>
                         <outlet property="searchBar" destination="at9-EW-yO4" id="Thq-4y-1YB"/>
@@ -703,7 +703,7 @@
             </objects>
             <point key="canvasLocation" x="1328.985507246377" y="900.66964285714278"/>
         </scene>
-        <!--Profile-->
+        <!--Profile View Controller-->
         <scene sceneID="tI2-UQ-2Av">
             <objects>
                 <viewController id="7PK-Ia-Gxz" customClass="ProfileViewController" sceneMemberID="viewController">
@@ -797,7 +797,7 @@
                             <constraint firstItem="UIv-jN-bF2" firstAttribute="trailing" secondItem="77J-Ja-xf7" secondAttribute="trailing" id="Mnk-nf-Sbf"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" id="7KV-6F-xfh"/>
+                    <tabBarItem key="tabBarItem" title="" image="user" selectedImage="user" id="7KV-6F-xfh"/>
                     <navigationItem key="navigationItem" id="srL-Jo-aff"/>
                     <connections>
                         <outlet property="tableView" destination="UIv-jN-bF2" id="BiV-NL-5CU"/>
@@ -815,7 +815,10 @@
     <resources>
         <image name="air-pngrepo-com" width="60" height="60"/>
         <image name="close-icon" width="26" height="24"/>
+        <image name="home" width="32" height="32"/>
         <image name="logo" width="60" height="60"/>
+        <image name="user" width="32" height="32"/>
+        <image name="zoom" width="32" height="32"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
