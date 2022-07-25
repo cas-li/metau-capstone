@@ -36,7 +36,7 @@
     self.arrayOfSelectedAudience = [[NSMutableSet alloc] init];
     self.tableView.allowsMultipleSelection = YES;
     [self loadData];
-
+    
     self.postVentButton.layer.cornerRadius = 20;
 }
 
@@ -51,14 +51,14 @@
             return;
         }
         if (!error) {
-          NSLog(@"%@", follows);
-          NSArray *arrayOfFollowers = CAST_TO_CLASS_OR_NIL([follows valueForKey:@"currentUser"], NSArray);
-          strongSelf.arrayOfUserAudienceMembers = arrayOfFollowers.mutableCopy;
-          [strongSelf.tableView reloadData];
-          
+            NSLog(@"%@", follows);
+            NSArray *arrayOfFollowers = CAST_TO_CLASS_OR_NIL([follows valueForKey:@"currentUser"], NSArray);
+            strongSelf.arrayOfUserAudienceMembers = arrayOfFollowers.mutableCopy;
+            [strongSelf.tableView reloadData];
+            
         }
         else {
-          NSLog(@"there was an error, u suck");
+            NSLog(@"there was an error, u suck");
         }
     }];
     
@@ -71,38 +71,38 @@
             return;
         }
         if (!error) {
-          NSLog(@"%@", groups);
-          NSArray *arrayOfGroups = groups;
-          strongSelf.arrayOfGroupAudienceMembers = arrayOfGroups.mutableCopy;
-          [strongSelf.tableView reloadData];
-          
+            NSLog(@"%@", groups);
+            NSArray *arrayOfGroups = groups;
+            strongSelf.arrayOfGroupAudienceMembers = arrayOfGroups.mutableCopy;
+            [strongSelf.tableView reloadData];
+            
         }
         else {
-          NSLog(@"there was an error, u suck");
+            NSLog(@"there was an error, u suck");
         }
     }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-     return 2;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-     if (section == 0)
-     {
-            return [self.arrayOfGroupAudienceMembers count];
-     }
-     else {
-            return [self.arrayOfUserAudienceMembers count];
-     }
+    if (section == 0)
+    {
+        return [self.arrayOfGroupAudienceMembers count];
+    }
+    else {
+        return [self.arrayOfUserAudienceMembers count];
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-          return @"Groups";
+        return @"Groups";
     }
     else {
-          return @"Users";
+        return @"Users";
     }
 }
 
@@ -118,7 +118,7 @@
         cell.user = self.arrayOfUserAudienceMembers[indexPath.row];
         return cell;
     }
-
+    
     
 }
 
@@ -148,72 +148,37 @@
     else {
         [self.arrayOfSelectedAudience removeObject:self.arrayOfUserAudienceMembers[indexPath.row]];
     }
-
+    
 }
 
-//refactor to be PFCloud func
 - (IBAction)didTapVent:(id)sender {
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+    NSMutableArray *ventAudiences = [NSMutableArray arrayWithArray:[self.arrayOfSelectedAudience allObjects]];
     
-    Vent *currentVent = [[Vent alloc] initWithVentContent:self.ventContent];
+    NSMutableArray *ventAudiencesIds = [ventAudiences valueForKey:@"objectId"];
     
-    NSMutableArray *ventAudiences = [[NSMutableArray alloc] init];
     __weak typeof(self) weakSelf = self;
-    [currentVent saveInBackgroundWithBlock: ^(BOOL succeeded, NSError * _Nullable error) {
+    [PFCloud callFunctionInBackground:@"postVent"
+                       withParameters:@{@"currentUserId":[VWUser currentUser].objectId, @"ventContent":self.ventContent, @"ventAudiencesIds":ventAudiencesIds}
+                                block:^(id groups, NSError *error) {
         typeof(self) strongSelf = weakSelf;
         if (!strongSelf) {
             NSLog(@"I got killed!");
             return;
         }
-        if (succeeded) {
-            NSLog(@"vent post succeeded!");
-            for (id audience in strongSelf.arrayOfSelectedAudience) {
-                if ([audience isKindOfClass:[PFUser class]]) {
-                    VentAudience *newVA = [[VentAudience alloc] initWithUserAudience:audience withVent:currentVent];
-                    
-                    [ventAudiences addObject:newVA];
-                }
-                else if ([audience isKindOfClass:[GroupDetails class]]) {
-                    VentAudience *newVA = [[VentAudience alloc] initWithGroupAudience:audience withVent:currentVent];
-                    
-                    [ventAudiences addObject:newVA];
-                }
-                else {
-                    NSLog(@"not a possible audience type");
-                }
-            }
-
-            [PFObject saveAllInBackground:ventAudiences block:^(BOOL succeeded, NSError * _Nullable error) {
-                if (succeeded) {
-                    NSLog(@"vent audiences succeeded!");
-                    [MBProgressHUD hideHUDForView:strongSelf.view animated:YES];
-                    [strongSelf dismissViewControllerAnimated:YES completion:nil];
-                }
-                else {
-                    NSLog(@"vent audiences failed!");
-                    [currentVent deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                        if (succeeded) {
-                            NSLog(@"VA error, vent deleted!");
-                        }
-                        else {
-                            NSLog(@"VA error, vent NOT deleted!");
-                        }
-                    }];
-                    [strongSelf dismissViewControllerAnimated:true completion:nil];
-                }
-                
-            }];
+        if (!error) {
+            [MBProgressHUD hideHUDForView:strongSelf.view animated:YES];
+            [strongSelf dismissViewControllerAnimated:YES completion:nil];
+            
         }
         else {
-            NSLog(@"vent post failed");
-            NSLog(@"😫😫😫 Error posting: %@", error.localizedDescription);
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [strongSelf dismissViewControllerAnimated:true completion:nil];
+            NSLog(@"there was an error, u suck");
+            [MBProgressHUD hideHUDForView:strongSelf.view animated:YES];
+            [strongSelf dismissViewControllerAnimated:YES completion:nil];
         }
     }];
-
-    
 }
 
 @end

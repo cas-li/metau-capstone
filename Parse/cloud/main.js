@@ -55,8 +55,15 @@ Parse.Cloud.beforeSave("VentAudience", async (request) => {
       group.id
     );
   }
+});
 
+Parse.Cloud.beforeSave("Vent", async (request) => {
+  var author = await request.object.get("author");
 
+  request.object.set(
+    "authorUserId",
+    author.id
+  );
 });
 
 Parse.Cloud.beforeSave("GroupDetails", async (request) => {
@@ -99,12 +106,14 @@ Parse.Cloud.beforeSave("SearchItem", async (request) => {
       group.id
     );
   }
-
-  if (user !== undefined) {
+  else if (user !== undefined) {
     request.object.set(
       "userId",
       user.id
     );
+  }
+  else {
+    console.log("something bad happened");
   }
 
 });
@@ -181,6 +190,7 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
   searchItemQuery.include("group");
   searchItemQuery.include("user");
   const searchItemResult = await searchItemQuery.find();
+
   for (let i = 0; i < searchItemResult.length; i++) {
     var item = searchItemResult[i];
     var group = await item.get("group");
@@ -209,6 +219,66 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
   }
 
   return results;
+});
+
+Parse.Cloud.define("postVent", async (request) => {
+  const Vent = Parse.Object.extend("Vent");
+  const vent = new Vent();
+  const currentUserId = request.params.currentUserId;
+  var ventAudiencesIds = request.params.ventAudiencesIds;
+  var ventContent = request.params.ventContent;
+
+  const userQuery = new Parse.Query("User");
+  userQuery.equalTo("objectId", currentUserId);
+  const user = await userQuery.first();
+
+  if (user == undefined) {
+    return;
+  }
+
+  vent.set("author", user);
+  vent.set("ventContent", ventContent);
+
+  vent.save()
+  .then((vent) => {
+  }, (error) => {
+    alert('Failed to create new object, with error code: ' + error.message);
+    return;
+  });
+
+  var ventAudienceArray = [];
+  for (var i = 0; i < ventAudiencesIds.length; i++) {
+    let currentAudienceId = ventAudiencesIds[i];
+
+    const VentAudience = Parse.Object.extend("VentAudience");
+    const ventAudience = new VentAudience();
+
+    const userQuery = new Parse.Query("User");
+    userQuery.equalTo("objectId", currentAudienceId);
+    const user = await userQuery.first();
+
+    const groupQuery = new Parse.Query("GroupDetails");
+    groupQuery.equalTo("objectId", currentAudienceId);
+    const group = await groupQuery.first();
+
+    ventAudience.set("vent", vent);
+
+    if (user !== undefined) {
+      ventAudience.set("user", user);
+    }
+    else if (group !== undefined) {
+      ventAudience.set("group", group);
+    }
+    else {
+      console.log("not a user or group");
+      continue;
+    }
+
+    ventAudienceArray.push(ventAudience);
+  }
+  Parse.Object.saveAll(ventAudienceArray);
+
+  return;
 });
 
 Parse.Cloud.define("fetchPotentialAudienceUsers", async (request) => {
