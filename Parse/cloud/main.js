@@ -187,7 +187,7 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
   if (request.params.searchString !== undefined) {
     searchItemQuery.contains("searchName", request.params.searchString.toLowerCase());
   }
-  searchItemQuery.include("group");
+  searchItemQuery.include(["group.groupAuthor"]);
   searchItemQuery.include("user");
   const searchItemResult = await searchItemQuery.find();
 
@@ -196,7 +196,9 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
     var group = await item.get("group");
     var user = await item.get("user");
     if (group !== undefined) {
-      results.push(group);
+      if (group.get("groupAuthor").id == currentUserId) {
+        results.push(group);
+      }
       continue;
     }
     if (user !== undefined) {
