@@ -2,6 +2,9 @@
 // The example below shows you how a cloud code function looks like.
 
 // Parse Server 3.x
+
+var stringSimilarity = require('string-similarity');
+
 Parse.Cloud.define("validatePassword", (request) => {
   return("Hello world!");
 });
@@ -177,6 +180,66 @@ Parse.Cloud.define("fetchUserCellData", async (request) => {
   return results;
 });
 
+async function compare(a, b, searchString) {
+  var a_group = await a.get("group");
+  var a_user = await a.get("user");
+  var a_string;
+  if (a_group !== undefined) {
+    a_string = a_group.get("groupName");
+  }
+  else if (a_user !== undefined) {
+    a_string = a_user.get("username");
+  }
+  else {
+    return;
+  }
+
+  var b_group = await b.get("group");
+  var b_user = await b.get("user");
+  var b_string;
+  if (b_group !== undefined) {
+    b_string = b_group.get("groupName");
+  }
+  else if (a_user !== undefined) {
+    b_string = b_user.get("username");
+  }
+  else {
+    return;
+  }
+
+  return stringSimilarity.compareTwoStrings(b_string, searchString) - stringSimilarity.compareTwoStrings(a_string, searchString);
+}
+
+function sortWithSearchString(array, searchString) {
+  return array.sort(function (a, b) {
+    var a_group = a.get("group");
+    var a_user = a.get("user");
+    var a_string;
+    if (a_group !== undefined) {
+      a_string = a_group.get("groupName");
+    }
+    else if (a_user !== undefined) {
+      a_string = a_user.get("username");
+    }
+    else {
+      return;
+    }
+
+    var b_group = b.get("group");
+    var b_user = b.get("user");
+    var b_string;
+    if (b_group !== undefined) {
+      b_string = b_group.get("groupName");
+    }
+    else if (a_user !== undefined) {
+      b_string = b_user.get("username");
+    }
+    else {
+      return;
+    }
+    return stringSimilarity.compareTwoStrings(b_string, searchString) - stringSimilarity.compareTwoStrings(a_string, searchString);
+});
+}
 Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
   console.log("Hello World");
   var limit = request.params.limit;
@@ -188,11 +251,20 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
     searchItemQuery.contains("searchName", request.params.searchString.toLowerCase());
   }
   searchItemQuery.include(["group.groupAuthor"]);
+  searchItemQuery.include(["group.groupName"]);
   searchItemQuery.include("user");
+  searchItemQuery.include(["user.username"]);
   const searchItemResult = await searchItemQuery.find();
 
-  for (let i = 0; i < searchItemResult.length; i++) {
-    var item = searchItemResult[i];
+  if (request.params.searchString !== undefined) {
+    var sortedItems = sortWithSearchString(searchItemResult, request.params.searchString.toLowerCase());
+  }
+  else {
+    var sortedItems = searchItemResult;
+  }
+
+  for (let i = 0; i < sortedItems.length; i++) {
+    var item = sortedItems[i];
     var group = await item.get("group");
     var user = await item.get("user");
     if (group !== undefined) {

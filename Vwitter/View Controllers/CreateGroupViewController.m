@@ -119,7 +119,8 @@
                 if (succeeded) {
                     NSLog(@"group memberships succeeded!");
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                    [strongSelf dismissViewControllerAnimated:true completion:nil];
+                    UINavigationController *navigationController = strongSelf.navigationController;
+                    [navigationController popViewControllerAnimated:YES];
                 }
                 else {
                     NSLog(@"group memberships failed!");

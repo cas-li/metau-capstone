@@ -83,6 +83,10 @@
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self loadData];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
