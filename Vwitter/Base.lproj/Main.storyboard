@@ -313,12 +313,22 @@
                                     <segue destination="5R5-Ky-cTz" kind="show" identifier="selectAudienceSegue" id="pU5-Ti-jV8"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="niK-Pu-IGm">
+                                <rect key="frame" x="20" y="748" width="56" height="46"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="spotify"/>
+                                <connections>
+                                    <segue destination="HeX-QS-Hsw" kind="presentation" id="YkW-Se-e4J"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7Gd-3w-8oI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="niK-Pu-IGm" firstAttribute="leading" secondItem="7Gd-3w-8oI" secondAttribute="leading" constant="20" id="DQ7-1Y-Mc4"/>
                             <constraint firstItem="DM7-4V-YAZ" firstAttribute="top" secondItem="7Gd-3w-8oI" secondAttribute="top" constant="26" id="IL9-gG-gSQ"/>
                             <constraint firstItem="7Gd-3w-8oI" firstAttribute="trailing" secondItem="DM7-4V-YAZ" secondAttribute="trailing" constant="20" id="LE1-yn-pSi"/>
+                            <constraint firstItem="ekF-sl-A46" firstAttribute="top" secondItem="niK-Pu-IGm" secondAttribute="top" id="MUx-z2-Ydd"/>
                             <constraint firstItem="7Gd-3w-8oI" firstAttribute="bottom" secondItem="ekF-sl-A46" secondAttribute="bottom" constant="34" id="YYL-Yg-3cH"/>
                             <constraint firstItem="7Gd-3w-8oI" firstAttribute="trailing" secondItem="ekF-sl-A46" secondAttribute="trailing" constant="11" id="fXg-MB-qyo"/>
                             <constraint firstItem="ekF-sl-A46" firstAttribute="top" secondItem="DM7-4V-YAZ" secondAttribute="bottom" constant="40" id="oZr-tP-bZo"/>
@@ -460,6 +470,21 @@
             </objects>
             <point key="canvasLocation" x="6171.0144927536239" y="177.45535714285714"/>
         </scene>
+        <!--Spotify View Controller-->
+        <scene sceneID="B5v-jH-Som">
+            <objects>
+                <viewController id="HeX-QS-Hsw" customClass="SpotifyViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2hh-DK-Wp2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="0ua-e4-smK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v90-Rx-khA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5435" y="837"/>
+        </scene>
         <!--Create Group View Controller-->
         <scene sceneID="e4q-ps-Ieq">
             <objects>
@@ -478,14 +503,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AudienceMemberCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudienceMemberCell" id="Dhl-f0-ATg" customClass="AudienceMemberCell">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dhl-f0-ATg" id="e9F-i6-Qvo">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Bn-d5-0Ha">
-                                                    <rect key="frame" x="20" y="11" width="374" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -817,6 +842,7 @@
         <image name="close-icon" width="26" height="24"/>
         <image name="home" width="32" height="32"/>
         <image name="logo" width="60" height="60"/>
+        <image name="spotify" width="32" height="32"/>
         <image name="user" width="32" height="32"/>
         <image name="zoom" width="32" height="32"/>
         <systemColor name="labelColor">

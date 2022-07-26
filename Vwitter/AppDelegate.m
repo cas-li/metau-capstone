@@ -6,6 +6,7 @@
 //
 
 #import <Parse/Parse.h>
+#import <SpotifyiOS/SpotifyiOS.h>
 
 #import "AppDelegate.h"
 
@@ -32,6 +33,18 @@
     
     return YES;
 }
+
+//- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+//{
+//    NSDictionary *params = [self.appRemote authorizationParametersFromURL:url];
+//    NSString *token = params[SPTAppRemoteAccessTokenKey];
+//    if (token) {
+//        self.appRemote.connectionParameters.accessToken = token;
+//    } else if (params[SPTAppRemoteErrorDescriptionKey]) {
+//        NSLog(@"%@", params[SPTAppRemoteErrorDescriptionKey]);
+//    }
+//    return YES;
+//}
 
 
 #pragma mark - UISceneSession lifecycle

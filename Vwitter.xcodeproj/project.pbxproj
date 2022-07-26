@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		17966EBD10E3EB1BC2FAAD61 /* Pods_Vwitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894F0F1003377F1354C45F05 /* Pods_Vwitter.framework */; };
+		291787A2289089D500ACAD70 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787A1289089D500ACAD70 /* SpotifyViewController.m */; };
+		291787A3289089D500ACAD70 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787A1289089D500ACAD70 /* SpotifyViewController.m */; };
+		291787A4289089D500ACAD70 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787A1289089D500ACAD70 /* SpotifyViewController.m */; };
+		291787AE28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
+		291787AF28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
+		291787B028908CC000ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
+		291787B128908CC000ACAD70 /* SpotifyiOS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		298B82B628763A2100EE54B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B528763A2100EE54B8 /* AppDelegate.m */; };
 		298B82B928763A2100EE54B8 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B828763A2100EE54B8 /* SceneDelegate.m */; };
 		298B82BF28763A2100EE54B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 298B82BD28763A2100EE54B8 /* Main.storyboard */; };
@@ -59,8 +66,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		291787AB28908C4A00ACAD70 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				291787B128908CC000ACAD70 /* SpotifyiOS.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		221521725659A1798AF2F840 /* Pods-Vwitter-VwitterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter-VwitterUITests.debug.xcconfig"; path = "Target Support Files/Pods-Vwitter-VwitterUITests/Pods-Vwitter-VwitterUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		291787A0289089D500ACAD70 /* SpotifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotifyViewController.h; sourceTree = "<group>"; };
+		291787A1289089D500ACAD70 /* SpotifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifyViewController.m; sourceTree = "<group>"; };
+		291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = SpotifyiOS.xcframework; sourceTree = "<group>"; };
 		298B82B128763A2100EE54B8 /* Vwitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vwitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		298B82B428763A2100EE54B8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		298B82B528763A2100EE54B8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -133,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291787B028908CC000ACAD70 /* SpotifyiOS.xcframework in Frameworks */,
 				17966EBD10E3EB1BC2FAAD61 /* Pods_Vwitter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291787AE28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */,
 				BDA7F819A0286F3B39A008CB /* Pods_VwitterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291787AF28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */,
 				DA1CE8C75883D35ED75901CF /* Pods_Vwitter_VwitterUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,6 +271,8 @@
 				298B83012878EAFA00EE54B8 /* SignupViewController.m */,
 				29AA84AD28887AE500C9FC1F /* CreateGroupViewController.h */,
 				29AA84AE28887AE500C9FC1F /* CreateGroupViewController.m */,
+				291787A0289089D500ACAD70 /* SpotifyViewController.h */,
+				291787A1289089D500ACAD70 /* SpotifyViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -285,6 +314,7 @@
 		DE16D2202A9222F898C735BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */,
 				894F0F1003377F1354C45F05 /* Pods_Vwitter.framework */,
 				331D1081242141322F3BA4A9 /* Pods_Vwitter_VwitterUITests.framework */,
 				3FAF62101235E35D90DEFAAC /* Pods_VwitterTests.framework */,
@@ -304,6 +334,7 @@
 				298B82AE28763A2100EE54B8 /* Frameworks */,
 				298B82AF28763A2100EE54B8 /* Resources */,
 				12CAE9F219A06B31B97B1AAD /* [CP] Embed Pods Frameworks */,
+				291787AB28908C4A00ACAD70 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -554,6 +585,7 @@
 				298B8322287E1C6000EE54B8 /* VentAudience.m in Sources */,
 				298B830A287CD3E000EE54B8 /* UserCell.m in Sources */,
 				29AA84B22888BC2D00C9FC1F /* GroupCell.m in Sources */,
+				291787A2289089D500ACAD70 /* SpotifyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,6 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				298B82D128763A2300EE54B8 /* VwitterTests.m in Sources */,
+				291787A3289089D500ACAD70 /* SpotifyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +604,7 @@
 			files = (
 				298B82DD28763A2300EE54B8 /* VwitterUITestsLaunchTests.m in Sources */,
 				298B82DB28763A2300EE54B8 /* VwitterUITests.m in Sources */,
+				291787A4289089D500ACAD70 /* SpotifyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,6 +762,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vwitter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -756,6 +794,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vwitter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -783,6 +825,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
@@ -802,6 +848,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
@@ -820,6 +870,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyli.VwitterUITests;
@@ -837,6 +891,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyli.VwitterUITests;
