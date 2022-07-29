@@ -293,7 +293,7 @@
         <!--Compose View Controller-->
         <scene sceneID="IaF-wO-3Jt">
             <objects>
-                <viewController id="D7s-lF-xTd" customClass="ComposeViewController" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="D7s-lF-xTd" customClass="ComposeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hsg-vS-3Ne">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -318,7 +318,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="spotify"/>
                                 <connections>
-                                    <segue destination="HeX-QS-Hsw" kind="presentation" id="YkW-Se-e4J"/>
+                                    <segue destination="fwB-Zx-hYG" kind="show" identifier="songPickerSegue" id="DRn-lU-88O"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -355,6 +355,86 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="buJ-Dd-gUa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5436.231884057971" y="155.35714285714286"/>
+        </scene>
+        <!--Song Picker View Controller-->
+        <scene sceneID="myu-3S-koY">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="fwB-Zx-hYG" customClass="SongPickerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8c3-u2-wlD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="TwH-fk-jFk">
+                                <rect key="frame" x="0.0" y="88" width="414" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mcI-g4-nWs">
+                                <rect key="frame" x="0.0" y="139" width="414" height="757"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TrackCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TrackCell" id="8Xr-6O-7Ck" customClass="TrackCell">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8Xr-6O-7Ck" id="bdV-EF-QQ5">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fce-cD-IRz">
+                                                    <rect key="frame" x="20" y="12" width="374" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="fce-cD-IRz" firstAttribute="top" secondItem="bdV-EF-QQ5" secondAttribute="topMargin" constant="1" id="23M-nf-4df"/>
+                                                <constraint firstItem="fce-cD-IRz" firstAttribute="leading" secondItem="bdV-EF-QQ5" secondAttribute="leadingMargin" id="Gr9-zs-Lmu"/>
+                                                <constraint firstItem="fce-cD-IRz" firstAttribute="trailing" secondItem="bdV-EF-QQ5" secondAttribute="trailingMargin" id="UXV-9r-AJL"/>
+                                                <constraint firstItem="fce-cD-IRz" firstAttribute="bottom" secondItem="bdV-EF-QQ5" secondAttribute="bottomMargin" id="cD6-pV-We6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="trackNameLabel" destination="fce-cD-IRz" id="LiX-Gs-Hc6"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gJO-v5-q5t"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="TwH-fk-jFk" firstAttribute="leading" secondItem="8c3-u2-wlD" secondAttribute="leading" id="3Nj-jX-OzL"/>
+                            <constraint firstItem="TwH-fk-jFk" firstAttribute="top" secondItem="8c3-u2-wlD" secondAttribute="top" constant="88" id="MBp-CV-fag"/>
+                            <constraint firstItem="mcI-g4-nWs" firstAttribute="trailing" secondItem="gJO-v5-q5t" secondAttribute="trailing" id="QLp-3h-yvz"/>
+                            <constraint firstItem="mcI-g4-nWs" firstAttribute="bottom" secondItem="gJO-v5-q5t" secondAttribute="bottom" id="VHk-hk-Ihj"/>
+                            <constraint firstItem="mcI-g4-nWs" firstAttribute="top" secondItem="TwH-fk-jFk" secondAttribute="bottom" id="Y3g-kf-E3s"/>
+                            <constraint firstItem="mcI-g4-nWs" firstAttribute="top" secondItem="TwH-fk-jFk" secondAttribute="bottom" id="aOo-KU-x3S"/>
+                            <constraint firstAttribute="trailing" secondItem="TwH-fk-jFk" secondAttribute="trailing" id="cbA-xs-SBT"/>
+                            <constraint firstItem="mcI-g4-nWs" firstAttribute="leading" secondItem="gJO-v5-q5t" secondAttribute="leading" id="ykG-7f-lFz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="NMa-sy-KgK">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="dYo-Xa-MNS">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="vHy-tX-bUL">
+                                <rect key="frame" x="302" y="5" width="92" height="34.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Done"/>
+                            </button>
+                            <connections>
+                                <action selector="unwindToCompose:" destination="fwB-Zx-hYG" id="aQN-iT-bpv"/>
+                                <segue destination="YcQ-kD-c4i" kind="unwind" unwindAction="unwindToCompose:" id="Msr-0J-fvS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="mcI-g4-nWs" id="Rxq-GG-I9y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oUr-rl-Hdx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="YcQ-kD-c4i" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="5433.3333333333339" y="873.88392857142856"/>
         </scene>
         <!--Select Audience View Controller-->
         <scene sceneID="ERq-K8-QLc">
@@ -475,11 +555,11 @@
             <objects>
                 <viewController id="HeX-QS-Hsw" customClass="SpotifyViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2hh-DK-Wp2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hvp-gA-vF7">
-                                <rect key="frame" x="167.5" y="405.5" width="79" height="31"/>
+                                <rect key="frame" x="167.5" y="432.5" width="79" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Connect"/>
                                 <connections>
@@ -497,7 +577,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v90-Rx-khA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5435" y="837"/>
+            <point key="canvasLocation" x="3387" y="138"/>
         </scene>
         <!--Create Group View Controller-->
         <scene sceneID="e4q-ps-Ieq">

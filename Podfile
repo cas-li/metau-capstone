@@ -11,6 +11,9 @@ target 'Vwitter' do
   pod 'UITextView+Placeholder'
   pod 'DateTools'  
   pod 'MBProgressHUD'
+  pod 'AFNetworking'
+  pod 'BDBOAuth1Manager'
+  pod 'AFNetworkActivityLogger'
 
   target 'VwitterTests' do
     inherit! :search_paths

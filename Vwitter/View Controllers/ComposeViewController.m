@@ -8,10 +8,12 @@
 #import "ComposeViewController.h"
 #import "Vent.h"
 #import "SelectAudienceViewController.h"
+#import "SongPickerViewController.h"
+#import "VWHelpers.h"
 
 @import UITextView_Placeholder;
 
-@interface ComposeViewController () <UITextViewDelegate>
+@interface ComposeViewController () <UITextViewDelegate, SongPickerViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *ventContent;
 @property (strong, nonatomic) NSString *placeholderText;
 
@@ -28,7 +30,6 @@
     
     self.ventContent.placeholder = self.placeholderText;
     self.ventContent.placeholderColor = [UIColor lightGrayColor];
-
 }
 
 - (IBAction)didTapClose:(id)sender {
@@ -57,8 +58,17 @@
         
         SelectAudienceViewController *selectAudienceVC = [segue destinationViewController];
         selectAudienceVC.ventContent = self.ventContent.text;
+        selectAudienceVC.selectedTrack = self.selectedTrack;
         
     }
+    else if ([segue.identifier isEqualToString:@"songPickerSegue"]) {
+        SongPickerViewController *songPickerVC = CAST_TO_CLASS_OR_NIL([segue destinationViewController], SongPickerViewController);
+        songPickerVC.delegate = self;
+    }
+}
+
+- (void)passSelectedTrack:(SpotifyTrack *)selectedTrack {
+    self.selectedTrack = selectedTrack;
 }
 
 

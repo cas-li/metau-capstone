@@ -9,6 +9,8 @@
 
 #import "AppDelegate.h"
 #import "VWHelpers.h"
+#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
+#import "SpotifyAPIManager.h"
 
 static NSString * const SpotifyClientID = @"e4185723643e4db9bcf48af28e078cff";
 static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
@@ -41,36 +43,37 @@ static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
 //    }
     
     // init app remote
+    SpotifyAPIManager *spotifyAPIManager = [[SpotifyAPIManager alloc] init];
+    [spotifyAPIManager authorizeSpotify];
     
     SPTConfiguration *configuration =
         [[SPTConfiguration alloc] initWithClientID:SpotifyClientID redirectURL:[NSURL URLWithString:SpotifyRedirectURLString]];
-    
+
     self.appRemote = [[SPTAppRemote alloc] initWithConfiguration:configuration logLevel:SPTAppRemoteLogLevelDebug];
-    
-    BOOL spotifyInstalled = [self.appRemote authorizeAndPlayURI:@""];
-    if (!spotifyInstalled) {
-        /*
-        * The Spotify app is not installed.
-        * Use SKStoreProductViewController with [SPTAppRemote spotifyItunesItemIdentifier] to present the user
-        * with a way to install the Spotify app.
-        */
-        NSString *adjustUrl = @"https://app.adjust.com/bdyga9?campaign=com.cyli.Vwitter";
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:adjustUrl]];
-        [request setValue:@"spotify_campaign_user_agent" forHTTPHeaderField:@"User-Agent"];
 
-        [[[NSURLSession sharedSession] dataTaskWithRequest:request
-                                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        }] resume];
-        
-        NSString *url = @"https://itunes.apple.com/app/spotify-music/id324684580?mt=8";
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
-            if (success) {
-                NSLog(@"Opened url");
-            }
-        }];
-
-    }
-
+    BOOL spotifyInstalled = [self.appRemote authorizeAndPlayURI:@"spotify:artist:2YZyLoL8N0Wb9xBt1NhZWg"];
+//    if (!spotifyInstalled) {
+//        /*
+//        * The Spotify app is not installed.
+//        * Use SKStoreProductViewController with [SPTAppRemote spotifyItunesItemIdentifier] to present the user
+//        * with a way to install the Spotify app.
+//        */
+//        NSString *adjustUrl = @"https://app.adjust.com/bdyga9?campaign=com.cyli.Vwitter";
+//        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:adjustUrl]];
+//        [request setValue:@"spotify_campaign_user_agent" forHTTPHeaderField:@"User-Agent"];
+//
+//        [[[NSURLSession sharedSession] dataTaskWithRequest:request
+//                                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//        }] resume];
+//
+//        NSString *url = @"https://itunes.apple.com/app/spotify-music/id324684580?mt=8";
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
+//            if (success) {
+//                NSLog(@"Opened app store url");
+//            }
+//        }];
+//
+//    }
     
     return YES;
 }
@@ -108,5 +111,49 @@ static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
     // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
 }
 
+
+- (void)appRemote:(nonnull SPTAppRemote *)appRemote didDisconnectWithError:(nullable NSError *)error {
+    NSLog(@"disconnected: %@", error.localizedDescription);
+}
+
+- (void)appRemote:(nonnull SPTAppRemote *)appRemote didFailConnectionAttemptWithError:(nullable NSError *)error {
+    NSLog(@"connection failed: %@", error.localizedDescription);
+}
+
+- (void)appRemoteDidEstablishConnection:(nonnull SPTAppRemote *)appRemote {
+    NSLog(@"connected");
+    self.appRemote.playerAPI.delegate = self;
+    [self.appRemote.playerAPI subscribeToPlayerState:^(id  _Nullable result, NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"subscribed to player state");
+        }
+        else {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+    }];
+}
+
+
+- (void)playerStateDidChange:(nonnull id<SPTAppRemotePlayerState>)playerState {
+    NSLog(@"player state changed");
+    NSLog(@"Track name: %@", playerState.track.name);
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+    if (self.appRemote.isConnected) {
+        NSLog(@"appRemote disconnected");
+        [self.appRemote disconnect];
+    }
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    if (self.appRemote.connectionParameters.accessToken) {
+        NSLog(@"app remote connected");
+        [self.appRemote connect];
+    }
+    else {
+        NSLog(@"cannot connect, no accesstoken");
+    }
+}
 
 @end

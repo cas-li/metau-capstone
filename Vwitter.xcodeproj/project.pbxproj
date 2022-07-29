@@ -15,6 +15,12 @@
 		291787AF28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
 		291787B028908CC000ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
 		291787B128908CC000ACAD70 /* SpotifyiOS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		291787B6289300E500ACAD70 /* SongPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787B5289300E500ACAD70 /* SongPickerViewController.m */; };
+		291787B7289300E500ACAD70 /* SongPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787B5289300E500ACAD70 /* SongPickerViewController.m */; };
+		291787B8289300E500ACAD70 /* SongPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787B5289300E500ACAD70 /* SongPickerViewController.m */; };
+		291787BC289306D800ACAD70 /* SpotifyAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787BB289306D800ACAD70 /* SpotifyAPIManager.m */; };
+		291F305B28932D3D006E9E28 /* SpotifyTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F305A28932D3D006E9E28 /* SpotifyTrack.m */; };
+		291F305E28932EA8006E9E28 /* TrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F305D28932EA8006E9E28 /* TrackCell.m */; };
 		298B82B628763A2100EE54B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B528763A2100EE54B8 /* AppDelegate.m */; };
 		298B82B928763A2100EE54B8 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B828763A2100EE54B8 /* SceneDelegate.m */; };
 		298B82BF28763A2100EE54B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 298B82BD28763A2100EE54B8 /* Main.storyboard */; };
@@ -85,6 +91,14 @@
 		291787A0289089D500ACAD70 /* SpotifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotifyViewController.h; sourceTree = "<group>"; };
 		291787A1289089D500ACAD70 /* SpotifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifyViewController.m; sourceTree = "<group>"; };
 		291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = SpotifyiOS.xcframework; sourceTree = "<group>"; };
+		291787B4289300E500ACAD70 /* SongPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SongPickerViewController.h; sourceTree = "<group>"; };
+		291787B5289300E500ACAD70 /* SongPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SongPickerViewController.m; sourceTree = "<group>"; };
+		291787BA289306D800ACAD70 /* SpotifyAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotifyAPIManager.h; sourceTree = "<group>"; };
+		291787BB289306D800ACAD70 /* SpotifyAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifyAPIManager.m; sourceTree = "<group>"; };
+		291F305928932D3D006E9E28 /* SpotifyTrack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotifyTrack.h; sourceTree = "<group>"; };
+		291F305A28932D3D006E9E28 /* SpotifyTrack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifyTrack.m; sourceTree = "<group>"; };
+		291F305C28932EA8006E9E28 /* TrackCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrackCell.h; sourceTree = "<group>"; };
+		291F305D28932EA8006E9E28 /* TrackCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrackCell.m; sourceTree = "<group>"; };
 		298B82B128763A2100EE54B8 /* Vwitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vwitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		298B82B428763A2100EE54B8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		298B82B528763A2100EE54B8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -183,6 +197,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		291787B9289301A600ACAD70 /* SpotifyAPI */ = {
+			isa = PBXGroup;
+			children = (
+				291787BA289306D800ACAD70 /* SpotifyAPIManager.h */,
+				291787BB289306D800ACAD70 /* SpotifyAPIManager.m */,
+			);
+			path = SpotifyAPI;
+			sourceTree = "<group>";
+		};
 		298B82A828763A2100EE54B8 = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +231,7 @@
 		298B82B328763A2100EE54B8 /* Vwitter */ = {
 			isa = PBXGroup;
 			children = (
+				291787B9289301A600ACAD70 /* SpotifyAPI */,
 				298B82F62878DEEC00EE54B8 /* Models */,
 				298B82E92878A14E00EE54B8 /* View Controllers */,
 				298B82B428763A2100EE54B8 /* AppDelegate.h */,
@@ -231,6 +255,8 @@
 				298B832C2880D52D00EE54B8 /* VWHelpers.h */,
 				29AA84B02888BC2D00C9FC1F /* GroupCell.h */,
 				29AA84B12888BC2D00C9FC1F /* GroupCell.m */,
+				291F305C28932EA8006E9E28 /* TrackCell.h */,
+				291F305D28932EA8006E9E28 /* TrackCell.m */,
 			);
 			path = Vwitter;
 			sourceTree = "<group>";
@@ -273,6 +299,8 @@
 				29AA84AE28887AE500C9FC1F /* CreateGroupViewController.m */,
 				291787A0289089D500ACAD70 /* SpotifyViewController.h */,
 				291787A1289089D500ACAD70 /* SpotifyViewController.m */,
+				291787B4289300E500ACAD70 /* SongPickerViewController.h */,
+				291787B5289300E500ACAD70 /* SongPickerViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -294,6 +322,8 @@
 				298B8327287E1D8700EE54B8 /* GroupMembership.m */,
 				29B8E0A6288626E100EEFFC2 /* UserCellViewModel.h */,
 				29B8E0A7288626E100EEFFC2 /* UserCellViewModel.m */,
+				291F305928932D3D006E9E28 /* SpotifyTrack.h */,
+				291F305A28932D3D006E9E28 /* SpotifyTrack.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -564,7 +594,9 @@
 			files = (
 				298B82EC2878A15D00EE54B8 /* LoginViewController.m in Sources */,
 				298B82B628763A2100EE54B8 /* AppDelegate.m in Sources */,
+				291F305B28932D3D006E9E28 /* SpotifyTrack.m in Sources */,
 				298B82C728763A2300EE54B8 /* main.m in Sources */,
+				291787BC289306D800ACAD70 /* SpotifyAPIManager.m in Sources */,
 				298B8307287C9C7B00EE54B8 /* UIViewController+ErrorAlertPresenter.m in Sources */,
 				298B82F22878C95E00EE54B8 /* ComposeViewController.m in Sources */,
 				298B83022878EAFA00EE54B8 /* SignupViewController.m in Sources */,
@@ -574,6 +606,7 @@
 				298B8325287E1CDC00EE54B8 /* GroupDetails.m in Sources */,
 				298B82EF2878AF3000EE54B8 /* HomeViewController.m in Sources */,
 				298B82F52878D5EA00EE54B8 /* SelectAudienceViewController.m in Sources */,
+				291787B6289300E500ACAD70 /* SongPickerViewController.m in Sources */,
 				29AA84AF28887AE500C9FC1F /* CreateGroupViewController.m in Sources */,
 				29B8E0A8288626E100EEFFC2 /* UserCellViewModel.m in Sources */,
 				298B82B928763A2100EE54B8 /* SceneDelegate.m in Sources */,
@@ -582,6 +615,7 @@
 				298B82F92878DF0900EE54B8 /* VWUser.m in Sources */,
 				298B82FC2878E30F00EE54B8 /* SearchUsersViewController.m in Sources */,
 				298B831F287E1BFA00EE54B8 /* Vent.m in Sources */,
+				291F305E28932EA8006E9E28 /* TrackCell.m in Sources */,
 				298B8322287E1C6000EE54B8 /* VentAudience.m in Sources */,
 				298B830A287CD3E000EE54B8 /* UserCell.m in Sources */,
 				29AA84B22888BC2D00C9FC1F /* GroupCell.m in Sources */,
@@ -594,6 +628,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				298B82D128763A2300EE54B8 /* VwitterTests.m in Sources */,
+				291787B7289300E500ACAD70 /* SongPickerViewController.m in Sources */,
 				291787A3289089D500ACAD70 /* SpotifyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -603,6 +638,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				298B82DD28763A2300EE54B8 /* VwitterUITestsLaunchTests.m in Sources */,
+				291787B8289300E500ACAD70 /* SongPickerViewController.m in Sources */,
 				298B82DB28763A2300EE54B8 /* VwitterUITests.m in Sources */,
 				291787A4289089D500ACAD70 /* SpotifyViewController.m in Sources */,
 			);

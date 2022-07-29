@@ -6,8 +6,11 @@
 //
 
 #import <Parse/Parse.h>
+#import <SpotifyiOS/SpotifyiOS.h>
 
 #import "SceneDelegate.h"
+#import "AppDelegate.h"
+#import "VWHelpers.h"
 
 @interface SceneDelegate ()
 
@@ -35,18 +38,6 @@
 }
 
 
-- (void)sceneDidBecomeActive:(UIScene *)scene {
-    // Called when the scene has moved from an inactive state to an active state.
-    // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-}
-
-
-- (void)sceneWillResignActive:(UIScene *)scene {
-    // Called when the scene will move from an active state to an inactive state.
-    // This may occur due to temporary interruptions (ex. an incoming phone call).
-}
-
-
 - (void)sceneWillEnterForeground:(UIScene *)scene {
     // Called as the scene transitions from the background to the foreground.
     // Use this method to undo the changes made on entering the background.
@@ -59,5 +50,44 @@
     // to restore the scene back to its current state.
 }
 
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+    
+    NSLog(@"scene delegate open URL getting called");
+    NSURL *url = [[URLContexts allObjects] firstObject].URL;
+    
+    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
+    
+    NSDictionary *params = [appDelegate.appRemote authorizationParametersFromURL:url];
+    NSString *token = params[SPTAppRemoteAccessTokenKey];
+    if (token) {
+        appDelegate.appRemote.connectionParameters.accessToken = token;
+        
+        // save the token if needed
+        [NSUserDefaults.standardUserDefaults setObject:token forKey:@"spotify_token"];
+        
+    } else if (params[SPTAppRemoteErrorDescriptionKey]) {
+        NSLog(@"%@", params[SPTAppRemoteErrorDescriptionKey]);
+    }
+
+}
+
+- (void)sceneDidBecomeActive:(UIScene *)scene {
+    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
+    if (appDelegate.appRemote.connectionParameters.accessToken) {
+        NSLog(@"app remote connected");
+        [appDelegate.appRemote connect];
+    }
+    else {
+        NSLog(@"cannot connect, no accesstoken");
+    }
+}
+
+//- (void)sceneWillResignActive:(UIScene *)scene {
+//    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
+//    if (appDelegate.appRemote.isConnected) {
+//        NSLog(@"appRemote disconnected");
+//        [appDelegate.appRemote disconnect];
+//    }
+//}
 
 @end
