@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		17966EBD10E3EB1BC2FAAD61 /* Pods_Vwitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894F0F1003377F1354C45F05 /* Pods_Vwitter.framework */; };
+		291787A2289089D500ACAD70 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787A1289089D500ACAD70 /* SpotifyViewController.m */; };
+		291787A3289089D500ACAD70 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787A1289089D500ACAD70 /* SpotifyViewController.m */; };
+		291787A4289089D500ACAD70 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787A1289089D500ACAD70 /* SpotifyViewController.m */; };
+		291787AE28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
+		291787AF28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
+		291787B028908CC000ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
+		291787B128908CC000ACAD70 /* SpotifyiOS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		298B82B628763A2100EE54B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B528763A2100EE54B8 /* AppDelegate.m */; };
 		298B82B928763A2100EE54B8 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B828763A2100EE54B8 /* SceneDelegate.m */; };
 		298B82BF28763A2100EE54B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 298B82BD28763A2100EE54B8 /* Main.storyboard */; };
@@ -19,6 +26,25 @@
 		298B82DD28763A2300EE54B8 /* VwitterUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82DC28763A2300EE54B8 /* VwitterUITestsLaunchTests.m */; };
 		298B82EC2878A15D00EE54B8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82EB2878A15D00EE54B8 /* LoginViewController.m */; };
 		298B82EF2878AF3000EE54B8 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82EE2878AF3000EE54B8 /* HomeViewController.m */; };
+		298B82F22878C95E00EE54B8 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82F12878C95E00EE54B8 /* ComposeViewController.m */; };
+		298B82F52878D5EA00EE54B8 /* SelectAudienceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82F42878D5EA00EE54B8 /* SelectAudienceViewController.m */; };
+		298B82F92878DF0900EE54B8 /* VWUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82F82878DF0900EE54B8 /* VWUser.m */; };
+		298B82FC2878E30F00EE54B8 /* SearchUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82FB2878E30F00EE54B8 /* SearchUsersViewController.m */; };
+		298B82FF2878E3F100EE54B8 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82FE2878E3F100EE54B8 /* ProfileViewController.m */; };
+		298B83022878EAFA00EE54B8 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B83012878EAFA00EE54B8 /* SignupViewController.m */; };
+		298B8304287935F900EE54B8 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 298B8303287935F900EE54B8 /* Keys.plist */; };
+		298B8307287C9C7B00EE54B8 /* UIViewController+ErrorAlertPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B8306287C9C7B00EE54B8 /* UIViewController+ErrorAlertPresenter.m */; };
+		298B830A287CD3E000EE54B8 /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B8309287CD3E000EE54B8 /* UserCell.m */; };
+		298B830D287CD99E00EE54B8 /* Follow.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B830C287CD99E00EE54B8 /* Follow.m */; };
+		298B8310287DFF5500EE54B8 /* AudienceMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B830F287DFF5500EE54B8 /* AudienceMemberCell.m */; };
+		298B831F287E1BFA00EE54B8 /* Vent.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B831E287E1BFA00EE54B8 /* Vent.m */; };
+		298B8322287E1C6000EE54B8 /* VentAudience.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B8321287E1C6000EE54B8 /* VentAudience.m */; };
+		298B8325287E1CDC00EE54B8 /* GroupDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B8324287E1CDC00EE54B8 /* GroupDetails.m */; };
+		298B8328287E1D8700EE54B8 /* GroupMembership.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B8327287E1D8700EE54B8 /* GroupMembership.m */; };
+		298B832B28808A8E00EE54B8 /* VentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B832A28808A8E00EE54B8 /* VentCell.m */; };
+		29AA84AF28887AE500C9FC1F /* CreateGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29AA84AE28887AE500C9FC1F /* CreateGroupViewController.m */; };
+		29AA84B22888BC2D00C9FC1F /* GroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29AA84B12888BC2D00C9FC1F /* GroupCell.m */; };
+		29B8E0A8288626E100EEFFC2 /* UserCellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B8E0A7288626E100EEFFC2 /* UserCellViewModel.m */; };
 		BDA7F819A0286F3B39A008CB /* Pods_VwitterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAF62101235E35D90DEFAAC /* Pods_VwitterTests.framework */; };
 		DA1CE8C75883D35ED75901CF /* Pods_Vwitter_VwitterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331D1081242141322F3BA4A9 /* Pods_Vwitter_VwitterUITests.framework */; };
 /* End PBXBuildFile section */
@@ -40,8 +66,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		291787AB28908C4A00ACAD70 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				291787B128908CC000ACAD70 /* SpotifyiOS.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		221521725659A1798AF2F840 /* Pods-Vwitter-VwitterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter-VwitterUITests.debug.xcconfig"; path = "Target Support Files/Pods-Vwitter-VwitterUITests/Pods-Vwitter-VwitterUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		291787A0289089D500ACAD70 /* SpotifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotifyViewController.h; sourceTree = "<group>"; };
+		291787A1289089D500ACAD70 /* SpotifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifyViewController.m; sourceTree = "<group>"; };
+		291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = SpotifyiOS.xcframework; sourceTree = "<group>"; };
 		298B82B128763A2100EE54B8 /* Vwitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vwitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		298B82B428763A2100EE54B8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		298B82B528763A2100EE54B8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -61,6 +104,44 @@
 		298B82EB2878A15D00EE54B8 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		298B82ED2878AF3000EE54B8 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		298B82EE2878AF3000EE54B8 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		298B82F02878C95E00EE54B8 /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
+		298B82F12878C95E00EE54B8 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
+		298B82F32878D5EA00EE54B8 /* SelectAudienceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectAudienceViewController.h; sourceTree = "<group>"; };
+		298B82F42878D5EA00EE54B8 /* SelectAudienceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectAudienceViewController.m; sourceTree = "<group>"; };
+		298B82F72878DF0900EE54B8 /* VWUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VWUser.h; sourceTree = "<group>"; };
+		298B82F82878DF0900EE54B8 /* VWUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VWUser.m; sourceTree = "<group>"; };
+		298B82FA2878E30F00EE54B8 /* SearchUsersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUsersViewController.h; sourceTree = "<group>"; };
+		298B82FB2878E30F00EE54B8 /* SearchUsersViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchUsersViewController.m; sourceTree = "<group>"; };
+		298B82FD2878E3F100EE54B8 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		298B82FE2878E3F100EE54B8 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		298B83002878EAFA00EE54B8 /* SignupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
+		298B83012878EAFA00EE54B8 /* SignupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
+		298B8303287935F900EE54B8 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		298B8305287C9C7B00EE54B8 /* UIViewController+ErrorAlertPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ErrorAlertPresenter.h"; sourceTree = "<group>"; };
+		298B8306287C9C7B00EE54B8 /* UIViewController+ErrorAlertPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ErrorAlertPresenter.m"; sourceTree = "<group>"; };
+		298B8308287CD3E000EE54B8 /* UserCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
+		298B8309287CD3E000EE54B8 /* UserCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
+		298B830B287CD99E00EE54B8 /* Follow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Follow.h; sourceTree = "<group>"; };
+		298B830C287CD99E00EE54B8 /* Follow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Follow.m; sourceTree = "<group>"; };
+		298B830E287DFF5500EE54B8 /* AudienceMemberCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudienceMemberCell.h; sourceTree = "<group>"; };
+		298B830F287DFF5500EE54B8 /* AudienceMemberCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudienceMemberCell.m; sourceTree = "<group>"; };
+		298B831D287E1BFA00EE54B8 /* Vent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vent.h; sourceTree = "<group>"; };
+		298B831E287E1BFA00EE54B8 /* Vent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vent.m; sourceTree = "<group>"; };
+		298B8320287E1C6000EE54B8 /* VentAudience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VentAudience.h; sourceTree = "<group>"; };
+		298B8321287E1C6000EE54B8 /* VentAudience.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VentAudience.m; sourceTree = "<group>"; };
+		298B8323287E1CDC00EE54B8 /* GroupDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupDetails.h; sourceTree = "<group>"; };
+		298B8324287E1CDC00EE54B8 /* GroupDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupDetails.m; sourceTree = "<group>"; };
+		298B8326287E1D8700EE54B8 /* GroupMembership.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupMembership.h; sourceTree = "<group>"; };
+		298B8327287E1D8700EE54B8 /* GroupMembership.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupMembership.m; sourceTree = "<group>"; };
+		298B832928808A8E00EE54B8 /* VentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VentCell.h; sourceTree = "<group>"; };
+		298B832A28808A8E00EE54B8 /* VentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VentCell.m; sourceTree = "<group>"; };
+		298B832C2880D52D00EE54B8 /* VWHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VWHelpers.h; sourceTree = "<group>"; };
+		29AA84AD28887AE500C9FC1F /* CreateGroupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateGroupViewController.h; sourceTree = "<group>"; };
+		29AA84AE28887AE500C9FC1F /* CreateGroupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateGroupViewController.m; sourceTree = "<group>"; };
+		29AA84B02888BC2D00C9FC1F /* GroupCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupCell.h; sourceTree = "<group>"; };
+		29AA84B12888BC2D00C9FC1F /* GroupCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupCell.m; sourceTree = "<group>"; };
+		29B8E0A6288626E100EEFFC2 /* UserCellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserCellViewModel.h; sourceTree = "<group>"; };
+		29B8E0A7288626E100EEFFC2 /* UserCellViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserCellViewModel.m; sourceTree = "<group>"; };
 		331D1081242141322F3BA4A9 /* Pods_Vwitter_VwitterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vwitter_VwitterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FAF62101235E35D90DEFAAC /* Pods_VwitterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VwitterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A5D72133CCDA51BC7A511AE /* Pods-Vwitter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter.debug.xcconfig"; path = "Target Support Files/Pods-Vwitter/Pods-Vwitter.debug.xcconfig"; sourceTree = "<group>"; };
@@ -76,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291787B028908CC000ACAD70 /* SpotifyiOS.xcframework in Frameworks */,
 				17966EBD10E3EB1BC2FAAD61 /* Pods_Vwitter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291787AE28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */,
 				BDA7F819A0286F3B39A008CB /* Pods_VwitterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291787AF28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */,
 				DA1CE8C75883D35ED75901CF /* Pods_Vwitter_VwitterUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,16 +208,29 @@
 		298B82B328763A2100EE54B8 /* Vwitter */ = {
 			isa = PBXGroup;
 			children = (
+				298B82F62878DEEC00EE54B8 /* Models */,
 				298B82E92878A14E00EE54B8 /* View Controllers */,
 				298B82B428763A2100EE54B8 /* AppDelegate.h */,
 				298B82B528763A2100EE54B8 /* AppDelegate.m */,
 				298B82B728763A2100EE54B8 /* SceneDelegate.h */,
 				298B82B828763A2100EE54B8 /* SceneDelegate.m */,
 				298B82BD28763A2100EE54B8 /* Main.storyboard */,
+				298B8308287CD3E000EE54B8 /* UserCell.h */,
+				298B8309287CD3E000EE54B8 /* UserCell.m */,
 				298B82C028763A2300EE54B8 /* Assets.xcassets */,
 				298B82C228763A2300EE54B8 /* LaunchScreen.storyboard */,
 				298B82C528763A2300EE54B8 /* Info.plist */,
 				298B82C628763A2300EE54B8 /* main.m */,
+				298B8303287935F900EE54B8 /* Keys.plist */,
+				298B8305287C9C7B00EE54B8 /* UIViewController+ErrorAlertPresenter.h */,
+				298B8306287C9C7B00EE54B8 /* UIViewController+ErrorAlertPresenter.m */,
+				298B830E287DFF5500EE54B8 /* AudienceMemberCell.h */,
+				298B830F287DFF5500EE54B8 /* AudienceMemberCell.m */,
+				298B832928808A8E00EE54B8 /* VentCell.h */,
+				298B832A28808A8E00EE54B8 /* VentCell.m */,
+				298B832C2880D52D00EE54B8 /* VWHelpers.h */,
+				29AA84B02888BC2D00C9FC1F /* GroupCell.h */,
+				29AA84B12888BC2D00C9FC1F /* GroupCell.m */,
 			);
 			path = Vwitter;
 			sourceTree = "<group>";
@@ -162,8 +259,43 @@
 				298B82EB2878A15D00EE54B8 /* LoginViewController.m */,
 				298B82ED2878AF3000EE54B8 /* HomeViewController.h */,
 				298B82EE2878AF3000EE54B8 /* HomeViewController.m */,
+				298B82F02878C95E00EE54B8 /* ComposeViewController.h */,
+				298B82F12878C95E00EE54B8 /* ComposeViewController.m */,
+				298B82F32878D5EA00EE54B8 /* SelectAudienceViewController.h */,
+				298B82F42878D5EA00EE54B8 /* SelectAudienceViewController.m */,
+				298B82FA2878E30F00EE54B8 /* SearchUsersViewController.h */,
+				298B82FB2878E30F00EE54B8 /* SearchUsersViewController.m */,
+				298B82FD2878E3F100EE54B8 /* ProfileViewController.h */,
+				298B82FE2878E3F100EE54B8 /* ProfileViewController.m */,
+				298B83002878EAFA00EE54B8 /* SignupViewController.h */,
+				298B83012878EAFA00EE54B8 /* SignupViewController.m */,
+				29AA84AD28887AE500C9FC1F /* CreateGroupViewController.h */,
+				29AA84AE28887AE500C9FC1F /* CreateGroupViewController.m */,
+				291787A0289089D500ACAD70 /* SpotifyViewController.h */,
+				291787A1289089D500ACAD70 /* SpotifyViewController.m */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		298B82F62878DEEC00EE54B8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				298B82F72878DF0900EE54B8 /* VWUser.h */,
+				298B82F82878DF0900EE54B8 /* VWUser.m */,
+				298B830B287CD99E00EE54B8 /* Follow.h */,
+				298B830C287CD99E00EE54B8 /* Follow.m */,
+				298B831D287E1BFA00EE54B8 /* Vent.h */,
+				298B831E287E1BFA00EE54B8 /* Vent.m */,
+				298B8320287E1C6000EE54B8 /* VentAudience.h */,
+				298B8321287E1C6000EE54B8 /* VentAudience.m */,
+				298B8323287E1CDC00EE54B8 /* GroupDetails.h */,
+				298B8324287E1CDC00EE54B8 /* GroupDetails.m */,
+				298B8326287E1D8700EE54B8 /* GroupMembership.h */,
+				298B8327287E1D8700EE54B8 /* GroupMembership.m */,
+				29B8E0A6288626E100EEFFC2 /* UserCellViewModel.h */,
+				29B8E0A7288626E100EEFFC2 /* UserCellViewModel.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		7E6EAC97CF69670635C4FEC0 /* Pods */ = {
@@ -182,6 +314,7 @@
 		DE16D2202A9222F898C735BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */,
 				894F0F1003377F1354C45F05 /* Pods_Vwitter.framework */,
 				331D1081242141322F3BA4A9 /* Pods_Vwitter_VwitterUITests.framework */,
 				3FAF62101235E35D90DEFAAC /* Pods_VwitterTests.framework */,
@@ -201,6 +334,7 @@
 				298B82AE28763A2100EE54B8 /* Frameworks */,
 				298B82AF28763A2100EE54B8 /* Resources */,
 				12CAE9F219A06B31B97B1AAD /* [CP] Embed Pods Frameworks */,
+				291787AB28908C4A00ACAD70 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -297,6 +431,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				298B8304287935F900EE54B8 /* Keys.plist in Resources */,
 				298B82C428763A2300EE54B8 /* LaunchScreen.storyboard in Resources */,
 				298B82C128763A2300EE54B8 /* Assets.xcassets in Resources */,
 				298B82BF28763A2100EE54B8 /* Main.storyboard in Resources */,
@@ -430,8 +565,27 @@
 				298B82EC2878A15D00EE54B8 /* LoginViewController.m in Sources */,
 				298B82B628763A2100EE54B8 /* AppDelegate.m in Sources */,
 				298B82C728763A2300EE54B8 /* main.m in Sources */,
+				298B8307287C9C7B00EE54B8 /* UIViewController+ErrorAlertPresenter.m in Sources */,
+				298B82F22878C95E00EE54B8 /* ComposeViewController.m in Sources */,
+				298B83022878EAFA00EE54B8 /* SignupViewController.m in Sources */,
+				298B832B28808A8E00EE54B8 /* VentCell.m in Sources */,
+				298B82FF2878E3F100EE54B8 /* ProfileViewController.m in Sources */,
+				298B8310287DFF5500EE54B8 /* AudienceMemberCell.m in Sources */,
+				298B8325287E1CDC00EE54B8 /* GroupDetails.m in Sources */,
 				298B82EF2878AF3000EE54B8 /* HomeViewController.m in Sources */,
+				298B82F52878D5EA00EE54B8 /* SelectAudienceViewController.m in Sources */,
+				29AA84AF28887AE500C9FC1F /* CreateGroupViewController.m in Sources */,
+				29B8E0A8288626E100EEFFC2 /* UserCellViewModel.m in Sources */,
 				298B82B928763A2100EE54B8 /* SceneDelegate.m in Sources */,
+				298B8328287E1D8700EE54B8 /* GroupMembership.m in Sources */,
+				298B830D287CD99E00EE54B8 /* Follow.m in Sources */,
+				298B82F92878DF0900EE54B8 /* VWUser.m in Sources */,
+				298B82FC2878E30F00EE54B8 /* SearchUsersViewController.m in Sources */,
+				298B831F287E1BFA00EE54B8 /* Vent.m in Sources */,
+				298B8322287E1C6000EE54B8 /* VentAudience.m in Sources */,
+				298B830A287CD3E000EE54B8 /* UserCell.m in Sources */,
+				29AA84B22888BC2D00C9FC1F /* GroupCell.m in Sources */,
+				291787A2289089D500ACAD70 /* SpotifyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				298B82D128763A2300EE54B8 /* VwitterTests.m in Sources */,
+				291787A3289089D500ACAD70 /* SpotifyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +604,7 @@
 			files = (
 				298B82DD28763A2300EE54B8 /* VwitterUITestsLaunchTests.m in Sources */,
 				298B82DB28763A2300EE54B8 /* VwitterUITests.m in Sources */,
+				291787A4289089D500ACAD70 /* SpotifyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +762,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vwitter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -634,6 +794,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vwitter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -661,6 +825,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
@@ -680,6 +848,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
@@ -698,6 +870,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyli.VwitterUITests;
@@ -715,6 +891,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NK59MHNWL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyli.VwitterUITests;

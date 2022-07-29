@@ -5,8 +5,9 @@
 //  Created by Christina Li on 7/6/22.
 //
 
-#import "SceneDelegate.h"
 #import <Parse/Parse.h>
+
+#import "SceneDelegate.h"
 
 @interface SceneDelegate ()
 
@@ -20,7 +21,7 @@
     if (PFUser.currentUser) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         
-        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"homeNavigationController"];
+        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
     }
 
 }

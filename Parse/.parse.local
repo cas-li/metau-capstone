@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "Vwitter": {
+      "applicationId": "kniju7zULq2flcCwJ7PEG3U8bgQlxqFMBn2NEKPH"
+    },
+    "_default": {
+      "link": "Vwitter"
+    }
+  }
+}

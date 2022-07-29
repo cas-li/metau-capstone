@@ -5,13 +5,15 @@
 //  Created by Christina Li on 7/8/22.
 //
 
-#import "LoginViewController.h"
 #import <Parse/Parse.h>
 
-@interface LoginViewController ()
+#import "LoginViewController.h"
+#import "VWUser.h"
+#import "UIViewController+ErrorAlertPresenter.h"
+
+@interface LoginViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
-@property (weak, nonatomic) NSString *defaultPlaceholder;
 
 @end
 
@@ -20,61 +22,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-
-- (void)registerUser {
-    // initialize a user object
-    PFUser *newUser = [PFUser user];
-    
-    // set user properties
-    newUser.username = self.usernameField.text;
-    newUser.password = self.passwordField.text;
-    
-    // call sign up function on the object
-    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-        } else {
-            NSLog(@"User registered successfully");
-            [self performSegueWithIdentifier:@"loginSegue" sender:nil];
-            
-            // manually segue to logged in view
-        }
-    }];
+    self.usernameField.delegate = self;
+    self.passwordField.delegate = self;
 }
 
 - (void)loginUser {
     NSString *username = self.usernameField.text;
     NSString *password = self.passwordField.text;
     
-    [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
+    __weak typeof(self) weakSelf = self;
+    [VWUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *  error) {
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) {
+            NSLog(@"I got killed!");
+            return;
+        }
         if (error != nil) {
             NSLog(@"User log in failed: %@", error.localizedDescription);
+            [strongSelf presentErrorMessageWithTitle:@"Error" message:error.localizedDescription];
         } else {
             NSLog(@"User logged in successfully");
-            [self performSegueWithIdentifier:@"loginSegue" sender:nil];
-            
-            // display view controller that needs to shown after successful login
+            [strongSelf performSegueWithIdentifier:@"loginSegue" sender:nil];
         }
     }];
-}
-
-- (IBAction)didTapSignup:(id)sender {
-    [self registerUser];
 }
 
 - (IBAction)didTapLogin:(id)sender {
     [self loginUser];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
-*/
 
 @end

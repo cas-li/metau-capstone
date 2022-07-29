@@ -6,9 +6,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SpotifyiOS/SpotifyiOS.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
+@property (strong, nonatomic) SPTAppRemote *appRemote;
 
 @end
 
