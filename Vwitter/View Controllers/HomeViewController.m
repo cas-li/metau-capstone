@@ -16,6 +16,7 @@
 #import "UIViewController+ErrorAlertPresenter.h"
 #import "VWUser.h"
 #import "VWHelpers.h"
+#import "SpotifyAPIManager.h"
 
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -36,6 +37,9 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(beginRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
+    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
+    [self.tableView addGestureRecognizer:longPressRecognizer];
     
     [self loadData];
 }
@@ -116,4 +120,31 @@
     return cell;
 }
 
+-(void)onLongPress:(UILongPressGestureRecognizer*)gestureRecognizer
+{
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
+    {
+        CGPoint p = [gestureRecognizer locationInView:self.tableView];
+
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        
+        if (indexPath == nil) {
+            NSLog(@"long press on table view but not on a row");
+        } else {
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            if (cell.isHighlighted) {
+                NSLog(@"long press on table view at section %ld row %d", (long)indexPath.section, indexPath.row);
+                Vent *currentVent = self.arrayOfVents[indexPath.row];
+                if (currentVent.trackUri != nil) {
+                    [[SpotifyAPIManager shared] playTrack:currentVent.trackUri];
+                }
+            }
+        }
+
+    }
+
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
+    {
+    }
+}
 @end

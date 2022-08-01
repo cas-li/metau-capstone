@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)shared;
 
 - (void)authorizeSpotify;
+
+- (void)playTrack:(NSString *)track;
+
 @end
 
 NS_ASSUME_NONNULL_END

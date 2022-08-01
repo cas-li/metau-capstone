@@ -6,6 +6,14 @@
 //
 
 #import "SpotifyAPIManager.h"
+#import "AppDelegate.h"
+#import "VWHelpers.h"
+
+@interface SpotifyAPIManager ()
+
+@property (nonatomic) BOOL didAuthorize;
+
+@end
 
 @implementation SpotifyAPIManager
 
@@ -40,8 +48,17 @@
     }
 }
 
-- (void)fetchSpotifyToken {
+- (void)playTrack:(NSString *)trackUri {
+    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
     
+    [appDelegate.appRemote.playerAPI play:trackUri callback:^(id  _Nullable result, NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"track playing");
+        }
+        else {
+            NSLog(@"cell track failed to play %@", error.localizedDescription);
+        }
+    }];
     
 }
 

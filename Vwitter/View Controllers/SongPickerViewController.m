@@ -33,15 +33,6 @@
     
     AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
     
-//    [appDelegate.appRemote.playerAPI play:@"1NhCTXyj2XjiUXpjpDNoaF" callback:^(id  _Nullable result, NSError * _Nullable error) {
-//        if (!error) {
-//            NSLog(@"track playing");
-//        }
-//        else {
-//            NSLog(@"track playing failed");
-//        }
-//    }];
-    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
@@ -49,37 +40,12 @@
 
     // Do any additional setup after loading the view.
     
-//    NSString *bearerToken = [[NSString alloc] initWithFormat:@"Bearer %@",@"BQAX1sqW5xZO5DXjVMOaCFJl5pxYVzPFJoM7In8qvuVSgKFSvEDsuXVczNL7Cee_7OWyYrj5Cs_pcnvKDW4ivZGQ1hDJpN3Ij9JRlbBK_9tYf0lPMXah6BoqF7iVUxcbJ-Q84QHkqy-jA3INO3u7xBfiTNa2MvO31CTAg5SHOczeErm6-kma"];
     NSString *bearerToken = [[NSString alloc] initWithFormat:@"Bearer %@", appDelegate.appRemote.connectionParameters.accessToken];
-//
-//    AFHTTPSessionManager *manager =
-//    [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.spotify.com/v1"]];
-//
-//    AFHTTPRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-//
-//    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [requestSerializer setValue:bearerToken forHTTPHeaderField:@"Authorization"];
-//
-//    manager.requestSerializer = requestSerializer;
-
-//    [manager GET:@"/search" parameters:nil success:^(NSURLSessionDataTask *operation, id responseObject) {
-//        NSLog(@"JSON: %@ ", responseObject);
-//    } failure:^(AFHTTPSessionManager *operation, NSError *error) {
-//        NSLog(@"Error: %@", error);
-//    }];
-    
-//    [manager GET:@"/search" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-//        NSLog(@"JSON: %@", responseObject);
-//    } failure:^(NSURLSessionTask *operation, NSError *error) {
-//        NSLog(@"Error: %@", error);
-//    }];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
 
     NSURL *url = [NSURL URLWithString:@"https://api.spotify.com/v1/search?q=someone%20like%20you&type=track"];
 
-//    [request setValue:@"Bearer BQC470ZJMQ9fAdGbVbgEPVdzWOIhaJJC6w-x2YMDPQ8DnsGKUqAHFGFRNftnPITx9sXe4jvajVKIegWW5EO-zVjKhOot3H3HA0HRvQDedGrtSltCd2SeBfd7zQ0XcwryREPpyGlmWipmEeGwOWxH_7P7I6P8yYxr7bEVKH8E2dvWgfs" forHTTPHeaderField:@"Authorization"];
     [request setValue:bearerToken forHTTPHeaderField:@"Authorization"];
     [request setURL:url];
 
@@ -143,6 +109,7 @@
             NSLog(@"cell track failed to play %@", error.localizedDescription);
         }
     }];
+    [self.delegate passSelectedTrack:self.selectedTrack];
 }
 
 
@@ -159,12 +126,11 @@
          
      }
  }
-
--(IBAction)unwindToCompose:(UIStoryboardSegue *)segue
-{
-    ComposeViewController *source = (ComposeViewController *)segue.sourceViewController;
-    source.selectedTrack = self.selectedTrack;
+- (IBAction)didTapDone:(id)sender {
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:YES];
 }
+
  
 
 @end

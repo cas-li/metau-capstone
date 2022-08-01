@@ -91,57 +91,34 @@
 
 }
 
-//refactor to be parse cloud function
 - (IBAction)didCreateGroup:(id)sender {
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    GroupDetails *currentGroup = [[GroupDetails alloc] initWithGroupName:self.groupNameField.text withGroupAuthor:[VWUser currentUser]];
+    NSMutableArray *groupMemberships = [NSMutableArray arrayWithArray:[self.arrayOfSelectedUserAudience allObjects]];
     
-    NSMutableArray *groupMemberships = [[NSMutableArray alloc] init];
+    NSMutableArray *groupMembershipIds = [groupMemberships valueForKey:@"objectId"];
     
     __weak typeof(self) weakSelf = self;
-    [currentGroup saveInBackgroundWithBlock: ^(BOOL succeeded, NSError * _Nullable error) {
+    [PFCloud callFunctionInBackground:@"createGroup"
+                       withParameters:@{@"authorId":[VWUser currentUser].objectId, @"groupName":self.groupNameField.text, @"groupMembershipIds":groupMembershipIds}
+                                block:^(id groups, NSError *error) {
         typeof(self) strongSelf = weakSelf;
         if (!strongSelf) {
             NSLog(@"I got killed!");
             return;
         }
-        if (succeeded) {
-            NSLog(@"group details creation succeeded!");
-            for (id groupMember in strongSelf.arrayOfSelectedUserAudience) {
-                GroupMembership *newGM = [[GroupMembership alloc] initWithUser:groupMember withGroup:currentGroup];
-                
-                [groupMemberships addObject:newGM];
-            }
-
-            [PFObject saveAllInBackground:groupMemberships block:^(BOOL succeeded, NSError * _Nullable error) {
-                if (succeeded) {
-                    NSLog(@"group memberships succeeded!");
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
-                    UINavigationController *navigationController = strongSelf.navigationController;
-                    [navigationController popViewControllerAnimated:YES];
-                }
-                else {
-                    NSLog(@"group memberships failed!");
-                    [currentGroup deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                        if (succeeded) {
-                            NSLog(@"GM error, group deleted!");
-                        }
-                        else {
-                            NSLog(@"GM error, group NOT deleted!");
-                        }
-                    }];
-                    [strongSelf dismissViewControllerAnimated:true completion:nil];
-                }
-                
-            }];
+        if (!error) {
+            [MBProgressHUD hideHUDForView:strongSelf.view animated:YES];
+            UINavigationController *navigationController = strongSelf.navigationController;
+            [navigationController popViewControllerAnimated:YES];
+            
         }
         else {
-            NSLog(@"group creation failed");
-            NSLog(@"😫😫😫 Error posting: %@", error.localizedDescription);
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [strongSelf dismissViewControllerAnimated:true completion:nil];
+            NSLog(@"there was an error with group creation, u suck");
+            [MBProgressHUD hideHUDForView:strongSelf.view animated:YES];
+            UINavigationController *navigationController = strongSelf.navigationController;
+            [navigationController popViewControllerAnimated:YES];
         }
     }];
     

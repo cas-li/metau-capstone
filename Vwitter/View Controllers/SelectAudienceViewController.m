@@ -165,7 +165,7 @@
     
     __weak typeof(self) weakSelf = self;
     [PFCloud callFunctionInBackground:@"postVent"
-                       withParameters:@{@"currentUserId":[VWUser currentUser].objectId, @"ventContent":self.ventContent, @"ventAudiencesIds":ventAudiencesIds}
+                       withParameters:@{@"currentUserId":[VWUser currentUser].objectId, @"ventContent":self.ventContent, @"ventAudiencesIds":ventAudiencesIds, @"selectedTrackUri":self.selectedTrack.uriString}
                                 block:^(id groups, NSError *error) {
         typeof(self) strongSelf = weakSelf;
         if (!strongSelf) {

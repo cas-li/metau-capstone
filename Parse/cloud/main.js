@@ -72,6 +72,12 @@ Parse.Cloud.beforeSave("Vent", async (request) => {
 Parse.Cloud.beforeSave("GroupDetails", async (request) => {
   var currentGroup = request.object;
   var groupName = await request.object.get("groupName");
+  var author = currentGroup.get("groupAuthor");
+
+  request.object.set(
+    "groupAuthorUserId",
+    author.id
+  );
 
   request.object.set(
     "searchName",
@@ -312,6 +318,7 @@ Parse.Cloud.define("postVent", async (request) => {
 
   vent.set("author", user);
   vent.set("ventContent", ventContent);
+  vent.set("trackUri", request.params.selectedTrackUri);
 
   vent.save()
   .then((vent) => {
@@ -351,6 +358,59 @@ Parse.Cloud.define("postVent", async (request) => {
     ventAudienceArray.push(ventAudience);
   }
   Parse.Object.saveAll(ventAudienceArray);
+
+  return;
+});
+
+Parse.Cloud.define("createGroup", async (request) => {
+  const Group = Parse.Object.extend("GroupDetails");
+  const group = new Group();
+  const authorId = request.params.authorId;
+  var groupMembershipIds = request.params.groupMembershipIds;
+  var groupName = request.params.groupName;
+
+  const userQuery = new Parse.Query("User");
+  userQuery.equalTo("objectId", authorId);
+  const user = await userQuery.first();
+
+  if (user == undefined) {
+    return;
+  }
+
+  group.set("groupAuthor", user);
+  group.set("groupName", groupName);
+
+  group.save()
+  .then((group) => {
+  }, (error) => {
+    alert('Failed to create new object, with error code: ' + error.message);
+    return;
+  });
+
+  var groupMembershipArray = [];
+  for (var i = 0; i < groupMembershipIds.length; i++) {
+    let currentMembershipId = groupMembershipIds[i];
+
+    const GroupMembership = Parse.Object.extend("GroupMembership");
+    const groupMembership = new GroupMembership();
+
+    const userQuery = new Parse.Query("User");
+    userQuery.equalTo("objectId", currentMembershipId);
+    const user = await userQuery.first();
+
+    groupMembership.set("group", group);
+
+    if (user !== undefined) {
+      groupMembership.set("user", user);
+    }
+    else {
+      console.log("not a user");
+      continue;
+    }
+
+    groupMembershipArray.push(groupMembership);
+  }
+  Parse.Object.saveAll(groupMembershipArray);
 
   return;
 });
