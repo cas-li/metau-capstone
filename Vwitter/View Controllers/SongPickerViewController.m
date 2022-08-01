@@ -5,24 +5,27 @@
 //  Created by Christina Li on 7/28/22.
 //
 
-#import "SongPickerViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/AFHTTPSessionManager.h>
 #import <AFNetworking/AFURLRequestSerialization.h>
 #import <AFNetworking/AFHTTPSessionManager.h>
+#import <SpotifyiOS/SpotifyiOS.h>
 
+#import "SongPickerViewController.h"
 #import "SpotifyTrack.h"
 #import "TrackCell.h"
 #import "VWHelpers.h"
 #import "ComposeViewController.h"
 #import "AppDelegate.h"
-#import <SpotifyiOS/SpotifyiOS.h>
+#import "SpotifyAPIManager.h"
 
-@interface SongPickerViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@interface SongPickerViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *arrayOfTracks;
 @property (strong, nonatomic) SpotifyTrack *selectedTrack;
 @property (strong, nonatomic) NSNumber *selectedTrackRow;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -31,46 +34,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
-    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
     self.tableView.allowsMultipleSelection = NO;
-
-    // Do any additional setup after loading the view.
     
-    NSString *bearerToken = [[NSString alloc] initWithFormat:@"Bearer %@", appDelegate.appRemote.connectionParameters.accessToken];
+    [self getSearchResults:@"ur mom"];
+    [self.tableView reloadData];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    self.searchBar.delegate = self;
 
-    NSURL *url = [NSURL URLWithString:@"https://api.spotify.com/v1/search?q=someone%20like%20you&type=track"];
+}
 
-    [request setValue:bearerToken forHTTPHeaderField:@"Authorization"];
-    [request setURL:url];
-
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-      [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (!error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            // JSON with song is here
-            NSLog(@"JSON: %@", json);
-            NSArray *tracksArray = json[@"tracks"][@"items"];
-            NSArray *castedTracksArray = CAST_TO_CLASS_OR_NIL(tracksArray, NSArray);
-            NSMutableArray *spotifyTracksArray = [[NSMutableArray alloc] init];
-            for (id track in castedTracksArray) {
-                SpotifyTrack *currentTrack = [[SpotifyTrack alloc] initWithDictionary:track];
-                [spotifyTracksArray addObject:currentTrack];
+- (void)getSearchResults:(NSString *)searchString {
+    __weak typeof(self) weakSelf = self;
+    [[SpotifyAPIManager shared] getTracks:searchString withCompletion:^(NSMutableArray * _Nullable results, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            typeof(self) strongSelf = weakSelf;
+            if (!strongSelf) {
+                NSLog(@"I got killed!");
+                return;
             }
-            self.arrayOfTracks = spotifyTracksArray;
-
-            [self.tableView reloadData];
-            });
-            
-        }
-    }] resume];
-
+            if (results) {
+                strongSelf.arrayOfTracks = results;
+                [strongSelf.tableView reloadData];
+            }
+            else {
+                NSLog(@"there was an error, u suck %@", error.localizedDescription);
+            }
+        });
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -99,16 +92,7 @@
     self.selectedTrack = self.arrayOfTracks[indexPath.row];
     self.selectedTrackRow = [NSNumber numberWithLong:indexPath.row];
     
-    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
-    
-    [appDelegate.appRemote.playerAPI play:self.selectedTrack.uriString callback:^(id  _Nullable result, NSError * _Nullable error) {
-        if (!error) {
-            NSLog(@"track playing");
-        }
-        else {
-            NSLog(@"cell track failed to play %@", error.localizedDescription);
-        }
-    }];
+    [[SpotifyAPIManager shared] playTrack:self.selectedTrack.uriString];
     [self.delegate passSelectedTrack:self.selectedTrack];
 }
 
@@ -130,6 +114,11 @@
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:YES];
 }
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self getSearchResults:searchText];
+}
+    
 
  
 

@@ -16,6 +16,8 @@
 @interface ComposeViewController () <UITextViewDelegate, SongPickerViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *ventContent;
 @property (strong, nonatomic) NSString *placeholderText;
+@property (weak, nonatomic) IBOutlet UILabel *songTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *songTitleContainerView;
 
 @end
 
@@ -30,6 +32,43 @@
     
     self.ventContent.placeholder = self.placeholderText;
     self.ventContent.placeholderColor = [UIColor lightGrayColor];
+    
+    self.songTitleContainerView.clipsToBounds = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.songTitleLabel.frame = CGRectMake(
+        0 - self.songTitleContainerView.frame.size.width, // x
+        self.songTitleLabel.frame.origin.y, // y
+        self.songTitleLabel.frame.size.width, // width
+        self.songTitleLabel.frame.size.height // height
+    );
+}
+
+- (void)animateTitle {
+    self.songTitleLabel.frame = CGRectMake(
+        0 - self.songTitleContainerView.frame.size.width, // x
+        self.songTitleLabel.frame.origin.y, // y
+        self.songTitleLabel.frame.size.width, // width
+        self.songTitleLabel.frame.size.height // height
+    );
+    [UIView animateWithDuration:3.0f delay:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
+        self.songTitleLabel.frame = CGRectMake(
+            self.songTitleContainerView.frame.size.width, // x
+            self.songTitleLabel.frame.origin.y, // y
+            self.songTitleLabel.frame.size.width, // width
+            self.songTitleLabel.frame.size.height // height
+        );
+    } completion:^(BOOL finished) {
+        [self animateTitle];
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self animateTitle];
 }
 
 - (IBAction)didTapClose:(id)sender {

@@ -9,6 +9,7 @@
 #import <SpotifyiOS/SpotifyiOS.h>
 
 NS_ASSUME_NONNULL_BEGIN
+typedef void (^SpotifyTrackCompletion)(NSMutableArray *_Nullable results, NSError *_Nullable error);
 
 @interface SpotifyAPIManager : NSObject
 
@@ -19,6 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)authorizeSpotify;
 
 - (void)playTrack:(NSString *)track;
+
+- (void)pause;
+
+- (void)getTracks:(NSString *)searchString withCompletion:(SpotifyTrackCompletion)completion;
 
 @end
 

@@ -321,15 +321,35 @@
                                     <segue destination="fwB-Zx-hYG" kind="show" identifier="songPickerSegue" id="DRn-lU-88O"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7pf-nj-eaI">
+                                <rect key="frame" x="84" y="752" width="226" height="39"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCg-yz-DZT">
+                                        <rect key="frame" x="0.0" y="9" width="226" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="lCg-yz-DZT" firstAttribute="centerY" secondItem="7pf-nj-eaI" secondAttribute="centerY" id="Dff-GW-Q21"/>
+                                    <constraint firstAttribute="height" constant="39" id="sD2-S0-opI"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7Gd-3w-8oI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="7Gd-3w-8oI" firstAttribute="bottom" secondItem="7pf-nj-eaI" secondAttribute="bottom" constant="22" id="3Kg-N4-TdW"/>
+                            <constraint firstItem="7pf-nj-eaI" firstAttribute="leading" secondItem="niK-Pu-IGm" secondAttribute="trailing" constant="8" symbolic="YES" id="A5z-aF-RI2"/>
+                            <constraint firstItem="ekF-sl-A46" firstAttribute="leading" secondItem="7pf-nj-eaI" secondAttribute="trailing" constant="8" symbolic="YES" id="B28-Gq-48P"/>
                             <constraint firstItem="niK-Pu-IGm" firstAttribute="leading" secondItem="7Gd-3w-8oI" secondAttribute="leading" constant="20" id="DQ7-1Y-Mc4"/>
                             <constraint firstItem="DM7-4V-YAZ" firstAttribute="top" secondItem="7Gd-3w-8oI" secondAttribute="top" constant="26" id="IL9-gG-gSQ"/>
                             <constraint firstItem="7Gd-3w-8oI" firstAttribute="trailing" secondItem="DM7-4V-YAZ" secondAttribute="trailing" constant="20" id="LE1-yn-pSi"/>
                             <constraint firstItem="ekF-sl-A46" firstAttribute="top" secondItem="niK-Pu-IGm" secondAttribute="top" id="MUx-z2-Ydd"/>
                             <constraint firstItem="7Gd-3w-8oI" firstAttribute="bottom" secondItem="ekF-sl-A46" secondAttribute="bottom" constant="34" id="YYL-Yg-3cH"/>
+                            <constraint firstItem="7pf-nj-eaI" firstAttribute="top" secondItem="DM7-4V-YAZ" secondAttribute="bottom" constant="44" id="bbd-Ul-BaK"/>
                             <constraint firstItem="7Gd-3w-8oI" firstAttribute="trailing" secondItem="ekF-sl-A46" secondAttribute="trailing" constant="11" id="fXg-MB-qyo"/>
                             <constraint firstItem="ekF-sl-A46" firstAttribute="top" secondItem="DM7-4V-YAZ" secondAttribute="bottom" constant="40" id="oZr-tP-bZo"/>
                             <constraint firstItem="DM7-4V-YAZ" firstAttribute="leading" secondItem="7Gd-3w-8oI" secondAttribute="leading" constant="20" id="uJp-xF-H54"/>
@@ -349,12 +369,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="songTitleContainerView" destination="7pf-nj-eaI" id="0PA-Ow-FzU"/>
+                        <outlet property="songTitleLabel" destination="lCg-yz-DZT" id="ZC9-ZW-YXY"/>
                         <outlet property="ventContent" destination="DM7-4V-YAZ" id="Qxv-ip-FTc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="buJ-Dd-gUa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5436.231884057971" y="155.35714285714286"/>
+            <point key="canvasLocation" x="5434.7826086956529" y="155.35714285714286"/>
         </scene>
         <!--Song Picker View Controller-->
         <scene sceneID="myu-3S-koY">
@@ -430,6 +452,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="TwH-fk-jFk" id="32t-Ib-om4"/>
                         <outlet property="tableView" destination="mcI-g4-nWs" id="Rxq-GG-I9y"/>
                     </connections>
                 </viewController>

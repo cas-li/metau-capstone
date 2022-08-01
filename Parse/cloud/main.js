@@ -72,7 +72,7 @@ Parse.Cloud.beforeSave("Vent", async (request) => {
 Parse.Cloud.beforeSave("GroupDetails", async (request) => {
   var currentGroup = request.object;
   var groupName = await request.object.get("groupName");
-  var author = currentGroup.get("groupAuthor");
+  var author = await currentGroup.get("groupAuthor");
 
   request.object.set(
     "groupAuthorUserId",

@@ -145,6 +145,7 @@
 
     if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
     {
+        [[SpotifyAPIManager shared] pause];
     }
 }
 @end

@@ -35,13 +35,7 @@ static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
     }];
 
     [Parse initializeWithConfiguration:config];
-    
-//    NSString *_Nullable previouslySavedAccessToken = CAST_TO_CLASS_OR_NIL([NSUserDefaults.standardUserDefaults objectForKey:@"spotify_token"], NSString);
-//    if (previouslySavedAccessToken) {
-//        // user previously authenticated with spotify
-//        self.appRemote.connectionParameters.accessToken = previouslySavedAccessToken;
-//    }
-    
+
     // init app remote
     SpotifyAPIManager *spotifyAPIManager = [[SpotifyAPIManager alloc] init];
     [spotifyAPIManager authorizeSpotify];
@@ -52,29 +46,7 @@ static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
     self.appRemote = [[SPTAppRemote alloc] initWithConfiguration:configuration logLevel:SPTAppRemoteLogLevelDebug];
 
     BOOL spotifyInstalled = [self.appRemote authorizeAndPlayURI:@"spotify:artist:2YZyLoL8N0Wb9xBt1NhZWg"];
-//    if (!spotifyInstalled) {
-//        /*
-//        * The Spotify app is not installed.
-//        * Use SKStoreProductViewController with [SPTAppRemote spotifyItunesItemIdentifier] to present the user
-//        * with a way to install the Spotify app.
-//        */
-//        NSString *adjustUrl = @"https://app.adjust.com/bdyga9?campaign=com.cyli.Vwitter";
-//        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:adjustUrl]];
-//        [request setValue:@"spotify_campaign_user_agent" forHTTPHeaderField:@"User-Agent"];
-//
-//        [[[NSURLSession sharedSession] dataTaskWithRequest:request
-//                                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//        }] resume];
-//
-//        NSString *url = @"https://itunes.apple.com/app/spotify-music/id324684580?mt=8";
-//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
-//            if (success) {
-//                NSLog(@"Opened app store url");
-//            }
-//        }];
-//
-//    }
-    
+
     return YES;
 }
 

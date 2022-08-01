@@ -8,6 +8,7 @@
 #import "SpotifyAPIManager.h"
 #import "AppDelegate.h"
 #import "VWHelpers.h"
+#import "SpotifyTrack.h"
 
 @interface SpotifyAPIManager ()
 
@@ -59,7 +60,63 @@
             NSLog(@"cell track failed to play %@", error.localizedDescription);
         }
     }];
+}
+
+- (void)pause {
+    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
     
+    [appDelegate.appRemote.playerAPI pause:^(id  _Nullable result, NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"track paused");
+
+        }
+        else {
+            NSLog(@"track not paused, %@", error.localizedDescription);
+        }
+    }];
+    
+}
+
+- (void)getTracks:(NSString *)searchString withCompletion:(SpotifyTrackCompletion)completion {
+    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
+    
+    NSString *bearerToken = [[NSString alloc] initWithFormat:@"Bearer %@", appDelegate.appRemote.connectionParameters.accessToken];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    
+    NSString *convertedSearchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", @"https://api.spotify.com/v1/search?q=", convertedSearchString, @"&type=track"];
+    NSURL *url = [NSURL URLWithString:urlString];
+
+    [request setValue:bearerToken forHTTPHeaderField:@"Authorization"];
+    [request setURL:url];
+
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+      [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            NSMutableArray *spotifyTracksArray = [[NSMutableArray alloc] init];
+            
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            // JSON with song is here
+            NSLog(@"JSON: %@", json);
+            NSArray *tracksArray = json[@"tracks"][@"items"];
+            NSArray *castedTracksArray = CAST_TO_CLASS_OR_NIL(tracksArray, NSArray);
+            
+            for (id track in castedTracksArray) {
+                SpotifyTrack *currentTrack = [[SpotifyTrack alloc] initWithDictionary:track];
+                [spotifyTracksArray addObject:currentTrack];
+            }
+            
+            completion(spotifyTracksArray, nil);
+            
+        }
+        else {
+            NSLog(@"searching tracks had an error %@", error.localizedDescription);
+            completion(nil, error);
+        }
+    }] resume];
+
 }
 
 
