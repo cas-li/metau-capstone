@@ -34,6 +34,7 @@
     self.ventContent.placeholderColor = [UIColor lightGrayColor];
     
     self.songTitleContainerView.clipsToBounds = YES;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -54,7 +55,7 @@
         self.songTitleLabel.frame.size.width, // width
         self.songTitleLabel.frame.size.height // height
     );
-    [UIView animateWithDuration:3.0f delay:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:5.0f delay:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
         self.songTitleLabel.frame = CGRectMake(
             self.songTitleContainerView.frame.size.width, // x
             self.songTitleLabel.frame.origin.y, // y
@@ -108,6 +109,7 @@
 
 - (void)passSelectedTrack:(SpotifyTrack *)selectedTrack {
     self.selectedTrack = selectedTrack;
+    self.songTitleLabel.text = selectedTrack.trackName;
 }
 
 

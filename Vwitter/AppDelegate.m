@@ -9,7 +9,6 @@
 
 #import "AppDelegate.h"
 #import "VWHelpers.h"
-#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import "SpotifyAPIManager.h"
 
 static NSString * const SpotifyClientID = @"e4185723643e4db9bcf48af28e078cff";

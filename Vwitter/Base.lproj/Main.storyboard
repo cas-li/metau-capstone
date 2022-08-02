@@ -324,8 +324,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7pf-nj-eaI">
                                 <rect key="frame" x="84" y="752" width="226" height="39"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCg-yz-DZT">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCg-yz-DZT">
                                         <rect key="frame" x="0.0" y="9" width="226" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="226" id="7ZY-an-lx1"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -333,6 +336,7 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstItem="lCg-yz-DZT" firstAttribute="centerX" secondItem="7pf-nj-eaI" secondAttribute="centerX" id="9dm-Bz-X8N"/>
                                     <constraint firstItem="lCg-yz-DZT" firstAttribute="centerY" secondItem="7pf-nj-eaI" secondAttribute="centerY" id="Dff-GW-Q21"/>
                                     <constraint firstAttribute="height" constant="39" id="sD2-S0-opI"/>
                                 </constraints>

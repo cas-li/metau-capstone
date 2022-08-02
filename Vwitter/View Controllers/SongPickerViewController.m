@@ -5,10 +5,6 @@
 //  Created by Christina Li on 7/28/22.
 //
 
-#import <AFNetworking/AFNetworking.h>
-#import <AFNetworking/AFHTTPSessionManager.h>
-#import <AFNetworking/AFURLRequestSerialization.h>
-#import <AFNetworking/AFHTTPSessionManager.h>
 #import <SpotifyiOS/SpotifyiOS.h>
 
 #import "SongPickerViewController.h"
