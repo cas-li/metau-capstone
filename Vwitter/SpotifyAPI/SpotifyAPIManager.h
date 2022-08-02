@@ -11,9 +11,11 @@
 NS_ASSUME_NONNULL_BEGIN
 typedef void (^SpotifyTrackCompletion)(NSMutableArray *_Nullable results, NSError *_Nullable error);
 
-@interface SpotifyAPIManager : NSObject
+@interface SpotifyAPIManager : NSObject <SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate>
 
 @property (nonatomic) SPTSessionManager *sessionManager;
+@property (strong, nonatomic) SPTAppRemote *appRemote;
+
 
 + (instancetype)shared;
 

@@ -10,6 +10,9 @@
 #import "VWHelpers.h"
 #import "SpotifyTrack.h"
 
+static NSString * const SpotifyClientID = @"e4185723643e4db9bcf48af28e078cff";
+static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
+
 @interface SpotifyAPIManager ()
 
 @property (nonatomic) BOOL didAuthorize;
@@ -28,6 +31,7 @@
 }
 
 - (void)authorizeSpotify {
+    
     /*
      Scopes let you specify exactly what types of data your application wants to
      access, and the set of scopes you pass in your call determines what access
@@ -47,12 +51,24 @@
         // Use this on iOS versions < 11 to use SFSafariViewController
         NSLog(@"iOS version too old");
     }
+    
+    SPTConfiguration *configuration =
+        [[SPTConfiguration alloc] initWithClientID:SpotifyClientID redirectURL:[NSURL URLWithString:SpotifyRedirectURLString]];
+
+    self.appRemote = [[SPTAppRemote alloc] initWithConfiguration:configuration logLevel:SPTAppRemoteLogLevelDebug];
+
+    BOOL spotifyInstalled = [self.appRemote authorizeAndPlayURI:@"spotify:artist:2YZyLoL8N0Wb9xBt1NhZWg"];
+    
+    self.didAuthorize = YES;
+    
 }
 
 - (void)playTrack:(NSString *)trackUri {
-    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
+    if (!self.didAuthorize) {
+        [self authorizeSpotify];
+    }
     
-    [appDelegate.appRemote.playerAPI play:trackUri callback:^(id  _Nullable result, NSError * _Nullable error) {
+    [self.appRemote.playerAPI play:trackUri callback:^(id  _Nullable result, NSError * _Nullable error) {
         if (!error) {
             NSLog(@"track playing");
         }
@@ -63,9 +79,8 @@
 }
 
 - (void)pause {
-    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
     
-    [appDelegate.appRemote.playerAPI pause:^(id  _Nullable result, NSError * _Nullable error) {
+    [self.appRemote.playerAPI pause:^(id  _Nullable result, NSError * _Nullable error) {
         if (!error) {
             NSLog(@"track paused");
 
@@ -78,9 +93,11 @@
 }
 
 - (void)getTracks:(NSString *)searchString withCompletion:(SpotifyTrackCompletion)completion {
-    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
+    if (!self.didAuthorize) {
+        [self authorizeSpotify];
+    }
     
-    NSString *bearerToken = [[NSString alloc] initWithFormat:@"Bearer %@", appDelegate.appRemote.connectionParameters.accessToken];
+    NSString *bearerToken = [[NSString alloc] initWithFormat:@"Bearer %@", self.appRemote.connectionParameters.accessToken];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     
@@ -117,6 +134,33 @@
         }
     }] resume];
 
+}
+
+- (void)appRemote:(nonnull SPTAppRemote *)appRemote didDisconnectWithError:(nullable NSError *)error {
+    NSLog(@"disconnected: %@", error.localizedDescription);
+}
+
+- (void)appRemote:(nonnull SPTAppRemote *)appRemote didFailConnectionAttemptWithError:(nullable NSError *)error {
+    NSLog(@"connection failed: %@", error.localizedDescription);
+}
+
+- (void)appRemoteDidEstablishConnection:(nonnull SPTAppRemote *)appRemote {
+    NSLog(@"connected");
+    self.appRemote.playerAPI.delegate = self;
+    [self.appRemote.playerAPI subscribeToPlayerState:^(id  _Nullable result, NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"subscribed to player state");
+        }
+        else {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+    }];
+}
+
+
+- (void)playerStateDidChange:(nonnull id<SPTAppRemotePlayerState>)playerState {
+    NSLog(@"player state changed");
+    NSLog(@"Track name: %@", playerState.track.name);
 }
 
 

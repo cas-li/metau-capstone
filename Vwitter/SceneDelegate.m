@@ -11,6 +11,7 @@
 #import "SceneDelegate.h"
 #import "AppDelegate.h"
 #import "VWHelpers.h"
+#import "SpotifyAPIManager.h"
 
 @interface SceneDelegate ()
 
@@ -28,7 +29,6 @@
     }
 
 }
-
 
 - (void)sceneDidDisconnect:(UIScene *)scene {
     // Called as the scene is being released by the system.
@@ -55,12 +55,12 @@
     NSLog(@"scene delegate open URL getting called");
     NSURL *url = [[URLContexts allObjects] firstObject].URL;
     
-    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
+    SpotifyAPIManager *spotifyAPIManager = CAST_TO_CLASS_OR_NIL([SpotifyAPIManager shared], SpotifyAPIManager);
     
-    NSDictionary *params = [appDelegate.appRemote authorizationParametersFromURL:url];
+    NSDictionary *params = [spotifyAPIManager.appRemote authorizationParametersFromURL:url];
     NSString *token = params[SPTAppRemoteAccessTokenKey];
     if (token) {
-        appDelegate.appRemote.connectionParameters.accessToken = token;
+        spotifyAPIManager.appRemote.connectionParameters.accessToken = token;
         
         // save the token if needed
         [NSUserDefaults.standardUserDefaults setObject:token forKey:@"spotify_token"];
@@ -72,22 +72,14 @@
 }
 
 - (void)sceneDidBecomeActive:(UIScene *)scene {
-    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
-    if (appDelegate.appRemote.connectionParameters.accessToken) {
+    SpotifyAPIManager *spotifyAPIManager = CAST_TO_CLASS_OR_NIL([SpotifyAPIManager shared], SpotifyAPIManager);
+    if (spotifyAPIManager.appRemote.connectionParameters.accessToken) {
         NSLog(@"app remote connected");
-        [appDelegate.appRemote connect];
+        [spotifyAPIManager.appRemote connect];
     }
     else {
         NSLog(@"cannot connect, no accesstoken");
     }
 }
-
-//- (void)sceneWillResignActive:(UIScene *)scene {
-//    AppDelegate *appDelegate = CAST_TO_CLASS_OR_NIL(UIApplication.sharedApplication.delegate, AppDelegate);
-//    if (appDelegate.appRemote.isConnected) {
-//        NSLog(@"appRemote disconnected");
-//        [appDelegate.appRemote disconnect];
-//    }
-//}
 
 @end

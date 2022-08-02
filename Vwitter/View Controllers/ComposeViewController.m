@@ -10,6 +10,7 @@
 #import "SelectAudienceViewController.h"
 #import "SongPickerViewController.h"
 #import "VWHelpers.h"
+#import "SpotifyAPIManager.h"
 
 @import UITextView_Placeholder;
 
@@ -48,32 +49,42 @@
     );
 }
 
-- (void)animateTitle {
-    self.songTitleLabel.frame = CGRectMake(
-        0 - self.songTitleContainerView.frame.size.width, // x
-        self.songTitleLabel.frame.origin.y, // y
-        self.songTitleLabel.frame.size.width, // width
-        self.songTitleLabel.frame.size.height // height
-    );
-    [UIView animateWithDuration:5.0f delay:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self fadeAnimation];
+    [UIView animateWithDuration:5.0f delay:0.0f options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionRepeat | UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.songTitleLabel.frame = CGRectMake(
             self.songTitleContainerView.frame.size.width, // x
             self.songTitleLabel.frame.origin.y, // y
             self.songTitleLabel.frame.size.width, // width
             self.songTitleLabel.frame.size.height // height
         );
+
     } completion:^(BOOL finished) {
-        [self animateTitle];
+
     }];
+    
+
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self animateTitle];
+- (void)fadeAnimation {
+    
+    self.songTitleLabel.alpha = 0;
+    [UIView animateWithDuration:2.5f animations:^(void) {
+        self.songTitleLabel.alpha = 1;
+    }
+    completion:^(BOOL finished){
+       [UIView animateWithDuration:2.5f animations:^(void) {
+        self.songTitleLabel.alpha = 0;
+       } completion:^(BOOL finished) {
+            [self fadeAnimation];
+       }];
+    }];
+    
 }
-
 - (IBAction)didTapClose:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
+    [[SpotifyAPIManager shared] pause];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
