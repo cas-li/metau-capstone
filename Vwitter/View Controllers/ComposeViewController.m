@@ -38,6 +38,31 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.songTitleLabel sizeToFit];
+    [self setSongTitleLabelX:0 - self.songTitleLabel.frame.size.width];
+}
+
+- (void)animate {
+    [self.songTitleLabel sizeToFit];
+    [self setSongTitleLabelX:0 - self.songTitleLabel.frame.size.width];
+    
+    [UIView animateWithDuration:5.0f delay:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
+        self.songTitleLabel.frame = CGRectMake(
+            self.songTitleContainerView.frame.size.width, // x
+            self.songTitleLabel.frame.origin.y, // y
+            self.songTitleLabel.frame.size.width, // width
+            self.songTitleLabel.frame.size.height // height
+        );
+
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self animate];
+        }
+    }];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -55,19 +80,7 @@
     [leftGradient setEndPoint:CGPointMake(0.0, 0.05)];
     [self.songTitleContainerView.layer addSublayer:leftGradient];
     
-    [UIView animateWithDuration:5.0f delay:0.0f options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionRepeat | UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.songTitleLabel.frame = CGRectMake(
-            self.songTitleContainerView.frame.size.width, // x
-            self.songTitleLabel.frame.origin.y, // y
-            self.songTitleLabel.frame.size.width, // width
-            self.songTitleLabel.frame.size.height // height
-        );
-
-    } completion:^(BOOL finished) {
-
-    }];
-    
-
+    [self animate];
 }
 
 - (IBAction)didTapClose:(id)sender {
@@ -106,9 +119,22 @@
     }
 }
 
+- (void)setSongTitleLabelX:(CGFloat)x {
+    self.songTitleLabel.frame = CGRectMake(
+        x, // x
+        self.songTitleLabel.frame.origin.y, // y
+        self.songTitleLabel.frame.size.width, // width
+        self.songTitleLabel.frame.size.height // height
+    );
+    
+}
+
 - (void)passSelectedTrack:(SpotifyTrack *)selectedTrack {
     self.selectedTrack = selectedTrack;
     self.songTitleLabel.text = selectedTrack.trackName;
+    [self.songTitleLabel sizeToFit];
+    [self setSongTitleLabelX:0 - self.songTitleLabel.frame.size.width];
+    
 }
 
 
