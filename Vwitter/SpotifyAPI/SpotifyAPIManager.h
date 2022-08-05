@@ -16,10 +16,9 @@ typedef void (^SpotifyTrackCompletion)(NSMutableArray *_Nullable results, NSErro
 @property (nonatomic) SPTSessionManager *sessionManager;
 @property (strong, nonatomic) SPTAppRemote *appRemote;
 
+- (void)didAuthorizeWithSpotify:(NSString *)accessToken expiresInSeconds:(NSNumber *)expiresInSeconds;
 
 + (instancetype)shared;
-
-- (void)authorizeSpotify;
 
 - (void)playTrack:(NSString *)track;
 

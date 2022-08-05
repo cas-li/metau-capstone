@@ -14,8 +14,9 @@
 #import "SpotifyAPIManager.h"
 
 @interface SceneDelegate ()
-
 @end
+
+static NSString *kExpiresInKey = @"expires_in";
 
 @implementation SceneDelegate
 
@@ -60,13 +61,14 @@
     SpotifyAPIManager *spotifyAPIManager = CAST_TO_CLASS_OR_NIL([SpotifyAPIManager shared], SpotifyAPIManager);
     
     NSDictionary *params = [spotifyAPIManager.appRemote authorizationParametersFromURL:url];
-    NSString *token = params[SPTAppRemoteAccessTokenKey];
-    if (token) {
-        spotifyAPIManager.appRemote.connectionParameters.accessToken = token;
-        
-        // save the token if needed
-        [NSUserDefaults.standardUserDefaults setObject:token forKey:@"spotify_token"];
-        
+    NSString *_Nullable token = CAST_TO_CLASS_OR_NIL(params[SPTAppRemoteAccessTokenKey], NSString);
+    NSString *_Nullable expirationString = CAST_TO_CLASS_OR_NIL(params[kExpiresInKey], NSString);
+    NSNumber *_Nullable expiration = nil;
+    if (expirationString) {
+        expiration = @(expirationString.doubleValue);
+    }
+    if (token && expiration) {
+        [spotifyAPIManager didAuthorizeWithSpotify:token expiresInSeconds:expiration];
     } else if (params[SPTAppRemoteErrorDescriptionKey]) {
         NSLog(@"%@", params[SPTAppRemoteErrorDescriptionKey]);
     }

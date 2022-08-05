@@ -15,11 +15,14 @@ static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
 
 @interface SpotifyAPIManager ()
 
-@property (nonatomic) BOOL didAuthorize;
+@property (strong, nonatomic, nullable) NSString *accessToken;
+@property (strong, nonatomic, nullable) NSNumber *accessTokenExpirationTimestampSeconds;
 
 @end
 
 @implementation SpotifyAPIManager
+
+static NSString *const kExpirationKey = @"spotify_expires_timestamp";
 
 + (instancetype)shared {
     static SpotifyAPIManager *sharedManager = nil;
@@ -30,8 +33,20 @@ static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
     return sharedManager;
 }
 
-- (void)authorizeSpotify {
-    
+- (void)didAuthorizeWithSpotify:(NSString *)accessToken expiresInSeconds:(NSNumber *)expiresInSeconds {
+    self.accessToken = accessToken;
+    self.accessTokenExpirationTimestampSeconds = @(NSDate.date.timeIntervalSince1970 + expiresInSeconds.doubleValue);
+    self.appRemote.connectionParameters.accessToken = accessToken;
+}
+
+- (BOOL)hasValidSpotifyAuthorization {
+    NSTimeInterval timestampSeconds = NSDate.date.timeIntervalSince1970;
+    return (self.accessToken != nil
+            && self.accessTokenExpirationTimestampSeconds != nil
+            && self.accessTokenExpirationTimestampSeconds.doubleValue > timestampSeconds);
+}
+
+- (void)setupAppRemote {
     /*
      Scopes let you specify exactly what types of data your application wants to
      access, and the set of scopes you pass in your call determines what access
@@ -56,16 +71,20 @@ static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
         [[SPTConfiguration alloc] initWithClientID:SpotifyClientID redirectURL:[NSURL URLWithString:SpotifyRedirectURLString]];
 
     self.appRemote = [[SPTAppRemote alloc] initWithConfiguration:configuration logLevel:SPTAppRemoteLogLevelDebug];
+}
 
-    BOOL spotifyInstalled = [self.appRemote authorizeAndPlayURI:@"spotify:artist:2YZyLoL8N0Wb9xBt1NhZWg"];
-    
-    self.didAuthorize = YES;
-    
+- (void)authorizeSpotify {
+    [self setupAppRemote];
+    [self.appRemote authorizeAndPlayURI:@"spotify:artist:2YZyLoL8N0Wb9xBt1NhZWg"];
 }
 
 - (void)playTrack:(NSString *)trackUri {
-    if (!self.didAuthorize) {
+    if (!self.hasValidSpotifyAuthorization) {
         [self authorizeSpotify];
+    }
+    
+    if (!self.appRemote.playerAPI) {
+        [self.appRemote connect];
     }
     
     [self.appRemote.playerAPI play:trackUri callback:^(id  _Nullable result, NSError * _Nullable error) {
@@ -93,7 +112,7 @@ static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
 }
 
 - (void)getTracks:(NSString *)searchString withCompletion:(SpotifyTrackCompletion)completion {
-    if (!self.didAuthorize) {
+    if (!self.hasValidSpotifyAuthorization) {
         [self authorizeSpotify];
     }
     
