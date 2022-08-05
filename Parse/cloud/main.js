@@ -301,58 +301,6 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
   return results;
 });
 
-Parse.Cloud.define("toggleFollowStatus", async (request) => {
-
-  var currentUserId = request.params.currentUserId;
-  var followingUserId = request.params.followingUserId;
-
-  var followQuery = new Parse.Query("Follow");
-
-  followQuery.equalTo("followingUserId", followingUserId);
-  followQuery.equalTo("currentUserId", currentUserId);
-
-  const followResult = await followQuery.find();
-
-  if (request.params.searchString !== undefined) {
-    var sortedItems = sortWithSearchString(searchItemResult, request.params.searchString.toLowerCase());
-  }
-  else {
-    var sortedItems = searchItemResult;
-  }
-
-  for (let i = 0; i < sortedItems.length; i++) {
-    var item = sortedItems[i];
-    var group = await item.get("group");
-    var user = await item.get("user");
-    if (group !== undefined) {
-      if (group.get("groupAuthor").id == currentUserId) {
-        results.push(group);
-      }
-      continue;
-    }
-    if (user !== undefined) {
-      var followQuery = new Parse.Query("Follow");
-      followQuery.equalTo("followingUserId", user.id);
-      followQuery.equalTo("currentUserId", currentUserId);
-      const followResult = await followQuery.find();
-      if (followResult.length > 0) {
-        var modelDict = {"isFollowing": true,
-                      "user": user};
-        results.push(modelDict);
-      }
-      else {
-        var modelDict = {"isFollowing": false,
-                      "user": user};
-        results.push(modelDict);
-      }
-    }
-
-  }
-
-  return results;
-});
-
-
 Parse.Cloud.define("postVent", async (request) => {
   const Vent = Parse.Object.extend("Vent");
   const vent = new Vent();
@@ -371,6 +319,8 @@ Parse.Cloud.define("postVent", async (request) => {
   vent.set("author", user);
   vent.set("ventContent", ventContent);
   vent.set("trackUri", request.params.selectedTrackUri);
+  vent.set("startTimestamp", request.params.startTimestamp);
+  vent.set("endTimestamp", request.params.endTimestamp);
 
   vent.save()
   .then((vent) => {

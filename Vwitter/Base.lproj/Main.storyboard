@@ -443,7 +443,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Done"/>
                                 <connections>
-                                    <action selector="didTapDone:" destination="fwB-Zx-hYG" eventType="touchUpInside" id="Yp6-5z-Jed"/>
+                                    <segue destination="fhx-LB-dnj" kind="show" identifier="segmentPickerSegue" id="3l7-kA-RBI"/>
                                 </connections>
                             </button>
                             <connections>
@@ -459,6 +459,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oUr-rl-Hdx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5433.3333333333339" y="873.88392857142856"/>
+        </scene>
+        <!--Audio Segment Picker View Controller-->
+        <scene sceneID="Edx-sh-UAm">
+            <objects>
+                <viewController id="fhx-LB-dnj" customClass="AudioSegmentPickerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="I0f-xp-Whd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="lRv-OU-dYh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pnU-my-mfH"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nAD-Qi-rWE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6386.9565217391309" y="879.91071428571422"/>
         </scene>
         <!--Select Audience View Controller-->
         <scene sceneID="ERq-K8-QLc">

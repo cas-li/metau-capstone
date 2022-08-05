@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 typedef void (^SpotifyTrackCompletion)(NSMutableArray *_Nullable results, NSError *_Nullable error);
 
+typedef void (^DurationCompletion)(NSUInteger duration, NSError *_Nullable error);
+
 @interface SpotifyAPIManager : NSObject <SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate>
 
 @property (nonatomic) SPTSessionManager *sessionManager;
@@ -25,6 +27,10 @@ typedef void (^SpotifyTrackCompletion)(NSMutableArray *_Nullable results, NSErro
 - (void)pause;
 
 - (void)getTracks:(NSString *)searchString withCompletion:(SpotifyTrackCompletion)completion;
+
+- (void)getDurationWithCompletion:(DurationCompletion)completion;
+
+- (void)seekToPosition:(NSInteger)position;
 
 @end
 

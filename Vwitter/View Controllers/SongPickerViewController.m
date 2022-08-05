@@ -14,9 +14,10 @@
 #import "ComposeViewController.h"
 #import "AppDelegate.h"
 #import "SpotifyAPIManager.h"
+#import "AudioSegmentPickerViewController.h"
 
 
-@interface SongPickerViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface SongPickerViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, AudioSegmentPickerViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *arrayOfTracks;
 @property (strong, nonatomic) SpotifyTrack *selectedTrack;
@@ -40,6 +41,10 @@
     
     self.searchBar.delegate = self;
 
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.delegate passSelectedTrack:self.selectedTrack];
 }
 
 - (void)getSearchResults:(NSString *)searchString {
@@ -99,17 +104,12 @@
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
-     if ([segue.identifier isEqualToString:@"postSongChoiceSegue"]) {
-         
-         ComposeViewController *composeVC = [segue destinationViewController];
-         composeVC.selectedTrack = self.selectedTrack;
-         
+     if ([segue.identifier isEqualToString:@"segmentPickerSegue"]) {
+         AudioSegmentPickerViewController *aspVC = [segue destinationViewController];
+         aspVC.selectedTrack = self.selectedTrack;
+         aspVC.delegate = self;
      }
  }
-- (IBAction)didTapDone:(id)sender {
-    UINavigationController *navigationController = self.navigationController;
-    [navigationController popViewControllerAnimated:YES];
-}
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self getSearchResults:searchText];
@@ -117,5 +117,12 @@
     
 
  
+
+- (void)passSelectedTrack:(SpotifyTrack *)selectedTrack withStartTimestamp:(NSNumber *)startTimeStamp withEndTimestamp:(NSNumber *)endTimestamp {
+    self.selectedTrack = selectedTrack;
+    self.selectedTrack.startTimestamp = startTimeStamp;
+    self.selectedTrack.endTimestamp = endTimestamp;
+}
+
 
 @end

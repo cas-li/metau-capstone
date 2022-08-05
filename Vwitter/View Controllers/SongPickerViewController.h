@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SpotifyTrack.h"
+#import "AudioSegmentPickerViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

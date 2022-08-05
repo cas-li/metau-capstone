@@ -17,6 +17,7 @@
 		291787BC289306D800ACAD70 /* SpotifyAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787BB289306D800ACAD70 /* SpotifyAPIManager.m */; };
 		291F305B28932D3D006E9E28 /* SpotifyTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F305A28932D3D006E9E28 /* SpotifyTrack.m */; };
 		291F305E28932EA8006E9E28 /* TrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F305D28932EA8006E9E28 /* TrackCell.m */; };
+		29438A82289DB76200F510F9 /* AudioSegmentPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29438A81289DB76200F510F9 /* AudioSegmentPickerViewController.m */; };
 		298B82B628763A2100EE54B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B528763A2100EE54B8 /* AppDelegate.m */; };
 		298B82B928763A2100EE54B8 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B828763A2100EE54B8 /* SceneDelegate.m */; };
 		298B82BF28763A2100EE54B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 298B82BD28763A2100EE54B8 /* Main.storyboard */; };
@@ -94,6 +95,8 @@
 		291F305A28932D3D006E9E28 /* SpotifyTrack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifyTrack.m; sourceTree = "<group>"; };
 		291F305C28932EA8006E9E28 /* TrackCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrackCell.h; sourceTree = "<group>"; };
 		291F305D28932EA8006E9E28 /* TrackCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrackCell.m; sourceTree = "<group>"; };
+		29438A80289DB76200F510F9 /* AudioSegmentPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioSegmentPickerViewController.h; sourceTree = "<group>"; };
+		29438A81289DB76200F510F9 /* AudioSegmentPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioSegmentPickerViewController.m; sourceTree = "<group>"; };
 		298B82B128763A2100EE54B8 /* Vwitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vwitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		298B82B428763A2100EE54B8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		298B82B528763A2100EE54B8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -294,6 +297,8 @@
 				29AA84AE28887AE500C9FC1F /* CreateGroupViewController.m */,
 				291787B4289300E500ACAD70 /* SongPickerViewController.h */,
 				291787B5289300E500ACAD70 /* SongPickerViewController.m */,
+				29438A80289DB76200F510F9 /* AudioSegmentPickerViewController.h */,
+				29438A81289DB76200F510F9 /* AudioSegmentPickerViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -612,6 +617,7 @@
 				298B8322287E1C6000EE54B8 /* VentAudience.m in Sources */,
 				298B830A287CD3E000EE54B8 /* UserCell.m in Sources */,
 				29AA84B22888BC2D00C9FC1F /* GroupCell.m in Sources */,
+				29438A82289DB76200F510F9 /* AudioSegmentPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
