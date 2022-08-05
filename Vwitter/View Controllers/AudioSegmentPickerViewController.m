@@ -54,8 +54,6 @@ static CGFloat const kViewControllerLabelWidth = 100.0;
 
 - (void)setSelectedTrack:(SpotifyTrack *)selectedTrack {
     _selectedTrack = selectedTrack;
-    
-    [self setUpViewComponents];
 }
 
 - (void)viewWillLayoutSubviews
