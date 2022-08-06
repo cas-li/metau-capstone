@@ -97,6 +97,34 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     }];
 }
 
+- (void)playTrack:(NSString *)trackUri withPosition:(NSInteger)position {
+    if (!self.hasValidSpotifyAuthorization) {
+        [self authorizeSpotify];
+    }
+    
+    if (!self.appRemote.playerAPI) {
+        [self.appRemote connect];
+    }
+    
+    [self.appRemote.playerAPI play:trackUri callback:^(id  _Nullable result, NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"track playing");
+            [self.appRemote.playerAPI seekToPosition:position callback:^(id  _Nullable result, NSError * _Nullable error) {
+                if (!error) {
+                    NSLog(@"seeked to track playing");
+                }
+                else {
+                    NSLog(@"seeked to track failed to play %@", error.localizedDescription);
+                }
+            }];
+        }
+        else {
+            NSLog(@"cell track failed to play %@", error.localizedDescription);
+        }
+    }];
+    
+}
+
 - (void)pause {
     [self.appRemote.playerAPI pause:^(id  _Nullable result, NSError * _Nullable error) {
         if (!error) {
@@ -158,7 +186,6 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     
     [self.appRemote.playerAPI getPlayerState:^(id  _Nullable result, NSError * _Nullable error) {
         if (!error) {
-//            SPTAppRemotePlayerState *playerState = CAST_TO_CLASS_OR_NIL(result, SPTAppRemotePlayerState);
             id<SPTAppRemotePlayerState> playerState = result;
             completion(playerState.track.duration, nil);
         }

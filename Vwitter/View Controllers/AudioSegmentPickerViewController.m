@@ -100,8 +100,25 @@ static CGFloat const kViewControllerLabelWidth = 100.0;
 - (void)updateRangeText
 {
     NSLog(@"%0.2f - %0.2f", self.rangeSlider.leftValue, self.rangeSlider.rightValue);
-    self.label.text = [NSString stringWithFormat:@"%0.2f - %0.2f",
-                       self.rangeSlider.leftValue, self.rangeSlider.rightValue];
+    
+    CGFloat leftValueTotalSeconds = self.rangeSlider.leftValue / 1000.0;
+    CGFloat leftValueMinutes = leftValueTotalSeconds / 60;
+    CGFloat leftValueSeconds = leftValueTotalSeconds - ((int) leftValueMinutes) * 60;
+    NSInteger leftValueSecondsInteger = (int) leftValueSeconds;
+    
+    NSString *leftValueString = [NSString stringWithFormat:@"%d:%d", (int) leftValueMinutes, (int)leftValueSecondsInteger];
+    
+    CGFloat rightValueTotalSeconds = self.rangeSlider.rightValue / 1000.0;
+    CGFloat rightValueMinutes = rightValueTotalSeconds / 60;
+    CGFloat rightValueSeconds = rightValueTotalSeconds - ((int) rightValueMinutes) * 60;
+    
+    NSInteger rightValueSecondsInteger = (int) rightValueSeconds;
+    
+    NSString *rightValueString = [NSString stringWithFormat:@"%d:%d", (int) rightValueMinutes, (int) rightValueSecondsInteger];
+    
+    self.label.text = [NSString stringWithFormat:@"%@ - %@",
+                       leftValueString, rightValueString];
+    
 }
 
 /*

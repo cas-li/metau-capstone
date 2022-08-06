@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "SpotifyAPIManager.h"
 #import "AudioSegmentPickerViewController.h"
+#import "UIViewController+ErrorAlertPresenter.h"
 
 
 @interface SongPickerViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, AudioSegmentPickerViewControllerDelegate>
@@ -36,7 +37,7 @@
     
     self.tableView.allowsMultipleSelection = NO;
     
-    [self getSearchResults:@"ur mom"];
+    [self getSearchResults:@"Scream and shout"];
     [self.tableView reloadData];
     
     self.searchBar.delegate = self;
@@ -105,9 +106,15 @@
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
      if ([segue.identifier isEqualToString:@"segmentPickerSegue"]) {
-         AudioSegmentPickerViewController *aspVC = [segue destinationViewController];
-         aspVC.selectedTrack = self.selectedTrack;
-         aspVC.delegate = self;
+         if (self.selectedTrack == nil) {
+             [self presentErrorMessageWithTitle:@"Error" message:@"Must choose song before proceeding."];
+         }
+         else {
+             AudioSegmentPickerViewController *aspVC = [segue destinationViewController];
+             aspVC.selectedTrack = self.selectedTrack;
+             aspVC.delegate = self;
+         }
+
      }
  }
 

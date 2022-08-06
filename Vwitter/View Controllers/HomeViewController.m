@@ -136,7 +136,7 @@
                 NSLog(@"long press on table view at section %ld row %d", (long)indexPath.section, indexPath.row);
                 Vent *currentVent = self.arrayOfVents[indexPath.row];
                 if (currentVent.trackUri != nil) {
-                    [[SpotifyAPIManager shared] playTrack:currentVent.trackUri];
+                    [[SpotifyAPIManager shared] playTrack:currentVent.trackUri withPosition:currentVent.startTimestamp.longValue];
                 }
             }
         }

@@ -32,6 +32,8 @@ typedef void (^DurationCompletion)(NSUInteger duration, NSError *_Nullable error
 
 - (void)seekToPosition:(NSInteger)position;
 
+- (void)playTrack:(NSString *)trackUri withPosition:(NSInteger)position;
+
 @end
 
 NS_ASSUME_NONNULL_END
