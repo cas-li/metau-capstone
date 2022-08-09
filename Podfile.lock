@@ -3,6 +3,7 @@ PODS:
   - DateTools (2.0.0)
   - MARKRangeSlider (1.1.1)
   - MBProgressHUD (1.2.0)
+  - NSString-UrlEncode (2.1.0)
   - Parse (1.19.3):
     - Parse/Core (= 1.19.3)
   - Parse/Core (1.19.3):
@@ -15,6 +16,7 @@ DEPENDENCIES:
   - DateTools
   - MARKRangeSlider
   - MBProgressHUD
+  - NSString-UrlEncode (~> 2.1)
   - Parse
   - Parse/UI
   - "UITextView+Placeholder"
@@ -25,6 +27,7 @@ SPEC REPOS:
     - DateTools
     - MARKRangeSlider
     - MBProgressHUD
+    - NSString-UrlEncode
     - Parse
     - "UITextView+Placeholder"
 
@@ -33,9 +36,10 @@ SPEC CHECKSUMS:
   DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
   MARKRangeSlider: ef7e1fe84d22996f47fd72dcb8de50b9410aac47
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  NSString-UrlEncode: 92dcb01cac33ef036cda76baf0e4378b18779e47
   Parse: 0abb63a0ff6fa34a3f64b81d595a294e2ece143a
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: 1ffc8bc864ae715c1998caf5536ab19c903272aa
+PODFILE CHECKSUM: 75884dbb698ba0d047d791c65ca376a318d6e4b5
 
 COCOAPODS: 1.11.3

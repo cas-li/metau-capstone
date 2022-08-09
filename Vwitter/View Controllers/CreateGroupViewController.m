@@ -14,6 +14,7 @@
 #import "GroupDetails.h"
 #import "GroupMembership.h"
 #import "VWHelpers.h"
+#import "UIViewController+ErrorAlertPresenter.h"
 
 @interface CreateGroupViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -93,6 +94,19 @@
 
 - (IBAction)didCreateGroup:(id)sender {
     
+    if (![VWUser currentUser].objectId) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"You cannot currently create a group. Please try again."];
+        return;
+    }
+    else if ([self.groupNameField.text isEqualToString:@""]) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"Group name cannot be empty."];
+        return;
+    }
+    else if ([self.arrayOfSelectedUserAudience count] == 0) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"Group cannot have 0 members."];
+        return;
+    }
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     NSMutableArray *groupMemberships = [NSMutableArray arrayWithArray:[self.arrayOfSelectedUserAudience allObjects]];
@@ -116,6 +130,7 @@
         }
         else {
             NSLog(@"there was an error with group creation, u suck");
+            [self presentErrorMessageWithTitle:@"Error" message:@"Group creation failed"];
             [MBProgressHUD hideHUDForView:strongSelf.view animated:YES];
             UINavigationController *navigationController = strongSelf.navigationController;
             [navigationController popViewControllerAnimated:YES];

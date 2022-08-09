@@ -5,6 +5,7 @@
 //  Created by Christina Li on 7/28/22.
 //
 
+#import <NSString_UrlEncode/NSString+URLEncode.h>
 #import "SpotifyAPIManager.h"
 #import "AppDelegate.h"
 #import "VWHelpers.h"
@@ -12,6 +13,7 @@
 
 static NSString * const SpotifyClientID = @"e4185723643e4db9bcf48af28e078cff";
 static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
+static NSString * const SpotifySearchBaseURLString = @"https://api.spotify.com/v1/search?q=";
 
 @interface SpotifyAPIManager ()
 
@@ -65,6 +67,7 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     } else {
         // Use this on iOS versions < 11 to use SFSafariViewController
         NSLog(@"iOS version too old");
+        return;
     }
     
     SPTConfiguration *configuration =
@@ -101,7 +104,6 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     if (!self.hasValidSpotifyAuthorization) {
         [self authorizeSpotify];
     }
-    
     if (!self.appRemote.playerAPI) {
         [self.appRemote connect];
     }
@@ -129,7 +131,6 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     [self.appRemote.playerAPI pause:^(id  _Nullable result, NSError * _Nullable error) {
         if (!error) {
             NSLog(@"track paused");
-
         }
         else {
             NSLog(@"track not paused, %@", error.localizedDescription);
@@ -147,9 +148,9 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     
-    NSString *convertedSearchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSString *convertedSearchString = [searchString URLEncode];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", @"https://api.spotify.com/v1/search?q=", convertedSearchString, @"&type=track"];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", SpotifySearchBaseURLString, convertedSearchString, @"&type=track"];
     NSURL *url = [NSURL URLWithString:urlString];
 
     [request setValue:bearerToken forHTTPHeaderField:@"Authorization"];
@@ -159,18 +160,21 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
       [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (!error) {
             NSMutableArray *spotifyTracksArray = [[NSMutableArray alloc] init];
-            
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            // JSON with song is here
-            NSLog(@"JSON: %@", json);
-            NSArray *tracksArray = json[@"tracks"][@"items"];
-            NSArray *castedTracksArray = CAST_TO_CLASS_OR_NIL(tracksArray, NSArray);
-            
-            for (id track in castedTracksArray) {
-                SpotifyTrack *currentTrack = [[SpotifyTrack alloc] initWithDictionary:track];
-                [spotifyTracksArray addObject:currentTrack];
+            if (data) {
+                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                // JSON with song is here
+                NSLog(@"JSON: %@", json);
+                NSArray *castedTracksArray = CAST_TO_CLASS_OR_NIL(json[@"tracks"][@"items"], NSArray);
+                for (id track in castedTracksArray) {
+                    NSDictionary *castedTrack = CAST_TO_CLASS_OR_NIL(track, NSDictionary);
+                    if (!castedTrack) {
+                        NSLog(@"track is not a dictionary");
+                        continue;
+                    }
+                    SpotifyTrack *currentTrack = [[SpotifyTrack alloc] initWithDictionary:track];
+                    [spotifyTracksArray addObject:currentTrack];
+                }
             }
-            
             completion(spotifyTracksArray, nil);
             
         }

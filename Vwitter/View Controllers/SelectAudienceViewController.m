@@ -15,6 +15,7 @@
 #import "VentAudience.h"
 #import "VWHelpers.h"
 #import "GroupCell.h"
+#import "UIViewController+ErrorAlertPresenter.h"
 
 @interface SelectAudienceViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *postVentButton;
@@ -156,6 +157,27 @@
 }
 
 - (IBAction)didTapVent:(id)sender {
+    
+    if (![VWUser currentUser].objectId) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"You cannot currently vent. Please try again."];
+        return;
+    }
+    else if (!self.ventContent) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"Vent content undefined."];
+        return;
+    }
+    else if (!self.selectedTrack) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"You need to select a song!"];
+        return;
+    }
+    else if (!self.selectedTrack.uriString) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"You cannot vent using this song."];
+        return;
+    }
+    else if (!self.selectedTrack.startTimestamp || !self.selectedTrack.endTimestamp) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"You need to select a section of your song."];
+        return;
+    }
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 

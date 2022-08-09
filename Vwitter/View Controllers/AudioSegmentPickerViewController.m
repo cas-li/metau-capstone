@@ -12,14 +12,11 @@
 #import <SpotifyiOS/SpotifyiOS.h>
 #import <MARKRangeSlider/MARKRangeSlider.h>
 
-static CGFloat const kViewControllerRangeSliderWidth = 290.0;
-static CGFloat const kViewControllerLabelWidth = 100.0;
-
 @interface AudioSegmentPickerViewController ()
 
-@property (nonatomic, strong) MARKRangeSlider *rangeSlider;
-@property (nonatomic, strong) UILabel *label;
-@property (nonatomic) NSUInteger duration;
+@property (nonatomic, strong, nullable) NSTimer *audioTimer;
+@property (weak, nonatomic) IBOutlet MARKRangeSlider *rangeSlider;
+@property (weak, nonatomic) IBOutlet UILabel *sectionLabel;
 
 @end
 
@@ -34,16 +31,17 @@ static CGFloat const kViewControllerLabelWidth = 100.0;
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    
-}
-
 - (void)getSpotifyInfo {
+    __weak typeof(self) weakSelf = self;
     [[SpotifyAPIManager shared] getDurationWithCompletion:^(NSUInteger duration, NSError * _Nullable error) {
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) {
+            NSLog(@"I died!");
+            return;
+        }
         if (!error) {
             NSLog (@"duration %lu", (unsigned long)duration);
-            self.duration = duration;
-            [self setUpViewComponents];
+            [self setUpViewComponentsWithDuration:duration];
         }
         else {
             NSLog (@"there was an error %@", error.localizedDescription);
@@ -56,45 +54,55 @@ static CGFloat const kViewControllerLabelWidth = 100.0;
     _selectedTrack = selectedTrack;
 }
 
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    CGFloat labelX = (CGRectGetWidth(self.view.frame) - kViewControllerLabelWidth) / 2;
-    self.label.frame = CGRectMake(labelX, 110.0, kViewControllerLabelWidth, 20.0);
-
-    CGFloat sliderX = (CGRectGetWidth(self.view.frame) - kViewControllerRangeSliderWidth) / 2;
-    self.rangeSlider.frame = CGRectMake(sliderX, CGRectGetMaxY(self.label.frame) + 20.0, 290.0, 20.0);
-}
-
 - (void)rangeSliderValueDidChange:(MARKRangeSlider *)slider
 {
-    [[SpotifyAPIManager shared] seekToPosition:self.rangeSlider.leftValue];
-    [self updateRangeText];
-    [self.delegate passSelectedTrack:self.selectedTrack withStartTimestamp:@(self.rangeSlider.leftValue) withEndTimestamp:@(self.rangeSlider.rightValue)];
+    if (self.audioTimer) {
+        [self.audioTimer invalidate];
+    }
+    // TODO: kick off 200ms timer here
+    // reset any existing timer
+    
+    // this logic will be in the timer callback
+    __weak typeof(self) weakSelf = self;
+    self.audioTimer = [NSTimer scheduledTimerWithTimeInterval:0.2f repeats:NO block:^(NSTimer * _Nonnull timer) {
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) {
+            NSLog(@"I died!");
+            return;
+        }
+        [[SpotifyAPIManager shared] seekToPosition:strongSelf.rangeSlider.leftValue];
+        [strongSelf updateRangeText];
+        [strongSelf.delegate passSelectedTrack:strongSelf.selectedTrack withStartTimestamp:@(strongSelf.rangeSlider.leftValue) withEndTimestamp:@(strongSelf.rangeSlider.rightValue)];
+    }];
+    
 }
 
-- (void)setUpViewComponents
+- (void)setUpViewComponentsWithDuration:(NSUInteger)duration
 {
-    // Text label
-    self.label = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.label.numberOfLines = 1;
-    self.label.textColor = [UIColor blueColor];
+    self.sectionLabel.numberOfLines = 1;
+    self.sectionLabel.textColor = [UIColor blueColor];
 
-    // Init slider
-    self.rangeSlider = [[MARKRangeSlider alloc] initWithFrame:CGRectZero];
     [self.rangeSlider addTarget:self
                          action:@selector(rangeSliderValueDidChange:)
                forControlEvents:UIControlEventValueChanged];
-    [self.rangeSlider setMinValue:0.0 maxValue:(CGFloat)self.duration];
-    [self.rangeSlider setLeftValue:0.0 rightValue:(CGFloat)self.duration];
+    [self.rangeSlider setMinValue:0.0 maxValue:(CGFloat)duration];
+    [self.rangeSlider setLeftValue:0.0 rightValue:(CGFloat)duration];
 
-    // adjust this to be 5 seconds
-    self.rangeSlider.minimumDistance = 0.2;
+    self.rangeSlider.minimumDistance = 5000;
 
     [self updateRangeText];
 
-    [self.view addSubview:self.label];
-    [self.view addSubview:self.rangeSlider];
+}
+
+- (NSString *)timeStringFromSeconds:(double)seconds minutes:(double)minutes {
+    NSString *secondString = nil;
+    if (seconds < 10) {
+        secondString = [NSString stringWithFormat:@"0%d", (int)seconds];
+    } else {
+        secondString = [NSString stringWithFormat:@"%d", (int)seconds];
+    }
+    
+    return [NSString stringWithFormat:@"%d:%@", (int)minutes, secondString];
 }
 
 - (void)updateRangeText
@@ -104,31 +112,17 @@ static CGFloat const kViewControllerLabelWidth = 100.0;
     CGFloat leftValueTotalSeconds = self.rangeSlider.leftValue / 1000.0;
     CGFloat leftValueMinutes = leftValueTotalSeconds / 60;
     CGFloat leftValueSeconds = leftValueTotalSeconds - ((int) leftValueMinutes) * 60;
-    NSInteger leftValueSecondsInteger = (int) leftValueSeconds;
-    
-    NSString *leftValueString = [NSString stringWithFormat:@"%d:%d", (int) leftValueMinutes, (int)leftValueSecondsInteger];
+    NSString *leftValueString = [self timeStringFromSeconds:leftValueSeconds minutes:leftValueMinutes];
     
     CGFloat rightValueTotalSeconds = self.rangeSlider.rightValue / 1000.0;
     CGFloat rightValueMinutes = rightValueTotalSeconds / 60;
     CGFloat rightValueSeconds = rightValueTotalSeconds - ((int) rightValueMinutes) * 60;
     
-    NSInteger rightValueSecondsInteger = (int) rightValueSeconds;
+    NSString *rightValueString = [self timeStringFromSeconds:rightValueSeconds minutes:rightValueMinutes];
     
-    NSString *rightValueString = [NSString stringWithFormat:@"%d:%d", (int) rightValueMinutes, (int) rightValueSecondsInteger];
-    
-    self.label.text = [NSString stringWithFormat:@"%@ - %@",
+    self.sectionLabel.text = [NSString stringWithFormat:@"%@ - %@",
                        leftValueString, rightValueString];
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -15,12 +15,12 @@ typedef void (^DurationCompletion)(NSUInteger duration, NSError *_Nullable error
 
 @interface SpotifyAPIManager : NSObject <SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate>
 
-@property (nonatomic) SPTSessionManager *sessionManager;
+@property (strong, nonatomic) SPTSessionManager *sessionManager;
 @property (strong, nonatomic) SPTAppRemote *appRemote;
 
-- (void)didAuthorizeWithSpotify:(NSString *)accessToken expiresInSeconds:(NSNumber *)expiresInSeconds;
-
 + (instancetype)shared;
+
+- (void)didAuthorizeWithSpotify:(NSString *)accessToken expiresInSeconds:(NSNumber *)expiresInSeconds;
 
 - (void)playTrack:(NSString *)track;
 

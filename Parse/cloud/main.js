@@ -371,12 +371,18 @@ Parse.Cloud.define("createGroup", async (request) => {
   var groupMembershipIds = request.params.groupMembershipIds;
   var groupName = request.params.groupName;
 
+  if (authorId === undefined || groupName === undefined) {
+    throw Error("Missing author or group name!");
+  }
+
   const userQuery = new Parse.Query("User");
   userQuery.equalTo("objectId", authorId);
   const user = await userQuery.first();
 
   if (user == undefined) {
+    throw Error("No user with objectId");
     return;
+
   }
 
   group.set("groupAuthor", user);
@@ -406,7 +412,7 @@ Parse.Cloud.define("createGroup", async (request) => {
       groupMembership.set("user", user);
     }
     else {
-      console.log("not a user");
+      console.error("not a user");
       continue;
     }
 

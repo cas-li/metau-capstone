@@ -11,6 +11,7 @@
 #import "SongPickerViewController.h"
 #import "VWHelpers.h"
 #import "SpotifyAPIManager.h"
+#import "UIViewController+ErrorAlertPresenter.h"
 
 @import UITextView_Placeholder;
 
@@ -40,6 +41,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if (!self.songTitleLabel.text) {
+        [[SpotifyAPIManager shared] pause];
+    }
     [self.songTitleLabel sizeToFit];
     [self setSongTitleLabelX:0 - self.songTitleLabel.frame.size.width];
 }
@@ -107,7 +111,19 @@
     // Pass the selected object to the new view controller.
     
     if ([segue.identifier isEqualToString:@"selectAudienceSegue"]) {
-        
+        if ([self.ventContent.text isEqualToString:@""]) {
+            [self presentErrorMessageWithTitle:@"Error" message:@"Vent cannot be blank."];
+            return;
+        }
+        if (!self.selectedTrack) {
+            [self presentErrorMessageWithTitle:@"Error" message:@"You need to select a song!"];
+            return;
+        }
+        if (!self.selectedTrack.startTimestamp || !self.selectedTrack.endTimestamp) {
+            [self presentErrorMessageWithTitle:@"Error" message:@"You need to select a section of the song!"];
+            return;
+        }
+
         SelectAudienceViewController *selectAudienceVC = [segue destinationViewController];
         selectAudienceVC.ventContent = self.ventContent.text;
         selectAudienceVC.selectedTrack = self.selectedTrack;

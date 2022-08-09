@@ -467,10 +467,37 @@
                     <view key="view" contentMode="scaleToFill" id="I0f-xp-Whd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4xd-5Z-Eqr" customClass="MARKRangeSlider">
+                                <rect key="frame" x="40" y="423" width="334" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ebZ-MV-XV0"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3z-ip-A9Z">
+                                <rect key="frame" x="186" y="394" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="lRv-OU-dYh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="4xd-5Z-Eqr" firstAttribute="top" secondItem="E3z-ip-A9Z" secondAttribute="bottom" constant="8" symbolic="YES" id="B7K-pJ-BGy"/>
+                            <constraint firstItem="E3z-ip-A9Z" firstAttribute="centerX" secondItem="I0f-xp-Whd" secondAttribute="centerX" id="dX7-4C-3qu"/>
+                            <constraint firstItem="lRv-OU-dYh" firstAttribute="trailing" secondItem="4xd-5Z-Eqr" secondAttribute="trailing" constant="40" id="eXy-Te-cLo"/>
+                            <constraint firstItem="4xd-5Z-Eqr" firstAttribute="centerY" secondItem="I0f-xp-Whd" secondAttribute="centerY" id="gj9-yz-Z5y"/>
+                            <constraint firstItem="4xd-5Z-Eqr" firstAttribute="leading" secondItem="lRv-OU-dYh" secondAttribute="leading" constant="40" id="pBm-cc-xeC"/>
+                            <constraint firstItem="4xd-5Z-Eqr" firstAttribute="centerX" secondItem="I0f-xp-Whd" secondAttribute="centerX" id="tDb-EO-z0g"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pnU-my-mfH"/>
+                    <connections>
+                        <outlet property="rangeSlider" destination="4xd-5Z-Eqr" id="jdy-O9-XP2"/>
+                        <outlet property="sectionLabel" destination="E3z-ip-A9Z" id="Me9-Cf-pqb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nAD-Qi-rWE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -940,7 +967,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aPI-kv-ERw"/>
+        <segue reference="S1h-yJ-Z1M"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="air-pngrepo-com" width="60" height="60"/>
