@@ -51,20 +51,18 @@
 - (void)getSearchResults:(NSString *)searchString {
     __weak typeof(self) weakSelf = self;
     [[SpotifyAPIManager shared] getTracks:searchString withCompletion:^(NSMutableArray * _Nullable results, NSError * _Nullable error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            typeof(self) strongSelf = weakSelf;
-            if (!strongSelf) {
-                NSLog(@"I got killed!");
-                return;
-            }
-            if (results) {
-                strongSelf.arrayOfTracks = results;
-                [strongSelf.tableView reloadData];
-            }
-            else {
-                NSLog(@"there was an error, u suck %@", error.localizedDescription);
-            }
-        });
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) {
+            NSLog(@"I got killed!");
+            return;
+        }
+        if (results) {
+            strongSelf.arrayOfTracks = results;
+            [strongSelf.tableView reloadData];
+        }
+        else {
+            NSLog(@"there was an error, u suck %@", error.localizedDescription);
+        }
     }];
 }
 

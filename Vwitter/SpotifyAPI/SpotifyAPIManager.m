@@ -14,6 +14,7 @@
 static NSString * const SpotifyClientID = @"e4185723643e4db9bcf48af28e078cff";
 static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
 static NSString * const SpotifySearchBaseURLString = @"https://api.spotify.com/v1/search?q=";
+static NSString * const DefaultSongUriString = @"spotify:artist:1Z3fF5lZdCM0ZHugkGoH8s"; // john cage's 4'33', a.k.a. silence
 
 @interface SpotifyAPIManager ()
 
@@ -56,7 +57,7 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
      For more information, see https://developer.spotify.com/web-api/using-scopes/.
      */
     SPTScope scope = SPTUserLibraryReadScope | SPTPlaylistReadPrivateScope;
-
+    
     /*
      Start the authorization process. This requires user input.
      */
@@ -71,14 +72,17 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     }
     
     SPTConfiguration *configuration =
-        [[SPTConfiguration alloc] initWithClientID:SpotifyClientID redirectURL:[NSURL URLWithString:SpotifyRedirectURLString]];
-
+    [[SPTConfiguration alloc] initWithClientID:SpotifyClientID redirectURL:[NSURL URLWithString:SpotifyRedirectURLString]];
+    
     self.appRemote = [[SPTAppRemote alloc] initWithConfiguration:configuration logLevel:SPTAppRemoteLogLevelDebug];
 }
 
 - (void)authorizeSpotify {
     [self setupAppRemote];
-    [self.appRemote authorizeAndPlayURI:@"spotify:artist:2YZyLoL8N0Wb9xBt1NhZWg"];
+    [self.appRemote authorizeAndPlayURI:DefaultSongUriString];
+    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        [self pause];
+    }];
 }
 
 - (void)playTrack:(NSString *)trackUri {
@@ -100,7 +104,7 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     }];
 }
 
-- (void)playTrack:(NSString *)trackUri withPosition:(NSInteger)position {
+- (void)playTrack:(NSString *)trackUri startTimestamp:(NSInteger)startTimestamp endTimestamp:(NSInteger)endTimestamp {
     if (!self.hasValidSpotifyAuthorization) {
         [self authorizeSpotify];
     }
@@ -152,46 +156,55 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", SpotifySearchBaseURLString, convertedSearchString, @"&type=track"];
     NSURL *url = [NSURL URLWithString:urlString];
-
+    
     [request setValue:bearerToken forHTTPHeaderField:@"Authorization"];
     [request setURL:url];
-
+    
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-      [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (!error) {
-            NSMutableArray *spotifyTracksArray = [[NSMutableArray alloc] init];
-            if (data) {
-                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                // JSON with song is here
-                NSLog(@"JSON: %@", json);
-                NSArray *castedTracksArray = CAST_TO_CLASS_OR_NIL(json[@"tracks"][@"items"], NSArray);
-                for (id track in castedTracksArray) {
-                    NSDictionary *castedTrack = CAST_TO_CLASS_OR_NIL(track, NSDictionary);
-                    if (!castedTrack) {
-                        NSLog(@"track is not a dictionary");
-                        continue;
+    [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error) {
+                NSMutableArray *spotifyTracksArray = [[NSMutableArray alloc] init];
+                if (data) {
+                    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                    // JSON with song is here
+                    NSLog(@"JSON: %@", json);
+                    NSArray *castedTracksArray = CAST_TO_CLASS_OR_NIL(json[@"tracks"][@"items"], NSArray);
+                    for (id track in castedTracksArray) {
+                        NSDictionary *castedTrack = CAST_TO_CLASS_OR_NIL(track, NSDictionary);
+                        if (!castedTrack) {
+                            NSLog(@"track is not a dictionary");
+                            continue;
+                        }
+                        SpotifyTrack *currentTrack = [[SpotifyTrack alloc] initWithDictionary:track];
+                        [spotifyTracksArray addObject:currentTrack];
                     }
-                    SpotifyTrack *currentTrack = [[SpotifyTrack alloc] initWithDictionary:track];
-                    [spotifyTracksArray addObject:currentTrack];
                 }
+                completion(spotifyTracksArray, nil);
+                
             }
-            completion(spotifyTracksArray, nil);
-            
-        }
-        else {
-            NSLog(@"searching tracks had an error %@", error.localizedDescription);
-            completion(nil, error);
-        }
+            else {
+                NSLog(@"searching tracks had an error %@", error.localizedDescription);
+                completion(nil, error);
+            }
+        });
     }] resume];
-
+    
+    
 }
 
 - (void)getDurationWithCompletion:(DurationCompletion)completion {
     
     [self.appRemote.playerAPI getPlayerState:^(id  _Nullable result, NSError * _Nullable error) {
         if (!error) {
-            id<SPTAppRemotePlayerState> playerState = result;
-            completion(playerState.track.duration, nil);
+            id<SPTAppRemotePlayerState> playerState = CAST_TO_PROTOCOL_OR_NIL(result, SPTAppRemotePlayerState);
+            if (!playerState) {
+                NSMutableDictionary* details = [NSMutableDictionary dictionary];
+                [details setValue:@"PlayerState not of correct protocol" forKey:NSLocalizedDescriptionKey];
+                completion(0, [NSError errorWithDomain:@"PlayerState" code:0 userInfo:details]);
+            } else {
+                completion(playerState.track.duration, nil);
+            }
         }
         else {
             NSLog(@"getting remote player state had error %@", error.localizedDescription);

@@ -59,10 +59,7 @@
     if (self.audioTimer) {
         [self.audioTimer invalidate];
     }
-    // TODO: kick off 200ms timer here
-    // reset any existing timer
-    
-    // this logic will be in the timer callback
+
     __weak typeof(self) weakSelf = self;
     self.audioTimer = [NSTimer scheduledTimerWithTimeInterval:0.2f repeats:NO block:^(NSTimer * _Nonnull timer) {
         typeof(self) strongSelf = weakSelf;
