@@ -24,7 +24,7 @@ Parse.Cloud.afterSave(Parse.User, async (request) => {
   var currentUser = request.object;
   var username = await request.object.get("username");
 
-  searchItem.save({
+  await searchItem.save({
     searchName: username.toLowerCase(),
     user: currentUser
   })
@@ -92,7 +92,7 @@ Parse.Cloud.afterSave("GroupDetails", async (request) => {
   var currentGroup = request.object;
   var groupName = await request.object.get("groupName");
 
-  searchItem.save({
+  await searchItem.save({
     searchName: groupName.toLowerCase(),
     group: currentGroup
   })
@@ -322,7 +322,7 @@ Parse.Cloud.define("postVent", async (request) => {
   vent.set("startTimestamp", request.params.startTimestamp);
   vent.set("endTimestamp", request.params.endTimestamp);
 
-  vent.save()
+  await vent.save()
   .then((vent) => {
   }, (error) => {
     alert('Failed to create new object, with error code: ' + error.message);
@@ -359,7 +359,7 @@ Parse.Cloud.define("postVent", async (request) => {
 
     ventAudienceArray.push(ventAudience);
   }
-  Parse.Object.saveAll(ventAudienceArray);
+  await Parse.Object.saveAll(ventAudienceArray);
 
   return;
 });
@@ -388,7 +388,7 @@ Parse.Cloud.define("createGroup", async (request) => {
   group.set("groupAuthor", user);
   group.set("groupName", groupName);
 
-  group.save()
+  await group.save()
   .then((group) => {
   }, (error) => {
     alert('Failed to create new object, with error code: ' + error.message);
@@ -418,7 +418,7 @@ Parse.Cloud.define("createGroup", async (request) => {
 
     groupMembershipArray.push(groupMembership);
   }
-  Parse.Object.saveAll(groupMembershipArray);
+  await Parse.Object.saveAll(groupMembershipArray);
 
   return;
 });

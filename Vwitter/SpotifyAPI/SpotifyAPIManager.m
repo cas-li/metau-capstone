@@ -14,12 +14,13 @@
 static NSString * const SpotifyClientID = @"e4185723643e4db9bcf48af28e078cff";
 static NSString * const SpotifyRedirectURLString = @"vwitter://callback/";
 static NSString * const SpotifySearchBaseURLString = @"https://api.spotify.com/v1/search?q=";
-static NSString * const DefaultSongUriString = @"spotify:artist:1Z3fF5lZdCM0ZHugkGoH8s"; // john cage's 4'33', a.k.a. silence
+static NSString * const DefaultSongUriString = @"spotify:album:6UCnARt06DDqBASaO8sBaz"; // john cage's 4'33', a.k.a. silence
 
 @interface SpotifyAPIManager ()
 
 @property (strong, nonatomic, nullable) NSString *accessToken;
 @property (strong, nonatomic, nullable) NSNumber *accessTokenExpirationTimestampSeconds;
+@property (strong, nonatomic, nullable) NSTimer *repeatTimer;
 
 @end
 
@@ -129,9 +130,77 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
         }
     }];
     
+    if (!startTimestamp && !endTimestamp) {
+        self.repeatTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f repeats:YES block:^(NSTimer * _Nonnull timer) {
+            __weak typeof(self) weakSelf = self;
+            [self.appRemote.playerAPI getPlayerState:^(id  _Nullable result, NSError * _Nullable error) {
+                typeof(self) strongSelf = weakSelf;
+                if (!strongSelf) {
+                    NSLog(@"I got killed!");
+                    return;
+                }
+                if (!error) {
+                    id<SPTAppRemotePlayerState> playerState = CAST_TO_PROTOCOL_OR_NIL(result, SPTAppRemotePlayerState);
+                    if (!playerState) {
+                        NSLog(@"player state is not of correct protocol");
+                    } else {
+                        if (playerState.playbackPosition >= playerState.track.duration - 501) {
+                            [strongSelf.appRemote.playerAPI seekToPosition:startTimestamp callback:^(id  _Nullable result, NSError * _Nullable error) {
+                                if (!error) {
+                                    NSLog(@"seeked to track playing");
+                                }
+                                else {
+                                    NSLog(@"seeked to track failed to play %@", error.localizedDescription);
+                                }
+                            }];
+                            
+                        }
+                    }
+                }
+                else {
+                    NSLog(@"getting remote player state had error %@", error.localizedDescription);
+                }
+            }];
+        }];
+    }
+    else {
+        self.repeatTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f repeats:YES block:^(NSTimer * _Nonnull timer) {
+            __weak typeof(self) weakSelf = self;
+            [self.appRemote.playerAPI getPlayerState:^(id  _Nullable result, NSError * _Nullable error) {
+                typeof(self) strongSelf = weakSelf;
+                if (!strongSelf) {
+                    NSLog(@"I got killed!");
+                    return;
+                }
+                if (!error) {
+                    id<SPTAppRemotePlayerState> playerState = CAST_TO_PROTOCOL_OR_NIL(result, SPTAppRemotePlayerState);
+                    if (!playerState) {
+                        NSLog(@"player state is not of correct protocol");
+                    } else {
+                        if (playerState.playbackPosition >= endTimestamp) {
+                            [strongSelf.appRemote.playerAPI seekToPosition:startTimestamp callback:^(id  _Nullable result, NSError * _Nullable error) {
+                                if (!error) {
+                                    NSLog(@"seeked to track playing");
+                                }
+                                else {
+                                    NSLog(@"seeked to track failed to play %@", error.localizedDescription);
+                                }
+                            }];
+                            
+                        }
+                    }
+                }
+                else {
+                    NSLog(@"getting remote player state had error %@", error.localizedDescription);
+                }
+            }];
+        }];
+    }
+    
 }
 
 - (void)pause {
+    [self.repeatTimer invalidate];
     [self.appRemote.playerAPI pause:^(id  _Nullable result, NSError * _Nullable error) {
         if (!error) {
             NSLog(@"track paused");

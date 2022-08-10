@@ -10,6 +10,7 @@
 #import "ProfileViewController.h"
 #import "Vent.h"
 #import "VentCell.h"
+#import "SpotifyAPIManager.h"
 
 @interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
@@ -27,6 +28,9 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
+    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
+    [self.tableView addGestureRecognizer:longPressRecognizer];
     
     [self loadData];
 }
@@ -71,6 +75,34 @@
     cell.vent = self.arrayOfVents[indexPath.row];
 
     return cell;
+}
+
+- (void)onLongPress:(UILongPressGestureRecognizer*)gestureRecognizer
+{
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
+    {
+        CGPoint p = [gestureRecognizer locationInView:self.tableView];
+
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        
+        if (indexPath == nil) {
+            NSLog(@"long press on table view but not on a row");
+        } else {
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            if (cell.isHighlighted) {
+                NSLog(@"long press on table view at section %ld row %d", (long)indexPath.section, indexPath.row);
+                Vent *currentVent = self.arrayOfVents[indexPath.row];
+                if (currentVent.trackUri != nil) {
+                    [[SpotifyAPIManager shared] playTrack:currentVent.trackUri startTimestamp:[currentVent.startTimestamp intValue] endTimestamp:[currentVent.endTimestamp intValue]];
+                }
+            }
+        }
+    }
+
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
+    {
+        [[SpotifyAPIManager shared] pause];
+    }
 }
 
 @end

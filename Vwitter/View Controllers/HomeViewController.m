@@ -120,7 +120,7 @@
     return cell;
 }
 
--(void)onLongPress:(UILongPressGestureRecognizer*)gestureRecognizer
+- (void)onLongPress:(UILongPressGestureRecognizer*)gestureRecognizer
 {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
     {
@@ -136,7 +136,7 @@
                 NSLog(@"long press on table view at section %ld row %d", (long)indexPath.section, indexPath.row);
                 Vent *currentVent = self.arrayOfVents[indexPath.row];
                 if (currentVent.trackUri != nil) {
-                    [[SpotifyAPIManager shared] playTrack:currentVent.trackUri startTimestamp:currentVent.startTimestamp  endTimestamp:currentVent.endTimestamp];
+                    [[SpotifyAPIManager shared] playTrack:currentVent.trackUri startTimestamp:[currentVent.startTimestamp intValue] endTimestamp:[currentVent.endTimestamp intValue]];
                 }
             }
         }

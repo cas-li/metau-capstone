@@ -67,7 +67,8 @@
             NSLog(@"I died!");
             return;
         }
-        [[SpotifyAPIManager shared] seekToPosition:strongSelf.rangeSlider.leftValue];
+//        [[SpotifyAPIManager shared] seekToPosition:strongSelf.rangeSlider.leftValue];
+        [[SpotifyAPIManager shared] playTrack:strongSelf.selectedTrack.uriString startTimestamp:strongSelf.rangeSlider.leftValue endTimestamp:strongSelf.rangeSlider.rightValue];
         [strongSelf updateRangeText];
         [strongSelf.delegate passSelectedTrack:strongSelf.selectedTrack withStartTimestamp:@(strongSelf.rangeSlider.leftValue) withEndTimestamp:@(strongSelf.rangeSlider.rightValue)];
     }];

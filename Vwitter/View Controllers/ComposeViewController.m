@@ -115,14 +115,6 @@
             [self presentErrorMessageWithTitle:@"Error" message:@"Vent cannot be blank."];
             return;
         }
-        if (!self.selectedTrack) {
-            [self presentErrorMessageWithTitle:@"Error" message:@"You need to select a song!"];
-            return;
-        }
-        if (!self.selectedTrack.startTimestamp || !self.selectedTrack.endTimestamp) {
-            [self presentErrorMessageWithTitle:@"Error" message:@"You need to select a section of the song!"];
-            return;
-        }
 
         SelectAudienceViewController *selectAudienceVC = [segue destinationViewController];
         selectAudienceVC.ventContent = self.ventContent.text;

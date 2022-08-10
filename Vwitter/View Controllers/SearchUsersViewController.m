@@ -15,6 +15,7 @@
 #import "VWHelpers.h"
 #import "GroupDetails.h"
 #import "GroupCell.h"
+#import "UIViewController+ErrorAlertPresenter.h"
 
 @interface SearchUsersViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UserCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -22,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSMutableArray *arrayOfUserCellViewModelsAndGroups;
 @property (nonatomic, readwrite) int requestCount;
+@property (nonatomic) BOOL isRefreshing;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -33,6 +36,10 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(beginRefresh) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
     self.arrayOfUserCellViewModelsAndGroups = [[NSMutableArray alloc] init];
     [self loadSearchResults:nil];
     
@@ -41,6 +48,11 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self loadSearchResults:nil];
+}
+
+- (void)beginRefresh {
+    self.isRefreshing = YES;
     [self loadSearchResults:nil];
 }
 
@@ -96,9 +108,19 @@
             
             [strongSelf.tableView reloadData];
             
+            if (strongSelf.isRefreshing) {
+                [strongSelf.refreshControl endRefreshing];
+                strongSelf.isRefreshing = NO;
+            }
+            
         }
         else {
             NSLog(@"there was an error, u suck");
+            if (strongSelf.isRefreshing) {
+                [strongSelf.refreshControl endRefreshing];
+                strongSelf.isRefreshing = NO;
+                [strongSelf presentErrorMessageWithTitle:@"Error" message:@"There was an error refreshing."];
+            }
         }
     }];
     
