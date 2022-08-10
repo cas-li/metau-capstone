@@ -115,7 +115,7 @@ static NSString *const kExpirationKey = @"spotify_expires_timestamp";
     [self.appRemote.playerAPI play:trackUri callback:^(id  _Nullable result, NSError * _Nullable error) {
         if (!error) {
             NSLog(@"track playing");
-            [self.appRemote.playerAPI seekToPosition:position callback:^(id  _Nullable result, NSError * _Nullable error) {
+            [self.appRemote.playerAPI seekToPosition:startTimestamp callback:^(id  _Nullable result, NSError * _Nullable error) {
                 if (!error) {
                     NSLog(@"seeked to track playing");
                 }
