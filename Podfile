@@ -11,6 +11,8 @@ target 'Vwitter' do
   pod 'UITextView+Placeholder'
   pod 'DateTools'  
   pod 'MBProgressHUD'
+  pod 'MARKRangeSlider'
+  pod 'NSString-UrlEncode', '~> 2.1'
 
   target 'VwitterTests' do
     inherit! :search_paths
