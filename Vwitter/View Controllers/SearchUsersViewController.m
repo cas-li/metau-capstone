@@ -161,10 +161,15 @@
 }
 
 - (void)didFollowUserWithViewModel:(UserCellViewModel *)viewModel {
-
+    __weak typeof(self) weakSelf = self;
     [PFCloud callFunctionInBackground:@"didToggleFollow"
                        withParameters:@{@"followingUserId":viewModel.user.objectId, @"currentUserId":[VWUser currentUser].objectId}
                                 block:^(id result, NSError *error) {
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) {
+            NSLog(@"I got killed!");
+            return;
+        }
         if (!error) {
             NSNumber *numberResult = result;
             viewModel.isFollowing = numberResult.boolValue;

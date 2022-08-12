@@ -11,11 +11,17 @@
 #import "Vent.h"
 #import "VentCell.h"
 #import "SpotifyAPIManager.h"
+#import "VWHelpers.h"
+#import "UIViewController+ErrorAlertPresenter.h"
 
 @interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray<Vent *> *arrayOfVents;
+@property (weak, nonatomic) IBOutlet UILabel *screenNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ventCountLabel;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic) BOOL isRefreshing;
 
 @end
 
@@ -24,7 +30,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.usernameLabel.text = [PFUser currentUser].username;
+    self.usernameLabel.text = [NSString stringWithFormat:@"@%@", [VWUser currentUser].username];
+    self.screenNameLabel.text = [VWUser currentUser].screenName;
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(beginRefresh) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -35,33 +46,67 @@
     [self loadData];
 }
 
+- (void)beginRefresh {
+    self.isRefreshing = YES;
+    [self loadData];
+}
+
 - (void)loadData {
-    PFQuery *vaQuery = [Vent query];
-    [vaQuery orderByDescending:@"createdAt"];
-    [vaQuery whereKey:@"author" equalTo:[PFUser currentUser]];
-    [vaQuery includeKey:@"author"];
-    
-    vaQuery.limit = 20;
-    
     __weak typeof(self) weakSelf = self;
-    [vaQuery findObjectsInBackgroundWithBlock:^(NSArray<Vent *> * _Nullable vents, NSError * _Nullable error) {
+    [PFCloud callFunctionInBackground:@"getPersonalVents"
+                       withParameters:@{@"limit":@20, @"currentUserId":[VWUser currentUser].objectId}
+                                block:^(id vents, NSError *error) {
         typeof(self) strongSelf = weakSelf;
         if (!strongSelf) {
             NSLog(@"I got killed!");
             return;
         }
-        if (vents) {
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
-            strongSelf.arrayOfVents = vents.mutableCopy;
-            
+        if (!error) {
+            NSLog(@"%@", vents);
+            NSArray *arrayOfVents = CAST_TO_CLASS_OR_NIL(vents, NSArray);
+            if (!arrayOfVents) {
+                NSLog(@"Not an array");
+                return;
+            }
+            strongSelf.arrayOfVents = arrayOfVents.mutableCopy;
             [strongSelf.tableView reloadData];
-            
+
+            if (strongSelf.isRefreshing) {
+                [strongSelf.refreshControl endRefreshing];
+                strongSelf.isRefreshing = NO;
+            }
+          
         }
         else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+            NSLog(@"there was an error, u suck");
+            if (strongSelf.isRefreshing) {
+                [strongSelf.refreshControl endRefreshing];
+                strongSelf.isRefreshing = NO;
+                [strongSelf presentErrorMessageWithTitle:@"Error" message:@"There was an error refreshing."];
 
+            }
         }
-
+    }];
+    
+    [PFCloud callFunctionInBackground:@"getPersonalVentCount"
+                       withParameters:@{@"currentUserId":[VWUser currentUser].objectId}
+                                block:^(id vents, NSError *error) {
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) {
+            NSLog(@"I got killed!");
+            return;
+        }
+        if (!error) {
+            NSNumber *ventsNumber = CAST_TO_CLASS_OR_NIL(vents, NSNumber);
+            if (!vents) {
+                NSLog(@"vents not a number");
+                return;
+            }
+            self.ventCountLabel.text = [NSString stringWithFormat:@"%@%@", @"Vent Count: " , [ventsNumber stringValue]];
+        }
+        else {
+            NSLog(@"there was an error, u suck");
+        }
     }];
 }
 

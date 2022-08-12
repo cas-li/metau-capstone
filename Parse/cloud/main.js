@@ -516,20 +516,12 @@ Parse.Cloud.define("didToggleFollow", async (request) => {
     currentUser: currentUser,
     followingUser: followingUser,
     approved: true
-  })
-  .then((follow) => {
-    // The object was saved successfully.
-  }, (error) => {
-    // The save failed.
-    // error is a Parse.Error with an error code and message.
   });
 
   if (follow.id !== undefined) {
     return true;
   }
-
   return false;
-
 });
 
 Parse.Cloud.beforeSave("Follow", async (request) => {
@@ -594,6 +586,27 @@ Parse.Cloud.define("fetchHomeTimeline", async (request) => {
   var filteredVentsArray = ventsArray.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i);
 
   return filteredVentsArray;
+});
+
+Parse.Cloud.define("getPersonalVents", async (request) => {
+  var limit = request.params.limit;
+  var currentUserId = request.params.currentUserId;
+  var ventsQuery = new Parse.Query("Vent");
+  ventsQuery.equalTo("authorUserId", currentUserId);
+  ventsQuery.descending("createdAt");
+  ventsQuery.limit(limit);
+  const vents = await ventsQuery.find();
+  return vents;
+});
+
+Parse.Cloud.define("getPersonalVentCount", async (request) => {
+  var limit = request.params.limit;
+  var currentUserId = request.params.currentUserId;
+  var ventsQuery = new Parse.Query("Vent");
+  ventsQuery.equalTo("authorUserId", currentUserId);
+  ventsQuery.descending("createdAt");
+  const vents = await ventsQuery.find();
+  return vents.length;
 });
 
 /* Parse Server 2.x

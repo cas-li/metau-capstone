@@ -26,8 +26,8 @@
 
         configuration.applicationId = [dict objectForKey: @"applicationId"];
         configuration.clientKey = [dict objectForKey: @"clientKey"];
-//        configuration.server = @"http://localhost:1337/parse";
-        configuration.server = @"https://parseapi.back4app.com";
+        configuration.server = @"http://localhost:1337/parse";
+//        configuration.server = @"https://parseapi.back4app.com";
     }];
 
     [Parse initializeWithConfiguration:config];
