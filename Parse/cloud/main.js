@@ -108,6 +108,7 @@ Parse.Cloud.afterSave("GroupDetails", async (request) => {
 Parse.Cloud.beforeSave("SearchItem", async (request) => {
   var group = await request.object.get("group");
   var user = await request.object.get("user");
+  var vent = await request.object.get("vent");
 
   if (group !== undefined) {
     request.object.set(
@@ -119,6 +120,12 @@ Parse.Cloud.beforeSave("SearchItem", async (request) => {
     request.object.set(
       "userId",
       user.id
+    );
+  }
+  else if (vent !== undefined) {
+    request.object.set(
+      "ventId",
+      vent.id
     );
   }
   else {
@@ -152,38 +159,6 @@ Parse.Cloud.define("existsFollow", async (request) => {
    return true;
  }
  return false;
-});
-
-Parse.Cloud.define("fetchUserCellData", async (request) => {
-  console.log("Hello World");
-  var limit = request.params.limit;
-  var currentUserId = request.params.currentUserId;
-  let results = [];
-  var userQuery = new Parse.Query("User");
-  if (request.params.searchString !== undefined) {
-    userQuery.contains("searchName", request.params.searchString.toLowerCase());
-  }
-  userQuery.limit(limit);
-  const userResult = await userQuery.find();
-  for (let i = 0; i < userResult.length; i++) {
-    var user = userResult[i];
-    var followQuery = new Parse.Query("Follow");
-    followQuery.equalTo("followingUserId", user.id);
-    followQuery.equalTo("currentUserId", currentUserId);
-    const followResult = await followQuery.find();
-    if (followResult.length > 0) {
-      var modelDict = {"isFollowing": true,
-                    "user": user};
-      results.push(modelDict);
-    }
-    else {
-      var modelDict = {"isFollowing": false,
-                    "user": user};
-      results.push(modelDict);
-    }
-
-  }
-  return results;
 });
 
 async function compare(a, b, searchString) {
@@ -246,7 +221,7 @@ function sortWithSearchString(array, searchString) {
     return stringSimilarity.compareTwoStrings(b_string, searchString) - stringSimilarity.compareTwoStrings(a_string, searchString);
 });
 }
-Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
+Parse.Cloud.define("fetchSearchItems", async (request) => {
   console.log("Hello World");
   var limit = request.params.limit;
   var currentUserId = request.params.currentUserId;
@@ -260,6 +235,8 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
   searchItemQuery.include(["group.groupName"]);
   searchItemQuery.include("user");
   searchItemQuery.include(["user.username"]);
+  searchItemQuery.include("vent");
+  searchItemQuery.include(["vent.ventContent"]);
   const searchItemResult = await searchItemQuery.find();
 
   if (request.params.searchString !== undefined) {
@@ -269,10 +246,30 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
     var sortedItems = searchItemResult;
   }
 
+  let currentUserArray = [currentUserId];
+  currentUserArray.push(undefined);
+
+  //get users that currentUser is following
+  var followQuery = new Parse.Query("Follow");
+  followQuery.equalTo("currentUserId", currentUserId);
+  followQuery.equalTo("approved", true);
+  followQuery.include("followingUserId");
+  const followResult = await followQuery.find();
+  var followingUsersIds = followResult.map(a => a.get("followingUserId"));
+
+  // get following's groups that currentUser is in
+  var groupsQuery = new Parse.Query("GroupDetails");
+  groupsQuery.containedIn("groupAuthorUserId", followingUsersIds);
+  groupsQuery.include("objectId");
+  const groups = await groupsQuery.find();
+  var groupsArray = groups.map(a => a.id);
+  groupsArray.push(undefined);
+
   for (let i = 0; i < sortedItems.length; i++) {
     var item = sortedItems[i];
     var group = await item.get("group");
     var user = await item.get("user");
+    var vent = await item.get("vent");
     if (group !== undefined) {
       if (group.get("groupAuthor").id == currentUserId) {
         results.push(group);
@@ -280,6 +277,9 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
       continue;
     }
     if (user !== undefined) {
+      if (user.id == currentUserId) {
+        continue;
+      }
       var followQuery = new Parse.Query("Follow");
       followQuery.equalTo("followingUserId", user.id);
       followQuery.equalTo("currentUserId", currentUserId);
@@ -295,7 +295,23 @@ Parse.Cloud.define("fetchUsersAndGroups", async (request) => {
         results.push(modelDict);
       }
     }
-
+    if (vent !== undefined) {
+      var followQuery = new Parse.Query("Follow");
+      followQuery.equalTo("followingUserId", vent.get("authorUserId"));
+      followQuery.equalTo("currentUserId", currentUserId);
+      const followResult = await followQuery.find();
+      if (followResult.length > 0) {
+        var vaQuery = new Parse.Query("VentAudience");
+        vaQuery.equalTo("ventId", vent.id);
+        vaQuery.containedIn("userId", currentUserArray);
+        vaQuery.containedIn("groupId", groupsArray);
+        var vaResults = await vaQuery.find();
+        if (vaResults.length > 0) {
+          results.push(vent);
+        }
+      }
+      continue;
+    }
   }
 
   return results;
@@ -362,6 +378,25 @@ Parse.Cloud.define("postVent", async (request) => {
   await Parse.Object.saveAll(ventAudienceArray);
 
   return;
+});
+
+Parse.Cloud.afterSave("Vent", async (request) => {
+  const SearchItem = Parse.Object.extend("SearchItem");
+  const searchItem = new SearchItem();
+  var currentVent = request.object;
+  var ventContent = await request.object.get("ventContent");
+
+  await searchItem.save({
+    searchName: ventContent.toLowerCase(),
+    vent: currentVent
+  })
+  .then((searchItem) => {
+    // The object was saved successfully.
+  }, (error) => {
+    // The save failed.
+    // error is a Parse.Error with an error code and message.
+  });
+
 });
 
 Parse.Cloud.define("createGroup", async (request) => {
@@ -445,6 +480,74 @@ Parse.Cloud.define("fetchPotentialAudienceGroups", async (request) => {
   const groupResult = await groupQuery.find();
   return groupResult;
 });
+
+Parse.Cloud.define("didToggleFollow", async (request) => {
+  var currentUserId = request.params.currentUserId;
+  var followingUserId = request.params.followingUserId;
+
+  var followQuery = new Parse.Query("Follow");
+
+  followQuery.equalTo("followingUserId", followingUserId);
+  followQuery.equalTo("currentUserId", currentUserId);
+
+  const followResult = await followQuery.find();
+
+  if (followResult.length > 0) {
+    await Parse.Object.destroyAll(followResult);
+    return false;
+  }
+
+  const currentUserQuery = new Parse.Query("User");
+  currentUserQuery.equalTo("objectId", currentUserId);
+  const currentUser = await currentUserQuery.first();
+
+  const followingUserQuery = new Parse.Query("User");
+  followingUserQuery.equalTo("objectId", followingUserId);
+  const followingUser = await followingUserQuery.first();
+
+  if (currentUser == undefined || followingUser == undefined) {
+    return false;
+  }
+
+  const Follow = Parse.Object.extend("Follow");
+  const follow = new Follow();
+
+  await follow.save({
+    currentUser: currentUser,
+    followingUser: followingUser,
+    approved: true
+  })
+  .then((follow) => {
+    // The object was saved successfully.
+  }, (error) => {
+    // The save failed.
+    // error is a Parse.Error with an error code and message.
+  });
+
+  if (follow.id !== undefined) {
+    return true;
+  }
+
+  return false;
+
+});
+
+Parse.Cloud.beforeSave("Follow", async (request) => {
+  var currentUser = await request.object.get("currentUser");
+  var followingUser = await request.object.get("followingUser");
+
+  request.object.set(
+    "currentUserId",
+    currentUser.id
+  );
+
+  request.object.set(
+    "followingUserId",
+    followingUser.id
+  );
+
+});
+
 
 Parse.Cloud.define("fetchHomeTimeline", async (request) => {
   var limit = request.params.limit;

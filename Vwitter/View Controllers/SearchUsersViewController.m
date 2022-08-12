@@ -16,6 +16,7 @@
 #import "GroupDetails.h"
 #import "GroupCell.h"
 #import "UIViewController+ErrorAlertPresenter.h"
+#import "VentCell.h"
 
 @interface SearchUsersViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UserCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -63,7 +64,7 @@
     if (searchString && ![searchString isEqualToString:@""]) {
         params[@"searchString"] = searchString;
     }
-    [PFCloud callFunctionInBackground:@"fetchUsersAndGroups"
+    [PFCloud callFunctionInBackground:@"fetchSearchItems"
                        withParameters:params
                                 block:^(id results, NSError *error) {
         typeof(self) strongSelf = weakSelf;
@@ -84,6 +85,10 @@
             [strongSelf.arrayOfUserCellViewModelsAndGroups removeAllObjects];
             for (id object in resultsArray) {
                 if ([object isKindOfClass:[GroupDetails class]]) {
+                    [strongSelf.arrayOfUserCellViewModelsAndGroups addObject:object];
+                    continue;
+                }
+                else if ([object isKindOfClass:[Vent class]]) {
                     [strongSelf.arrayOfUserCellViewModelsAndGroups addObject:object];
                     continue;
                 }
@@ -136,11 +141,16 @@
         cell.group = self.arrayOfUserCellViewModelsAndGroups[indexPath.row];
         return cell;
     }
-    else {
+    else if ([self.arrayOfUserCellViewModelsAndGroups[indexPath.row] isKindOfClass:[UserCellViewModel class]]){
         UserCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserCell" forIndexPath:indexPath];
         cell.userCellViewModel = self.arrayOfUserCellViewModelsAndGroups[indexPath.row];
         cell.delegate = self;
         
+        return cell;
+    }
+    else {
+        VentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"VentCell" forIndexPath:indexPath];
+        cell.vent = self.arrayOfUserCellViewModelsAndGroups[indexPath.row];
         return cell;
     }
 
@@ -151,36 +161,17 @@
 }
 
 - (void)didFollowUserWithViewModel:(UserCellViewModel *)viewModel {
-    
-    //refactor all of this into cloud
-    PFQuery *thisFollow = [Follow query];
-    [thisFollow whereKey:@"followingUserId" equalTo:viewModel.user.objectId];
-    [thisFollow whereKey:@"currentUserId" equalTo:[PFUser currentUser].objectId];
-    
-    __weak typeof(self) weakSelf = self;
-    [thisFollow findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        typeof(self) strongSelf = weakSelf;
-        if (!strongSelf) {
-            NSLog(@"I got killed!");
-            return;
-        }
-        
-        if ([objects count] != 0) {
-            // refactor this to be deleteAll
-            for (id object in objects) {
-                [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                    viewModel.isFollowing = !succeeded;
-                    [self.tableView reloadData];
-                }];
-            }
-            
+
+    [PFCloud callFunctionInBackground:@"didToggleFollow"
+                       withParameters:@{@"followingUserId":viewModel.user.objectId, @"currentUserId":[VWUser currentUser].objectId}
+                                block:^(id result, NSError *error) {
+        if (!error) {
+            NSNumber *numberResult = result;
+            viewModel.isFollowing = numberResult.boolValue;
+            [self.tableView reloadData];
         }
         else {
-            Follow *newFollow =  [[Follow alloc] initWithFollowing:viewModel.user withApproved:YES];
-            [newFollow saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                viewModel.isFollowing = succeeded;
-                [self.tableView reloadData];
-            }];
+            NSLog(@"there was an error, u suck");
         }
     }];
 }
