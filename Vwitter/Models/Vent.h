@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) VWUser *author;
 @property (nonatomic, strong) NSString *authorUserId;
 @property (nonatomic, strong) NSString *ventContent;
+@property (nonatomic, strong) NSString *trackUri;
+@property (nonatomic, strong) NSNumber *startTimestamp;
+@property (nonatomic, strong) NSNumber *endTimestamp;
 
 - (instancetype)initWithVentContent:(NSString *)ventContent;
 

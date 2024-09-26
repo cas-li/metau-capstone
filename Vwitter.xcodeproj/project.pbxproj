@@ -7,14 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17966EBD10E3EB1BC2FAAD61 /* Pods_Vwitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894F0F1003377F1354C45F05 /* Pods_Vwitter.framework */; };
-		291787A2289089D500ACAD70 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787A1289089D500ACAD70 /* SpotifyViewController.m */; };
-		291787A3289089D500ACAD70 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787A1289089D500ACAD70 /* SpotifyViewController.m */; };
-		291787A4289089D500ACAD70 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787A1289089D500ACAD70 /* SpotifyViewController.m */; };
 		291787AE28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
 		291787AF28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
 		291787B028908CC000ACAD70 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; };
 		291787B128908CC000ACAD70 /* SpotifyiOS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		291787B6289300E500ACAD70 /* SongPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787B5289300E500ACAD70 /* SongPickerViewController.m */; };
+		291787B7289300E500ACAD70 /* SongPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787B5289300E500ACAD70 /* SongPickerViewController.m */; };
+		291787B8289300E500ACAD70 /* SongPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787B5289300E500ACAD70 /* SongPickerViewController.m */; };
+		291787BC289306D800ACAD70 /* SpotifyAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 291787BB289306D800ACAD70 /* SpotifyAPIManager.m */; };
+		291F305B28932D3D006E9E28 /* SpotifyTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F305A28932D3D006E9E28 /* SpotifyTrack.m */; };
+		291F305E28932EA8006E9E28 /* TrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F305D28932EA8006E9E28 /* TrackCell.m */; };
+		29438A82289DB76200F510F9 /* AudioSegmentPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29438A81289DB76200F510F9 /* AudioSegmentPickerViewController.m */; };
 		298B82B628763A2100EE54B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B528763A2100EE54B8 /* AppDelegate.m */; };
 		298B82B928763A2100EE54B8 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 298B82B828763A2100EE54B8 /* SceneDelegate.m */; };
 		298B82BF28763A2100EE54B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 298B82BD28763A2100EE54B8 /* Main.storyboard */; };
@@ -45,8 +48,9 @@
 		29AA84AF28887AE500C9FC1F /* CreateGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29AA84AE28887AE500C9FC1F /* CreateGroupViewController.m */; };
 		29AA84B22888BC2D00C9FC1F /* GroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29AA84B12888BC2D00C9FC1F /* GroupCell.m */; };
 		29B8E0A8288626E100EEFFC2 /* UserCellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B8E0A7288626E100EEFFC2 /* UserCellViewModel.m */; };
-		BDA7F819A0286F3B39A008CB /* Pods_VwitterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAF62101235E35D90DEFAAC /* Pods_VwitterTests.framework */; };
-		DA1CE8C75883D35ED75901CF /* Pods_Vwitter_VwitterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331D1081242141322F3BA4A9 /* Pods_Vwitter_VwitterUITests.framework */; };
+		33FA1CC72BEAF194D7749BFF /* Pods_Vwitter_VwitterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB96E72E91FDF08AB216A6A7 /* Pods_Vwitter_VwitterUITests.framework */; };
+		476CF160F4C7B184182C0BCE /* Pods_VwitterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDEFC78858BCDE092176CE69 /* Pods_VwitterTests.framework */; };
+		C9CD50307F90E48C7597FF2B /* Pods_Vwitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB4E3159D3B8F5340CF24A5 /* Pods_Vwitter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,10 +85,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		221521725659A1798AF2F840 /* Pods-Vwitter-VwitterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter-VwitterUITests.debug.xcconfig"; path = "Target Support Files/Pods-Vwitter-VwitterUITests/Pods-Vwitter-VwitterUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		291787A0289089D500ACAD70 /* SpotifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotifyViewController.h; sourceTree = "<group>"; };
-		291787A1289089D500ACAD70 /* SpotifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifyViewController.m; sourceTree = "<group>"; };
+		0CB4E3159D3B8F5340CF24A5 /* Pods_Vwitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vwitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = SpotifyiOS.xcframework; sourceTree = "<group>"; };
+		291787B4289300E500ACAD70 /* SongPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SongPickerViewController.h; sourceTree = "<group>"; };
+		291787B5289300E500ACAD70 /* SongPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SongPickerViewController.m; sourceTree = "<group>"; };
+		291787BA289306D800ACAD70 /* SpotifyAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotifyAPIManager.h; sourceTree = "<group>"; };
+		291787BB289306D800ACAD70 /* SpotifyAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifyAPIManager.m; sourceTree = "<group>"; };
+		291F305928932D3D006E9E28 /* SpotifyTrack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotifyTrack.h; sourceTree = "<group>"; };
+		291F305A28932D3D006E9E28 /* SpotifyTrack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifyTrack.m; sourceTree = "<group>"; };
+		291F305C28932EA8006E9E28 /* TrackCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrackCell.h; sourceTree = "<group>"; };
+		291F305D28932EA8006E9E28 /* TrackCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrackCell.m; sourceTree = "<group>"; };
+		29438A80289DB76200F510F9 /* AudioSegmentPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioSegmentPickerViewController.h; sourceTree = "<group>"; };
+		29438A81289DB76200F510F9 /* AudioSegmentPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioSegmentPickerViewController.m; sourceTree = "<group>"; };
 		298B82B128763A2100EE54B8 /* Vwitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vwitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		298B82B428763A2100EE54B8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		298B82B528763A2100EE54B8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -142,14 +154,14 @@
 		29AA84B12888BC2D00C9FC1F /* GroupCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupCell.m; sourceTree = "<group>"; };
 		29B8E0A6288626E100EEFFC2 /* UserCellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserCellViewModel.h; sourceTree = "<group>"; };
 		29B8E0A7288626E100EEFFC2 /* UserCellViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserCellViewModel.m; sourceTree = "<group>"; };
-		331D1081242141322F3BA4A9 /* Pods_Vwitter_VwitterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vwitter_VwitterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3FAF62101235E35D90DEFAAC /* Pods_VwitterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VwitterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A5D72133CCDA51BC7A511AE /* Pods-Vwitter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter.debug.xcconfig"; path = "Target Support Files/Pods-Vwitter/Pods-Vwitter.debug.xcconfig"; sourceTree = "<group>"; };
-		798736688B6AEEDAF86E81F3 /* Pods-Vwitter-VwitterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter-VwitterUITests.release.xcconfig"; path = "Target Support Files/Pods-Vwitter-VwitterUITests/Pods-Vwitter-VwitterUITests.release.xcconfig"; sourceTree = "<group>"; };
-		894F0F1003377F1354C45F05 /* Pods_Vwitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vwitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA87C5075EB2F94E5E6517A5 /* Pods-VwitterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VwitterTests.release.xcconfig"; path = "Target Support Files/Pods-VwitterTests/Pods-VwitterTests.release.xcconfig"; sourceTree = "<group>"; };
-		EF1191A3716A5FAB9E15358A /* Pods-VwitterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VwitterTests.debug.xcconfig"; path = "Target Support Files/Pods-VwitterTests/Pods-VwitterTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F9C6930335159782278F381F /* Pods-Vwitter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter.release.xcconfig"; path = "Target Support Files/Pods-Vwitter/Pods-Vwitter.release.xcconfig"; sourceTree = "<group>"; };
+		2C8E5C2F1C69DD394F9C8BCB /* Pods-Vwitter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter.release.xcconfig"; path = "Target Support Files/Pods-Vwitter/Pods-Vwitter.release.xcconfig"; sourceTree = "<group>"; };
+		32B68AC41B85ECF05304559B /* Pods-VwitterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VwitterTests.debug.xcconfig"; path = "Target Support Files/Pods-VwitterTests/Pods-VwitterTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5601EEACEAB79DC8E52B37F7 /* Pods-Vwitter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter.debug.xcconfig"; path = "Target Support Files/Pods-Vwitter/Pods-Vwitter.debug.xcconfig"; sourceTree = "<group>"; };
+		7AD14BFDF6E3341950557904 /* Pods-Vwitter-VwitterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter-VwitterUITests.debug.xcconfig"; path = "Target Support Files/Pods-Vwitter-VwitterUITests/Pods-Vwitter-VwitterUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BDC40C3BABAB59E998CC6491 /* Pods-Vwitter-VwitterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vwitter-VwitterUITests.release.xcconfig"; path = "Target Support Files/Pods-Vwitter-VwitterUITests/Pods-Vwitter-VwitterUITests.release.xcconfig"; sourceTree = "<group>"; };
+		BDEFC78858BCDE092176CE69 /* Pods_VwitterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VwitterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFFFBAAA4FEAB7E619BA6D36 /* Pods-VwitterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VwitterTests.release.xcconfig"; path = "Target Support Files/Pods-VwitterTests/Pods-VwitterTests.release.xcconfig"; sourceTree = "<group>"; };
+		CB96E72E91FDF08AB216A6A7 /* Pods_Vwitter_VwitterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vwitter_VwitterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				291787B028908CC000ACAD70 /* SpotifyiOS.xcframework in Frameworks */,
-				17966EBD10E3EB1BC2FAAD61 /* Pods_Vwitter.framework in Frameworks */,
+				C9CD50307F90E48C7597FF2B /* Pods_Vwitter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,7 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				291787AE28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */,
-				BDA7F819A0286F3B39A008CB /* Pods_VwitterTests.framework in Frameworks */,
+				476CF160F4C7B184182C0BCE /* Pods_VwitterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,13 +188,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				291787AF28908CBD00ACAD70 /* SpotifyiOS.xcframework in Frameworks */,
-				DA1CE8C75883D35ED75901CF /* Pods_Vwitter_VwitterUITests.framework in Frameworks */,
+				33FA1CC72BEAF194D7749BFF /* Pods_Vwitter_VwitterUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		291787B9289301A600ACAD70 /* SpotifyAPI */ = {
+			isa = PBXGroup;
+			children = (
+				291787BA289306D800ACAD70 /* SpotifyAPIManager.h */,
+				291787BB289306D800ACAD70 /* SpotifyAPIManager.m */,
+			);
+			path = SpotifyAPI;
+			sourceTree = "<group>";
+		};
 		298B82A828763A2100EE54B8 = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +229,7 @@
 		298B82B328763A2100EE54B8 /* Vwitter */ = {
 			isa = PBXGroup;
 			children = (
+				291787B9289301A600ACAD70 /* SpotifyAPI */,
 				298B82F62878DEEC00EE54B8 /* Models */,
 				298B82E92878A14E00EE54B8 /* View Controllers */,
 				298B82B428763A2100EE54B8 /* AppDelegate.h */,
@@ -231,6 +253,8 @@
 				298B832C2880D52D00EE54B8 /* VWHelpers.h */,
 				29AA84B02888BC2D00C9FC1F /* GroupCell.h */,
 				29AA84B12888BC2D00C9FC1F /* GroupCell.m */,
+				291F305C28932EA8006E9E28 /* TrackCell.h */,
+				291F305D28932EA8006E9E28 /* TrackCell.m */,
 			);
 			path = Vwitter;
 			sourceTree = "<group>";
@@ -271,8 +295,10 @@
 				298B83012878EAFA00EE54B8 /* SignupViewController.m */,
 				29AA84AD28887AE500C9FC1F /* CreateGroupViewController.h */,
 				29AA84AE28887AE500C9FC1F /* CreateGroupViewController.m */,
-				291787A0289089D500ACAD70 /* SpotifyViewController.h */,
-				291787A1289089D500ACAD70 /* SpotifyViewController.m */,
+				291787B4289300E500ACAD70 /* SongPickerViewController.h */,
+				291787B5289300E500ACAD70 /* SongPickerViewController.m */,
+				29438A80289DB76200F510F9 /* AudioSegmentPickerViewController.h */,
+				29438A81289DB76200F510F9 /* AudioSegmentPickerViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -294,6 +320,8 @@
 				298B8327287E1D8700EE54B8 /* GroupMembership.m */,
 				29B8E0A6288626E100EEFFC2 /* UserCellViewModel.h */,
 				29B8E0A7288626E100EEFFC2 /* UserCellViewModel.m */,
+				291F305928932D3D006E9E28 /* SpotifyTrack.h */,
+				291F305A28932D3D006E9E28 /* SpotifyTrack.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -301,12 +329,12 @@
 		7E6EAC97CF69670635C4FEC0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6A5D72133CCDA51BC7A511AE /* Pods-Vwitter.debug.xcconfig */,
-				F9C6930335159782278F381F /* Pods-Vwitter.release.xcconfig */,
-				221521725659A1798AF2F840 /* Pods-Vwitter-VwitterUITests.debug.xcconfig */,
-				798736688B6AEEDAF86E81F3 /* Pods-Vwitter-VwitterUITests.release.xcconfig */,
-				EF1191A3716A5FAB9E15358A /* Pods-VwitterTests.debug.xcconfig */,
-				EA87C5075EB2F94E5E6517A5 /* Pods-VwitterTests.release.xcconfig */,
+				5601EEACEAB79DC8E52B37F7 /* Pods-Vwitter.debug.xcconfig */,
+				2C8E5C2F1C69DD394F9C8BCB /* Pods-Vwitter.release.xcconfig */,
+				7AD14BFDF6E3341950557904 /* Pods-Vwitter-VwitterUITests.debug.xcconfig */,
+				BDC40C3BABAB59E998CC6491 /* Pods-Vwitter-VwitterUITests.release.xcconfig */,
+				32B68AC41B85ECF05304559B /* Pods-VwitterTests.debug.xcconfig */,
+				BFFFBAAA4FEAB7E619BA6D36 /* Pods-VwitterTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -315,9 +343,9 @@
 			isa = PBXGroup;
 			children = (
 				291787AC28908CBD00ACAD70 /* SpotifyiOS.xcframework */,
-				894F0F1003377F1354C45F05 /* Pods_Vwitter.framework */,
-				331D1081242141322F3BA4A9 /* Pods_Vwitter_VwitterUITests.framework */,
-				3FAF62101235E35D90DEFAAC /* Pods_VwitterTests.framework */,
+				0CB4E3159D3B8F5340CF24A5 /* Pods_Vwitter.framework */,
+				CB96E72E91FDF08AB216A6A7 /* Pods_Vwitter_VwitterUITests.framework */,
+				BDEFC78858BCDE092176CE69 /* Pods_VwitterTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -329,12 +357,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 298B82E028763A2300EE54B8 /* Build configuration list for PBXNativeTarget "Vwitter" */;
 			buildPhases = (
-				897C7DB3193C10AD93A6EFC5 /* [CP] Check Pods Manifest.lock */,
+				B68812FBDDE888A5089B6E0F /* [CP] Check Pods Manifest.lock */,
 				298B82AD28763A2100EE54B8 /* Sources */,
 				298B82AE28763A2100EE54B8 /* Frameworks */,
 				298B82AF28763A2100EE54B8 /* Resources */,
-				12CAE9F219A06B31B97B1AAD /* [CP] Embed Pods Frameworks */,
 				291787AB28908C4A00ACAD70 /* Embed Frameworks */,
+				21D8C77B6985344A339A9011 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -349,7 +377,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 298B82E328763A2300EE54B8 /* Build configuration list for PBXNativeTarget "VwitterTests" */;
 			buildPhases = (
-				48321730CA81AA1858AB3DF7 /* [CP] Check Pods Manifest.lock */,
+				6B32097A145FFE715EBFC79E /* [CP] Check Pods Manifest.lock */,
 				298B82C828763A2300EE54B8 /* Sources */,
 				298B82C928763A2300EE54B8 /* Frameworks */,
 				298B82CA28763A2300EE54B8 /* Resources */,
@@ -368,11 +396,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 298B82E628763A2300EE54B8 /* Build configuration list for PBXNativeTarget "VwitterUITests" */;
 			buildPhases = (
-				89542B66CCE8F7BE90889799 /* [CP] Check Pods Manifest.lock */,
+				708D508CFAF41A9E86EC9BF7 /* [CP] Check Pods Manifest.lock */,
 				298B82D228763A2300EE54B8 /* Sources */,
 				298B82D328763A2300EE54B8 /* Frameworks */,
 				298B82D428763A2300EE54B8 /* Resources */,
-				9C911CDBD74F4D3E1727E2EA /* [CP] Embed Pods Frameworks */,
+				E5DD7A9A97DCC30C555B7499 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -455,7 +483,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		12CAE9F219A06B31B97B1AAD /* [CP] Embed Pods Frameworks */ = {
+		21D8C77B6985344A339A9011 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -472,7 +500,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Vwitter/Pods-Vwitter-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		48321730CA81AA1858AB3DF7 /* [CP] Check Pods Manifest.lock */ = {
+		6B32097A145FFE715EBFC79E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -494,7 +522,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		89542B66CCE8F7BE90889799 /* [CP] Check Pods Manifest.lock */ = {
+		708D508CFAF41A9E86EC9BF7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -516,7 +544,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		897C7DB3193C10AD93A6EFC5 /* [CP] Check Pods Manifest.lock */ = {
+		B68812FBDDE888A5089B6E0F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -538,7 +566,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9C911CDBD74F4D3E1727E2EA /* [CP] Embed Pods Frameworks */ = {
+		E5DD7A9A97DCC30C555B7499 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -564,7 +592,9 @@
 			files = (
 				298B82EC2878A15D00EE54B8 /* LoginViewController.m in Sources */,
 				298B82B628763A2100EE54B8 /* AppDelegate.m in Sources */,
+				291F305B28932D3D006E9E28 /* SpotifyTrack.m in Sources */,
 				298B82C728763A2300EE54B8 /* main.m in Sources */,
+				291787BC289306D800ACAD70 /* SpotifyAPIManager.m in Sources */,
 				298B8307287C9C7B00EE54B8 /* UIViewController+ErrorAlertPresenter.m in Sources */,
 				298B82F22878C95E00EE54B8 /* ComposeViewController.m in Sources */,
 				298B83022878EAFA00EE54B8 /* SignupViewController.m in Sources */,
@@ -574,6 +604,7 @@
 				298B8325287E1CDC00EE54B8 /* GroupDetails.m in Sources */,
 				298B82EF2878AF3000EE54B8 /* HomeViewController.m in Sources */,
 				298B82F52878D5EA00EE54B8 /* SelectAudienceViewController.m in Sources */,
+				291787B6289300E500ACAD70 /* SongPickerViewController.m in Sources */,
 				29AA84AF28887AE500C9FC1F /* CreateGroupViewController.m in Sources */,
 				29B8E0A8288626E100EEFFC2 /* UserCellViewModel.m in Sources */,
 				298B82B928763A2100EE54B8 /* SceneDelegate.m in Sources */,
@@ -582,10 +613,11 @@
 				298B82F92878DF0900EE54B8 /* VWUser.m in Sources */,
 				298B82FC2878E30F00EE54B8 /* SearchUsersViewController.m in Sources */,
 				298B831F287E1BFA00EE54B8 /* Vent.m in Sources */,
+				291F305E28932EA8006E9E28 /* TrackCell.m in Sources */,
 				298B8322287E1C6000EE54B8 /* VentAudience.m in Sources */,
 				298B830A287CD3E000EE54B8 /* UserCell.m in Sources */,
 				29AA84B22888BC2D00C9FC1F /* GroupCell.m in Sources */,
-				291787A2289089D500ACAD70 /* SpotifyViewController.m in Sources */,
+				29438A82289DB76200F510F9 /* AudioSegmentPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,7 +626,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				298B82D128763A2300EE54B8 /* VwitterTests.m in Sources */,
-				291787A3289089D500ACAD70 /* SpotifyViewController.m in Sources */,
+				291787B7289300E500ACAD70 /* SongPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,8 +635,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				298B82DD28763A2300EE54B8 /* VwitterUITestsLaunchTests.m in Sources */,
+				291787B8289300E500ACAD70 /* SongPickerViewController.m in Sources */,
 				298B82DB28763A2300EE54B8 /* VwitterUITests.m in Sources */,
-				291787A4289089D500ACAD70 /* SpotifyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,7 +787,7 @@
 		};
 		298B82E128763A2300EE54B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6A5D72133CCDA51BC7A511AE /* Pods-Vwitter.debug.xcconfig */;
+			baseConfigurationReference = 5601EEACEAB79DC8E52B37F7 /* Pods-Vwitter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -787,7 +819,7 @@
 		};
 		298B82E228763A2300EE54B8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F9C6930335159782278F381F /* Pods-Vwitter.release.xcconfig */;
+			baseConfigurationReference = 2C8E5C2F1C69DD394F9C8BCB /* Pods-Vwitter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -819,7 +851,7 @@
 		};
 		298B82E428763A2300EE54B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF1191A3716A5FAB9E15358A /* Pods-VwitterTests.debug.xcconfig */;
+			baseConfigurationReference = 32B68AC41B85ECF05304559B /* Pods-VwitterTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -842,7 +874,7 @@
 		};
 		298B82E528763A2300EE54B8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA87C5075EB2F94E5E6517A5 /* Pods-VwitterTests.release.xcconfig */;
+			baseConfigurationReference = BFFFBAAA4FEAB7E619BA6D36 /* Pods-VwitterTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -865,7 +897,7 @@
 		};
 		298B82E728763A2300EE54B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 221521725659A1798AF2F840 /* Pods-Vwitter-VwitterUITests.debug.xcconfig */;
+			baseConfigurationReference = 7AD14BFDF6E3341950557904 /* Pods-Vwitter-VwitterUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -886,7 +918,7 @@
 		};
 		298B82E828763A2300EE54B8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 798736688B6AEEDAF86E81F3 /* Pods-Vwitter-VwitterUITests.release.xcconfig */;
+			baseConfigurationReference = BDC40C3BABAB59E998CC6491 /* Pods-Vwitter-VwitterUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

@@ -6,12 +6,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SpotifyTrack.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SelectAudienceViewController : UIViewController
 
 @property (strong, nonatomic) NSString *ventContent;
+@property (strong, nonatomic) SpotifyTrack *selectedTrack;
 
 @end
 

@@ -15,6 +15,8 @@
 #import "VentAudience.h"
 #import "VWHelpers.h"
 #import "GroupCell.h"
+#import "UIViewController+ErrorAlertPresenter.h"
+#import "SpotifyAPIManager.h"
 
 @interface SelectAudienceViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *postVentButton;
@@ -157,15 +159,39 @@
 
 - (IBAction)didTapVent:(id)sender {
     
+    if (![VWUser currentUser].objectId) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"You cannot currently vent. Please try again."];
+        return;
+    }
+    else if (!self.ventContent) {
+        [self presentErrorMessageWithTitle:@"Error" message:@"Vent content undefined."];
+        return;
+    }
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 
     NSMutableArray *ventAudiences = [NSMutableArray arrayWithArray:[self.arrayOfSelectedAudience allObjects]];
     
     NSMutableArray *ventAudiencesIds = [ventAudiences valueForKey:@"objectId"];
     
+    NSMutableDictionary *params = @{
+        @"currentUserId":[VWUser currentUser].objectId,
+        @"ventContent":self.ventContent,
+        @"ventAudiencesIds":ventAudiencesIds
+    }.mutableCopy;
+    
+    if (self.selectedTrack.uriString) {
+        params[@"selectedTrackUri"] = self.selectedTrack.uriString;
+
+    }
+    if (self.selectedTrack.startTimestamp && self.selectedTrack.endTimestamp) {
+        params[@"startTimestamp"] = self.selectedTrack.startTimestamp;
+        params[@"endTimestamp"] = self.selectedTrack.endTimestamp;
+    }
+    
     __weak typeof(self) weakSelf = self;
     [PFCloud callFunctionInBackground:@"postVent"
-                       withParameters:@{@"currentUserId":[VWUser currentUser].objectId, @"ventContent":self.ventContent, @"ventAudiencesIds":ventAudiencesIds}
+                       withParameters:params
                                 block:^(id groups, NSError *error) {
         typeof(self) strongSelf = weakSelf;
         if (!strongSelf) {
@@ -173,12 +199,15 @@
             return;
         }
         if (!error) {
+            [[SpotifyAPIManager shared] pause];
             [MBProgressHUD hideHUDForView:strongSelf.view animated:YES];
             [strongSelf dismissViewControllerAnimated:YES completion:nil];
             
         }
         else {
             NSLog(@"there was an error, u suck");
+            [[SpotifyAPIManager shared] pause];
+            [self presentErrorMessageWithTitle:@"Error" message:@"Your vent was not posted."];
             [MBProgressHUD hideHUDForView:strongSelf.view animated:YES];
             [strongSelf dismissViewControllerAnimated:YES completion:nil];
         }

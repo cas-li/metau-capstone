@@ -32,8 +32,11 @@
     if (self.userCellViewModel.isFollowing == YES) {
         [self.followStatusButton setTitle:@"Following" forState:UIControlStateNormal];
     }
-    else {
+    else if (self.userCellViewModel.isFollowing == NO) {
         [self.followStatusButton setTitle:@"Follow" forState:UIControlStateNormal];
+    }
+    else {
+        [self.followStatusButton setTitle:@"" forState:UIControlStateNormal];
     }
 }
 

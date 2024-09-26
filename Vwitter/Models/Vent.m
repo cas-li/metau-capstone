@@ -13,6 +13,9 @@
 @dynamic author;
 @dynamic authorUserId;
 @dynamic ventContent;
+@dynamic trackUri;
+@dynamic startTimestamp;
+@dynamic endTimestamp;
 
 + (nonnull NSString *)parseClassName {
     return @"Vent";
